@@ -1,0 +1,104 @@
+/* --- Estilos Base (Escritorio) --- */
+.div-gen-nv {
+    background-color: #ffffff;
+    /* Sombra suave en lugar de borde de color */
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    padding: 20px 50px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    /* Asegura que la barra esté sobre el contenido */
+}
+
+/* Logo o título (si decides poner uno a la izquierda) */
+.div-gen-nv::before {
+    content: '';
+    /* Espacio reservado para balance visual si no hay logo */
+}
+
+.first-div {
+    display: flex;
+    gap: 40px;
+    /* Espacio más equilibrado */
+    align-items: center;
+}
+
+.first-div a {
+    text-decoration: none;
+    color: #333333;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+/* Efecto Hover tipo botón suave */
+.first-div a:hover {
+    color: #0056b3;
+    /* Azul moderno */
+    background-color: #f0f7ff;
+    /* Fondo muy sutil al pasar el mouse */
+    text-decoration: none;
+}
+
+/* Botón hamburguesa */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+    padding: 5px;
+}
+
+/* --- Responsive (Móvil) --- */
+@media (max-width: 768px) {
+    .div-gen-nv {
+        padding: 15px 20px;
+        justify-content: space-between;
+        /* Mantiene botón a la derecha */
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .first-div {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #ffffff;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+        padding: 10px 0;
+        z-index: 999;
+        gap: 5px;
+    }
+
+    .first-div.active {
+        display: flex;
+    }
+
+    .first-div a {
+        width: 100%;
+        text-align: left;
+        /* Alineación más natural en móvil */
+        padding: 15px 30px;
+        /* Más área de toque */
+        box-sizing: border-box;
+        border-radius: 0;
+    }
+
+    .first-div a:hover {
+        background-color: #f8f9fa;
+    }
+}

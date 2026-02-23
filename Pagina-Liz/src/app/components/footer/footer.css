@@ -1,0 +1,99 @@
+/* --- Contenedor Principal --- */
+.footer-section {
+    background-color: #4a4a4a;
+    /* Gris oscuro mate */
+    color: #ffffff;
+    padding: 40px 60px 20px 60px;
+    /* Padding superior, derecho, inferior, izquierdo */
+    font-family: "Times New Roman", Times, serif;
+    /* Tipografía clave del diseño */
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    /* Espacio vertical entre las secciones */
+}
+
+/* --- Redes Sociales --- */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 18px;
+}
+
+.social-icons a {
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.social-icons a:hover {
+    opacity: 0.7;
+}
+
+/* --- Contenido Central (Grid/Flex) --- */
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    /* Separa los bloques a los extremos */
+    align-items: flex-start;
+    /* Alineación superior */
+    padding-bottom: 40px;
+    /* Espacio antes del copyright */
+}
+
+/* Bloque Izquierdo: Frase */
+.slogan h2 {
+    font-size: 32px;
+    font-weight: 400;
+    /* Regular, no bold, como en la imagen */
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+
+/* Bloque Derecho: Contacto */
+.contact-info {
+    text-align: left;
+    font-size: 20px;
+    line-height: 1.4;
+    /* Altura de línea para legibilidad */
+}
+
+.contact-info p {
+    margin: 0;
+}
+
+.contact-info a {
+    color: white;
+    text-decoration: none;
+}
+
+/* --- Copyright --- */
+.copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    /* Línea divisoria muy sutil si se desea */
+    padding-top: 20px;
+    font-size: 14px;
+    opacity: 0.8;
+    /* Un poco menos intenso que el resto */
+}
+
+/* --- Responsive (Móvil) --- */
+@media (max-width: 768px) {
+    .footer-section {
+        padding: 30px 20px;
+        gap: 30px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .slogan h2 {
+        font-size: 28px;
+    }
+
+    .contact-info {
+        font-size: 18px;
+    }
+}

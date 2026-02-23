@@ -1,0 +1,12 @@
+<nav class="div-gen-nv">
+    <button class="menu-toggle" (click)="toggleMenu()">
+        ☰
+    </button>
+
+    <div class="first-div" [class.active]="isMenuOpen">
+        <a routerLink="/">Inicio</a>
+        <a routerLink="/projects">Proyectos</a>
+        <a routerLink="/gallery">Galeria</a>
+        <a routerLink="/topics">Programas</a>
+    </div>
+</nav>
