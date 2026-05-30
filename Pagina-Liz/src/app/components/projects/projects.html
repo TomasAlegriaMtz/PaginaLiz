@@ -1,1 +1,78 @@
-<p>projects works!</p>
+<body>
+    <app-carousel></app-carousel>
+    <main class="container">
+        <section class="proyectos-section">
+            <div class="proyectos-header">
+                <h2>Proyectos de Investigación</h2>
+            </div>
+            <div class="proyectos-grid">
+                <div class="col">
+                    <div *ngFor="let p of proyectosCol1" class="card"
+                        [ngClass]="{
+                            'card-diamond': p.shape === 'diamond',
+                            'card-circle': p.shape === 'circle',
+                            'card-triangle': p.shape === 'triangle'
+                        }">
+                        <h3>{{ p.codigo }}</h3>
+                        <p>{{ p.titulo }}</p>
+                        <span class="anio">{{ p.anio }}</span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div *ngFor="let p of proyectosCol2" class="card"
+                        [ngClass]="{
+                            'card-diamond': p.shape === 'diamond',
+                            'card-circle': p.shape === 'circle',
+                            'card-triangle': p.shape === 'triangle'
+                        }">
+                        <h3>{{ p.codigo }}</h3>
+                        <p>{{ p.titulo }}</p>
+                        <span class="anio">{{ p.anio }}</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="tesis-section">
+            <h2>Tesis Dirigidas</h2>
+            <div class="tesis-item" *ngFor="let t of tesis">
+                <div class="tesis-meta">
+                    <span class="badge-nivel" [class.doctorado]="t.nivel === 'Doctorado'">{{ t.nivel }}</span>
+                    <span class="badge-estado" [class.en-proceso]="t.estado === 'En Proceso'">{{ t.estado }}</span>
+                    <span class="anio" *ngIf="t.anio">{{ t.anio }}</span>
+                </div>
+                <h3>{{ t.titulo }}</h3>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="publicaciones-section">
+            <h2>Publicaciones</h2>
+            <div class="pub-item" *ngFor="let p of publicaciones">
+                <span class="anio-grande">{{ p.anio }}</span>
+                <div class="pub-content">
+                    <h3>{{ p.titulo }}</h3>
+                    <p class="fuente">{{ p.fuente }}</p>
+                    <p class="autores">{{ p.autores }}</p>
+                </div>
+            </div>
+        </section>
+
+        <hr class="divider">
+
+        <section class="capitulos-section">
+            <h2>Capítulos de Libro</h2>
+            <div class="pub-item" *ngFor="let c of capitulos">
+                <span class="anio-grande">{{ c.anio }}</span>
+                <div class="pub-content">
+                    <h3>{{ c.titulo }}</h3>
+                    <p class="fuente">{{ c.editorial }}<span *ngIf="c.numeroCapitulo"> — {{ c.numeroCapitulo }}</span></p>
+                    <p class="autores">{{ c.autores }}</p>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>

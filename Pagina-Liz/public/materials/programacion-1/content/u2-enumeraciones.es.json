@@ -1,0 +1,169 @@
+{
+  "title": "Enumeraciones",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Programación I Unidad 3. Tipos de Datos Estructurados Enumeraciones Una enumeración es un conjunto de constantes enteras. De forma automática se suelen iniciar en 0 y luego continúan en forma ascendente."
+    },
+    {
+      "type": "paragraph",
+      "text": "A la enumeración se le puede asignar un nombre, que se comportará como un nuevo tipo de dato que solo podrá contener los valores especificados en la enumeración."
+    },
+    {
+      "type": "paragraph",
+      "text": "Las declaraciones se pueden hacer dentro o fuera del programa principal. Existen enumeraciones anónimas, esto es que no disponen de un nombre para referirse a la enumeración. Ejemplo:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Es frecuente utilizar enumeraciones con nombre, cuya declaración adopta la forma siguiente:"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum [nombre_de_tipo] {lista_de_identificadores}; Los identificadores que forman parte de enumeraciones no se admiten por teclado ni se pueden escribir directamente en pantalla. Ejemplos:"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum mis_datos {sistemas,electronica}; enum mis_datos uno, dos;"
+    },
+    {
+      "type": "code",
+      "text": "int main(int argc, const char * argv[]) {\nuno = sistemas;\ndos = electronica;\nprintf(\"%d \\n\", uno);\nprintf(\"%d \\n\", dos);\nreturn 0;\n}\n#include <stdio.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum mis_datos {sistemas,electronica}; enum mis_datos uno, dos;"
+    },
+    {
+      "type": "code",
+      "text": "int main(int argc, const char * argv[]) {"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum dias{ lunes, martes, miercoles, jueves, viernes, sabado, domingo}; Dra. Estela Lizbeth Muñoz Andrade | Tipos de Datos Estructurados Programación I"
+    },
+    {
+      "type": "code",
+      "text": "return 0;\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "La utilidad de las enumeraciones estriba en que es más fácil recordar un nombre que un determinado valor entero, como en el caso de las constantes creadas mediante #define, y además el compilador se encarga de asignar valores. Las enumeraciones al igual que las estructuras o registros, son una herramienta que le permite al programador un manejo más sencillo de datos."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <iostream>\nint main(int argc, const char * argv[]) {"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum autos{chevy, toyota, ferrari, bmw} auto1, auto2, auto3, auto4;"
+    },
+    {
+      "type": "code",
+      "text": "auto1 = chevy;\nauto2 = toyota;\nauto3 = ferrari;\nauto4 = bmw;\nprintf(\"%d\",auto1);\nreturn 0;\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Es usual encontrar a las enumeraciones como herramienta para trabajar menús. De esta forma se asigna a cada identificador (que son opciones para el usuario) un número entero. Cabe mencionar que las enumeraciones admiten como máximo 256 elementos."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <stdlib.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "#define NUMOPC 5"
+    },
+    {
+      "type": "code",
+      "text": "int main(int argc, const char * argv[]) {"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum {Nuevo, Abrir, Guardar, Cerrar, Salir};"
+    },
+    {
+      "type": "code",
+      "text": "char menu[][10] = {\"Nuevo\", \"Abrir\", \"Guardar\", \"Cerrar\", \"Salir\"};\nint opc;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Programación I do{"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"Seleccione la opcion deseada \\n\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "for(int i=0; i<NUMOPC; i++){"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"%s (%d) \", menu[i], i);\n}\nscanf(\"%d\",&opc);"
+    },
+    {
+      "type": "paragraph",
+      "text": "switch(opc){"
+    },
+    {
+      "type": "code",
+      "text": "case Nuevo : printf(\"Seleccionaste la opcion %s \\n\",menu[opc]);"
+    },
+    {
+      "type": "paragraph",
+      "text": "break;"
+    },
+    {
+      "type": "code",
+      "text": "case Abrir : printf(\"Seleccionaste la opcion %s \\n\",menu[opc]);"
+    },
+    {
+      "type": "paragraph",
+      "text": "break;"
+    },
+    {
+      "type": "code",
+      "text": "case Guardar : printf(\"Seleccionaste la opcion %s \\n\",menu[opc]);"
+    },
+    {
+      "type": "paragraph",
+      "text": "break;"
+    },
+    {
+      "type": "code",
+      "text": "case Cerrar : printf(\"Seleccionaste la opcion %s \\n\",menu[opc]);"
+    },
+    {
+      "type": "paragraph",
+      "text": "break;"
+    },
+    {
+      "type": "code",
+      "text": "case Salir : printf(\"Seleccionaste la opcion %s \\n\",menu[opc]);"
+    },
+    {
+      "type": "paragraph",
+      "text": "break;"
+    },
+    {
+      "type": "code",
+      "text": "default : printf(\"Opción incorrecta \\n\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "break; }//switch"
+    },
+    {
+      "type": "code",
+      "text": "}while(opc != Salir);\nreturn 0;\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Dra. Estela Lizbeth Muñoz Andrade | Tipos de Datos Estructurados"
+    }
+  ]
+}

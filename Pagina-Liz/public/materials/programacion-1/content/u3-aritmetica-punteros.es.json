@@ -1,0 +1,624 @@
+{
+  "title": "Aritmética de Apuntadores",
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 1: Introducción"
+    },
+    {
+      "type": "paragraph",
+      "text": "Suma"
+    },
+    {
+      "type": "paragraph",
+      "text": "Resta"
+    },
+    {
+      "type": "paragraph",
+      "text": "Comparación"
+    },
+    {
+      "type": "paragraph",
+      "text": "Asignación"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "29"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 2: Introducción"
+    },
+    {
+      "type": "paragraph",
+      "text": "2"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "Existe una cierta aritmética que es aplicable a los  punteros, y que difiere con respecto a la  aritmética vista para los enteros o reales."
+    },
+    {
+      "type": "paragraph",
+      "text": "Las operaciones que se pueden realizar son:"
+    },
+    {
+      "type": "paragraph",
+      "text": "▫\tSuma"
+    },
+    {
+      "type": "paragraph",
+      "text": "▫\tResta"
+    },
+    {
+      "type": "paragraph",
+      "text": "▫\tComparación"
+    },
+    {
+      "type": "paragraph",
+      "text": "▫\tAsignación"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 3: Suma"
+    },
+    {
+      "type": "paragraph",
+      "text": "3"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sumar un valor entero x a una variable de tipo  puntero significa desplazarnos x posiciones  hacia delante en memoria."
+    },
+    {
+      "type": "paragraph",
+      "text": "23"
+    },
+    {
+      "type": "paragraph",
+      "text": "34"
+    },
+    {
+      "type": "paragraph",
+      "text": "12"
+    },
+    {
+      "type": "paragraph",
+      "text": "56"
+    },
+    {
+      "type": "paragraph",
+      "text": "67"
+    },
+    {
+      "type": "paragraph",
+      "text": "45"
+    },
+    {
+      "type": "paragraph",
+      "text": "89"
+    },
+    {
+      "type": "paragraph",
+      "text": "0\t1\t2\t3"
+    },
+    {
+      "type": "paragraph",
+      "text": "4"
+    },
+    {
+      "type": "paragraph",
+      "text": "5\t6"
+    },
+    {
+      "type": "paragraph",
+      "text": "int * v;"
+    },
+    {
+      "type": "paragraph",
+      "text": "*v"
+    },
+    {
+      "type": "paragraph",
+      "text": "*(v+1)\t*(v+2)\t*(v+3)\t*(v+4) *(v+5)\t*(v+6)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Para realizar este desplazamiento, también  podemos utilizar el operador de autoincremento  (v++);"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 4: Resta"
+    },
+    {
+      "type": "paragraph",
+      "text": "4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "Restar un valor entero x a una variable de tipo  puntero significa desplazarnos x posiciones  hacia detrás en memoria."
+    },
+    {
+      "type": "paragraph",
+      "text": "También se puede utilizar el operador de  autodecremento (v--);"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 5: Comparación"
+    },
+    {
+      "type": "paragraph",
+      "text": "Comparar (==, !=) dos punteros significa  evaluar las direcciones de memoria a las que  apuntan."
+    },
+    {
+      "type": "paragraph",
+      "text": "int main()"
+    },
+    {
+      "type": "paragraph",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "int uno, dos, *p_uno, *p_dos;"
+    },
+    {
+      "type": "paragraph",
+      "text": "p_uno = &uno;  p_dos = &dos;"
+    },
+    {
+      "type": "paragraph",
+      "text": "if(p_uno == p_dos)"
+    },
+    {
+      "type": "paragraph",
+      "text": "printf(“Apuntan a la misma dirección\\n”);  else"
+    },
+    {
+      "type": "paragraph",
+      "text": "printf(“NO apuntan a la misma dirección\\n”);  system(“PAUSE”);"
+    },
+    {
+      "type": "paragraph",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 6: Asignación"
+    },
+    {
+      "type": "paragraph",
+      "text": "Al igual que el resto de tipos de variables, a los"
+    },
+    {
+      "type": "paragraph",
+      "text": "punteros\ttambién\tse\tles\tpuede\tasignar\t(=)"
+    },
+    {
+      "type": "paragraph",
+      "text": "una"
+    },
+    {
+      "type": "paragraph",
+      "text": "contenido,\tel\tcual\tserá,\tnormalmente,  dirección de memoria."
+    },
+    {
+      "type": "paragraph",
+      "text": "char c = ‘a’;  char *ptr = &c;"
+    },
+    {
+      "type": "paragraph",
+      "text": "6"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 7: Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "35"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 8: Ejercicios"
+    },
+    {
+      "type": "paragraph",
+      "text": "1.\tDadas\tlas\tsiguientes"
+    },
+    {
+      "type": "paragraph",
+      "text": "asignaciones,\tilustra\tcómo"
+    },
+    {
+      "type": "paragraph",
+      "text": "quedaría"
+    },
+    {
+      "type": "paragraph",
+      "text": "definiciones\ty"
+    },
+    {
+      "type": "paragraph",
+      "text": "la"
+    },
+    {
+      "type": "paragraph",
+      "text": "memoria después de ejecutarlas."
+    },
+    {
+      "type": "paragraph",
+      "text": "int A = 1, B = 2, C = 3, *P1, *P2;"
+    },
+    {
+      "type": "paragraph",
+      "text": "P1 = &A;  P2 = &C;"
+    },
+    {
+      "type": "paragraph",
+      "text": "*P1 = (*P2)++;  P1 = P2;"
+    },
+    {
+      "type": "paragraph",
+      "text": "P2 = &B;"
+    },
+    {
+      "type": "paragraph",
+      "text": "*P1 - = *P2;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "36"
+    },
+    {
+      "type": "paragraph",
+      "text": "++*P2;"
+    },
+    {
+      "type": "paragraph",
+      "text": "*P1 *= *P2;"
+    },
+    {
+      "type": "paragraph",
+      "text": "A = ++*P2 * *P1;  P1 = &A;"
+    },
+    {
+      "type": "paragraph",
+      "text": "*P2 = *P1 /= *P2;"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 9: Ámbito de las variables"
+    },
+    {
+      "type": "paragraph",
+      "text": "Paso de parámetros"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "37"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 10: Ámbito de las variables"
+    },
+    {
+      "type": "paragraph",
+      "text": "10"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "Principalmente en C las actúan en dos ámbitos:"
+    },
+    {
+      "type": "paragraph",
+      "text": "▫ Locales: Aquellas cuyo tiempo de vida finaliza  cuando lo hace la función en la que se declaró. Su  uso está restringido únicamente en dicha función."
+    },
+    {
+      "type": "paragraph",
+      "text": "▫ Globales: Aquellas cuyo tiempo de vida finaliza  con el fin del programa. Su uso está disponible en  todas las funciones que componen dicho  programa."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 11: Ámbito de las variables"
+    },
+    {
+      "type": "paragraph",
+      "text": "#include <stdio.h>  #include <stdlib.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "int global;  int main()"
+    },
+    {
+      "type": "paragraph",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "int local_m;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Global = %d\\n”, local_m, global);"
+    },
+    {
+      "type": "paragraph",
+      "text": "local_m = 3;  escribir_valor();  global = 5;  printf(“Local = %d.  system (“PAUSE”);"
+    },
+    {
+      "type": "paragraph",
+      "text": "11"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "}"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 12: Ámbito de las variables"
+    },
+    {
+      "type": "paragraph",
+      "text": "//No se puede tener acceso a la variable “local_m” de la función main()"
+    },
+    {
+      "type": "paragraph",
+      "text": "void escribir_valor()"
+    },
+    {
+      "type": "paragraph",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "int local_e;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Global = %d\\n”, local_e, global);"
+    },
+    {
+      "type": "paragraph",
+      "text": "local_e = 8;"
+    },
+    {
+      "type": "paragraph",
+      "text": "global = 6;  printf(“Local = %d.  system (“PAUSE”);"
+    },
+    {
+      "type": "paragraph",
+      "text": "12"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "}"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 13: Paso de parámetros"
+    },
+    {
+      "type": "paragraph",
+      "text": "13"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "Existen dos formas de pasar los argumentos a  una función:"
+    },
+    {
+      "type": "paragraph",
+      "text": "▫ Por valor: El valor que se le pasa a la función es  una copia del original. No se modifica el valor en  origen."
+    },
+    {
+      "type": "paragraph",
+      "text": "▫ Por referencia: El valor que se le pasa como  parámetro a la función es un puntero a la  dirección de memoria de la variable. Se puede  modificar el valor en origen."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 14: Paso de parámetros"
+    },
+    {
+      "type": "paragraph",
+      "text": "int Suma(int a, int b)"
+    },
+    {
+      "type": "paragraph",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "int resultado;"
+    },
+    {
+      "type": "paragraph",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ejemplo de paso de parámetros por valor:"
+    },
+    {
+      "type": "paragraph",
+      "text": "int main()"
+    },
+    {
+      "type": "paragraph",
+      "text": "#include <stdio.h>\t{"
+    },
+    {
+      "type": "paragraph",
+      "text": "14"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "int v1, v2, r;"
+    },
+    {
+      "type": "paragraph",
+      "text": "printf(“Introduzca dos valores: ”);  scanf(“%d %d”, &v1, &v2);"
+    },
+    {
+      "type": "paragraph",
+      "text": "r = suma(v1, v2);"
+    },
+    {
+      "type": "paragraph",
+      "text": "resultado = a + b;"
+    },
+    {
+      "type": "paragraph",
+      "text": "printf(“La suma es : %d\\n”, r);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return resultado;"
+    },
+    {
+      "type": "paragraph",
+      "text": "system(“PAUSE”);"
+    },
+    {
+      "type": "paragraph",
+      "text": "}"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 15: Paso de parámetros"
+    },
+    {
+      "type": "paragraph",
+      "text": "#include <stdio.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "void Suma(int *a, int *b, int *r )"
+    },
+    {
+      "type": "paragraph",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "*r = *a + *b;"
+    },
+    {
+      "type": "paragraph",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ejemplo de paso de parámetros por referencia:"
+    },
+    {
+      "type": "paragraph",
+      "text": "int main()"
+    },
+    {
+      "type": "paragraph",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "int v1, v2, r = 0;"
+    },
+    {
+      "type": "paragraph",
+      "text": "15"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros"
+    },
+    {
+      "type": "paragraph",
+      "text": "printf(“Introduzca dos valores: ”);  scanf(“%d %d”, &v1, &v2);"
+    },
+    {
+      "type": "paragraph",
+      "text": "suma(&v1, &v2, &r);"
+    },
+    {
+      "type": "paragraph",
+      "text": "printf(“La suma es : %d\\n”, r);"
+    },
+    {
+      "type": "paragraph",
+      "text": "system(“PAUSE”);"
+    },
+    {
+      "type": "paragraph",
+      "text": "}"
+    }
+  ]
+}

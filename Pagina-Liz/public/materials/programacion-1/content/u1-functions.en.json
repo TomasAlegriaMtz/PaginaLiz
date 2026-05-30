@@ -1,0 +1,1458 @@
+{
+  "title": "Functions in C",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "UNIT 3: FUNCTIONS IN C In this unit you will learn to:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Understand the development of a program using functions Establish the difference between the definition and declaration of a function Know and use the passing of values between functions and the return of values from a function Establish the difference between passing arguments by value and by reference Know the classification of variables according to their scope and storage class In this unit, you will learn to:• Understand how to develop an application using functions.• Distinguish between a function’s definition and its declaration.• Learn and apply concepts of value passing and return.• Differentiate between passing arguments by value and by reference.• Identify variable classifications according to their scope and storage class."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.1 Introduction"
+    },
+    {
+      "type": "paragraph",
+      "text": "In Unit 2, we saw that a function is a fragment of code that performs a well-defined task. For example, the printf function prints to standard output the arguments that we pass to it. Like this function, there are other functions that perform various tasks already defined in the ANSI C standard and can be used by the programmer. This type of predefined functions are called library functions. However, each programmer can define their own functions according to their needs. The functions that the programmer defines are known as user functions."
+    },
+    {
+      "type": "paragraph",
+      "text": "The use of functions allows us to divide a large program into small segments that perform specific tasks. Probably, within the same program, the same tasks are performed several times, which is facilitated by using functions. However, it is likely that certain functions are not reusable, but by using them the readability of the program is improved."
+    },
+    {
+      "type": "paragraph",
+      "text": "The philosophy on which C design is based is the use of functions. For this reason, a C program contains at least one function, the main function. This function is special since the execution of the program begins with the instructions contained within it. Once the program execution begins, from the main function you can call other functions and, possibly, from these functions to others. Another peculiarity of the main function is that it is called directly from the operating system and not from any other function. In this way, a C program can only contain one main function."
+    },
+    {
+      "type": "paragraph",
+      "text": "In order to allow efficient data handling, functions in C cannot be nested. In other words, a function cannot be declared inside another function, so all functions are global or external, which means they can be called from anywhere in a program."
+    },
+    {
+      "type": "paragraph",
+      "text": "A particular function can be accessed (called) from any part of a program. When a function is called, the instructions that constitute that function are executed. Once the function's instructions are executed, program control is returned to the next instruction (if it exists) immediately after the one that caused the function call."
+    },
+    {
+      "type": "paragraph",
+      "text": "When a function is accessed from a certain point in the program, information can be passed to it through special identifiers known as arguments (also called parameters). Once the function processes this information, it returns a value using the return statement."
+    },
+    {
+      "type": "paragraph",
+      "text": "The general structure of a function in C is as follows:"
+    },
+    {
+      "type": "paragraph",
+      "text": "return_type function_name(parameter_list)"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "function_body return expression;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Where:"
+    },
+    {
+      "type": "paragraph",
+      "text": "return_type: is the type of value returned by the function, or, in case the function does not return any value, the reserved word void."
+    },
+    {
+      "type": "paragraph",
+      "text": "function_name: is the name or identifier assigned to the function."
+    },
+    {
+      "type": "paragraph",
+      "text": "parameter_list: is the declaration list of parameters that are passed to the function. These are separated by commas. We must keep in mind that there may be functions that do not use parameters."
+    },
+    {
+      "type": "paragraph",
+      "text": "function_body: is composed of a set of statements that carry out the specific task for which the function was created."
+    },
+    {
+      "type": "paragraph",
+      "text": "return expression: through the reserved word return, the value of the function is returned, in this case represented by expression."
+    },
+    {
+      "type": "paragraph",
+      "text": "Let's suppose we want to create a program to calculate the price of a product based on its base price and the applicable tax. Below we show the source code of that program:"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nfloat price(float base, float tax);  /* declaration */\nmain()\n{\nfloat amount = 2.5;\nfloat rate = 0.07;\nprintf(\"The price to pay is: %.2f\\n\", price(amount, rate));"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nfloat price(float base, float tax)  /* definition */\n{\nfloat calculation;\ncalculation = base + (base * tax);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return calculation;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The previous example consists of two functions, the required main function and the function created by the user price, which calculates the price of a product taking as parameters its base price and the applicable tax. The price function calculates the price of a product by adding the corresponding tax to the base price and returns the calculated value through the return statement."
+    },
+    {
+      "type": "paragraph",
+      "text": "On the other hand, in the main function we declare two variables of type float that contain the base price of the product and the applicable tax. The next statement within the main function is the call to the library function printf, which receives as a parameter a call to the price function, which returns a value of type float. In this way, the printf function prints to standard output the value returned by the price function. It is important to keep in mind that the variables amount and rate (arguments) within the main function have a correspondence with the variables base and tax (parameters) within the price function respectively."
+    },
+    {
+      "type": "paragraph",
+      "text": "In the previous example, just before the main function, we have declared the price function. The intention is that the main function is able to recognize it. However, the definition of that function appears after the main function. Function definitions can appear in any order within one or more source files. Later, in this unit, we will see in detail the declaration and definition of functions."
+    },
+    {
+      "type": "paragraph",
+      "text": "On the other hand, we have added the return 0 statement at the end of the main function, since it is a function like any other and can return a value to whoever called it, in this case the environment in which the program runs. Generally, the value 0 implies a normal end of execution, while a different value implies an unusual or erroneous end of execution."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.2 Function Declaration"
+    },
+    {
+      "type": "paragraph",
+      "text": "Before starting to use a function, we must declare it. The declaration of a function is also known as the function prototype. In the prototype of a function, you have to specify the function's parameters, as well as the data type it returns."
+    },
+    {
+      "type": "paragraph",
+      "text": "The prototypes of the functions used in a program are generally included in the program header and have the following syntax:"
+    },
+    {
+      "type": "code",
+      "text": "return_type function_name(parameter_list);"
+    },
+    {
+      "type": "paragraph",
+      "text": "In the prototype of a function, the statements that are part of it are not specified, but rather its characteristics. For example:"
+    },
+    {
+      "type": "code",
+      "text": "int cube(int number);"
+    },
+    {
+      "type": "paragraph",
+      "text": "In this case, the cube function is declared, which receives as a parameter a variable of integer type (number) and returns a value of the same type. At no time are we specifying what is going to be done with the number variable, we only declare the characteristics of the cube function."
+    },
+    {
+      "type": "paragraph",
+      "text": "It should be noted that the name of the parameters is optional and is used to improve the understanding of the source code. In this way, the prototype of the cube function could be expressed as follows:"
+    },
+    {
+      "type": "code",
+      "text": "int cube(int);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Function prototypes are used by the compiler to verify that the function is accessed in the appropriate way with respect to the number and type of parameters, and the return value type of the same. Let's see some examples of function prototypes:"
+    },
+    {
+      "type": "code",
+      "text": "int power(int base, int exponent);\ndouble rectangle_area(float base, float height);\nint greater(int, int);\nstruct address input(void);"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Note"
+    },
+    {
+      "type": "paragraph",
+      "text": "Library functions are declared in what are known as header files or .h files (from the English \"headers\"). When we want to use any of the library functions, we must specify the .h file in which the function is declared, at the beginning of our program. For example, if we want to use the printf function in our program, we must include the stdio.h file that contains the prototype of this function."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.3 Function Definition"
+    },
+    {
+      "type": "paragraph",
+      "text": "After declaring a function, the next step is to implement it. Generally, this step is known as definition. It is precisely in the definition of a function where the instructions that are part of it are specified and that are used to carry out the specific task of the function. The definition of a function consists of two parts, the header and the body of the function. In the function header, as in its prototype, you have to specify the function's parameters, if it uses them, and the type of data it returns, while the body is composed of the instructions necessary to perform the task for which the function is created. The syntax of the function definition is as follows:"
+    },
+    {
+      "type": "paragraph",
+      "text": "return_type function_name(parameter_list)"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "statements;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The return_type represents the data type of the value that the function returns. This type must be one of the simple types of C, a pointer to a C type, or a struct type. By default, every function is considered to return an integer type (int). In other words, if the return_type is not specified in the declaration or definition of a function, the compiler assumes that it returns a value of type int."
+    },
+    {
+      "type": "paragraph",
+      "text": "The function_name represents the name assigned to the function."
+    },
+    {
+      "type": "paragraph",
+      "text": "It is recommended that the function name be related to the task it performs. If the function uses parameters, they must be listed in parentheses following the function name, specifying the data type and name of each parameter. If a function does not use parameters, you can leave the parentheses empty or include the word void, which indicates that the function does not use parameters. After the function header, the function body must appear, delimited by braces ({ and }), composed of the statements that carry out the specific task of the function. Let's see the definition of the cube function declared in the previous section:"
+    },
+    {
+      "type": "code",
+      "text": "int cube(int base)\n{\nint power;\npower = base * base * base;"
+    },
+    {
+      "type": "paragraph",
+      "text": "return power;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Note"
+    },
+    {
+      "type": "paragraph",
+      "text": "As we have already seen, the arguments that the function receives are also usually called parameters. However, some authors consider as parameters the list of variables in parentheses used in the declaration or definition of the function, and as arguments the values used when the function is called. The terms formal arguments and actual arguments are also used, respectively, to make this distinction."
+    },
+    {
+      "type": "paragraph",
+      "text": "When a program uses a large number of functions, the function declarations are usually separated from their definitions. As with library functions, declarations become part of a header file (.h extension), while definitions are stored in a file with the same name as the .h file, but with the .c extension. On some occasions, a programmer does not want to disclose the source code of their functions. In these cases, the user is usually provided with the header file, the compiled file of the definitions (with .o extension, for object), and documentation of them. In this way, when the user wants to make use of any of the functions, they know what arguments to pass to it and what type of data it returns, but they do not have access to the definition of the functions."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Practical Example 1"
+    },
+    {
+      "type": "paragraph",
+      "text": "The following program calculates the cube of numbers from 1 to 5 using a user-defined function."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nint cube(int base);\nmain()\n{\nint number;"
+    },
+    {
+      "type": "paragraph",
+      "text": "for(number = 1; number <= 5; number++)"
+    },
+    {
+      "type": "code",
+      "text": "{\nprintf(\"The cube of number %d is %d\\n\", number, cube(number));\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nint cube(int base)\n{\nint power;\npower = base * base * base;"
+    },
+    {
+      "type": "paragraph",
+      "text": "return power;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The output is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "The cube of number 1 is 1 The cube of number 2 is 8 The cube of number 3 is 27 The cube of number 4 is 64 The cube of number 5 is 125"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.4 Returning Values"
+    },
+    {
+      "type": "paragraph",
+      "text": "A function in C can only return one value. To return that value, the reserved word return is used, whose syntax is as follows:"
+    },
+    {
+      "type": "paragraph",
+      "text": "return <expression>; Where <expression> can be any data type except an array or a function. In addition, the value of the expression must match the data type declared in the function prototype. On the other hand, there is the possibility of returning multiple values through the use of pointers or structures. Within a function there can be several return statements since the program will return control to the statement that called the function as soon as it finds the first return statement. If there are no return statements, the function execution continues until the closing brace at the end of the function body (})."
+    },
+    {
+      "type": "paragraph",
+      "text": "Keep in mind that there are functions that do not return any value. The data type returned by these functions can be void, considered as a special data type. In these cases, the return statement can be written as return or can be omitted directly. For example:"
+    },
+    {
+      "type": "code",
+      "text": "void print_header()\n{\nprintf(\"this function only prints this line\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "return;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "is equivalent to:"
+    },
+    {
+      "type": "code",
+      "text": "void print_header()\n{\nprintf(\"this function only prints this line\");\n}"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.5 Accessing a Function"
+    },
+    {
+      "type": "paragraph",
+      "text": "For a function to perform the task for which it was created, we must access or call it. When a function is called within an expression, program control is passed to it and only returns to the next expression that made the call when it finds a return instruction or, failing that, the closing brace at the end of the function."
+    },
+    {
+      "type": "paragraph",
+      "text": "Generally, functions are usually called from the main function, which does not imply that within a function you can access another function."
+    },
+    {
+      "type": "paragraph",
+      "text": "When we want to access a function, we must do so by its name followed by the list of arguments that the function uses enclosed in parentheses. If the function you want to access does not use arguments, you must place the parentheses empty."
+    },
+    {
+      "type": "paragraph",
+      "text": "Any expression can contain a call to a function. This call can be part of a simple expression, such as an assignment, or it can be one of the operands of a more complex expression. For example:"
+    },
+    {
+      "type": "code",
+      "text": "a = cube(2);\ncalculation = b + c / cube(3);"
+    },
+    {
+      "type": "paragraph",
+      "text": "We must remember that the arguments we use in the call to a function are called actual arguments. These arguments must match in number and type with the formal arguments or parameters of the function. Let's not forget that formal arguments are those used in the definition and/or declaration of a function. Actual arguments can be variables, constants, or even more complex expressions. The value of each actual argument in the call to a function is transferred to that function and assigned to the corresponding formal argument."
+    },
+    {
+      "type": "paragraph",
+      "text": "Generally, when a function returns a value, the call to the function is usually within an assignment expression, as an operand of a complex expression, or as an actual argument of another function. However, when the function does not return any value, the call to the function usually appears alone. Let's see an example:"
+    },
+    {
+      "type": "code",
+      "text": "z = power(a, b);\nprint_values(x, y, z);"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Practical Example 2"
+    },
+    {
+      "type": "paragraph",
+      "text": "We are going to access the first and second functions from the main function."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nvoid first(void);\nvoid second(void);\nmain()\n{\nprintf(\"The first function called, main\\n\");\nfirst();\nsecond();\nprintf(\"End of main function\\n\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nvoid first(void)\n{\nprintf(\"Call to first function\\n\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "return;"
+    },
+    {
+      "type": "code",
+      "text": "}\nvoid second(void)\n{\nprintf(\"Call to second function\\n\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "return;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The output is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "The first function called, main Call to first function Call to second function End of main function"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.6 Scope and Storage Classes"
+    },
+    {
+      "type": "paragraph",
+      "text": "As we have seen in previous units, in C, variables can be classified according to their data type. For example, a variable can be of integer type (int) or character type (char). However, variables can also be classified according to their scope, that is, the part of the program in which the variable is recognized. According to their scope, variables can be local or global. On the other hand, there are type modifiers or storage classes that allow modifying the scope and permanence of a variable within a program. There are four type modifiers, automatic, external, static and register, which correspond to the reserved words auto, extern, static and register, respectively."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.7 Local Variables"
+    },
+    {
+      "type": "paragraph",
+      "text": "When we declare variables within the main function of the program, that is, within the main function, they are only associated with this function, in other words, they are local variables of the main function and cannot be accessed through any other function."
+    },
+    {
+      "type": "paragraph",
+      "text": "Just as with variables declared within the main function, any variable we declare within a function is local to that function, that is, its scope is confined to that function. This situation allows variables with the same name to exist in different functions without maintaining any relationship to each other."
+    },
+    {
+      "type": "paragraph",
+      "text": "We must keep in mind that any variable declared within a function is considered an automatic variable (auto) unless we use some type modifier. A variable is considered automatic because when the function is accessed, memory space is automatically assigned to it and that space is released as soon as the function is exited. In other words, an automatic variable does not retain a value between two successive calls to the same function. In order to guarantee the content of automatic variables, they must be initialized when entering the function to avoid their value being indeterminate."
+    },
+    {
+      "type": "paragraph",
+      "text": "All the variables we have used in the examples seen so far are automatic variables. The use of the reserved word auto is optional, although it is not normally used, for example:"
+    },
+    {
+      "type": "code",
+      "text": "auto int counter;"
+    },
+    {
+      "type": "paragraph",
+      "text": "is equivalent to:"
+    },
+    {
+      "type": "code",
+      "text": "int counter;"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Practical Example 3"
+    },
+    {
+      "type": "paragraph",
+      "text": "Using the same variable identifier in different functions showing its locality."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nvoid print_value();\nmain()\n{\nint counter = 0;"
+    },
+    {
+      "type": "paragraph",
+      "text": "counter++;"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"The value of counter is: %d\\n\", counter);\nprint_value();\nprintf(\"Now the value of counter is: %d\\n\", counter);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nvoid print_value()\n{\nint counter = 5;\nprintf(\"The value of counter is: %d\\n\", counter);\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The output is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "The value of counter is: 1 The value of counter is: 5 Now the value of counter is: 1"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.8 Global Variables"
+    },
+    {
+      "type": "paragraph",
+      "text": "Unlike local variables whose scope was confined to the function where they were declared, the scope of global variables extends from the point where they are defined to the end of the program. In other words, if we define a variable at the beginning of the program, any function that is part of it can use it simply by using its name."
+    },
+    {
+      "type": "paragraph",
+      "text": "The use of global variables provides a mechanism for exchanging information between functions without the need to use arguments. On the other hand, global variables maintain the value assigned to them within their scope, even after finishing the functions that modify that value. We must keep in mind that the use of global variables for exchanging information between functions can be useful in some situations (such as when you want to transfer more than one value from a function), but their use could lead to programs that are difficult to interpret and complex to debug."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Practical Example 4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Using global variables as a mechanism for exchanging information between functions."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nvoid one_function();\nvoid another_function();\nint variable;\nmain()\n{\nvariable = 9;\nprintf(\"The value of variable is: %d\\n\", variable);\none_function();\nanother_function();\nprintf(\"Now the value of variable is: %d\\n\", variable);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nvoid one_function()\n{\nprintf(\"In the function one_function, variable is: %d\\n\", variable);\n}\nvoid another_function()\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "variable++;"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"In the function another_function, variable is: %d\\n\", variable);\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The output is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "The value of variable is: 9 In the function one_function, variable is: 9 In the function another_function, variable is: 10 Now the value of variable is: 10 When working with global variables, we must distinguish between the definition of a global variable and its declaration. When we define a global variable, we do it in the same way as declaring an ordinary variable. The definition of a global variable is done outside any function. Additionally, global variable definitions usually appear before any function that wants to use that variable. The reason is that a global variable is identified by the location of its definition within the program. When a global variable is defined automatically, memory is reserved for its storage. In addition, we can assign an initial value to it."
+    },
+    {
+      "type": "paragraph",
+      "text": "If a function wants to use a previously defined global variable, it is enough to use its name without making any special declaration within the function. However, if the function definition appears before the global variable definition, it is required to include a declaration of the global variable within the function."
+    },
+    {
+      "type": "paragraph",
+      "text": "To declare a global variable, the reserved word extern is used. By using extern, we are telling the compiler that the memory space for that variable is defined elsewhere. Moreover, in the declaration of an external variable (extern), you cannot include the assignment of a value to that variable. On the other hand, the name and data type used in the declaration of a global variable must match the name and data type of the global variable defined outside the function."
+    },
+    {
+      "type": "paragraph",
+      "text": "We must remember that you can only initialize a global variable in its definition. The initial value assigned to the global variable must be expressed as a constant and not as an expression. It is important to note that if an initial value is not assigned to the global variable, it is automatically assigned the value zero (0). In this way, global variables always have an initial value."
+    },
+    {
+      "type": "paragraph",
+      "text": "It should be noted that the declaration of a global variable can refer to a variable that is defined in another file. For this reason, we can say that the extern type specifier refers to a variable that has been defined in a different place from the point where it is being declared and where it is going to be used."
+    },
+    {
+      "type": "code",
+      "text": "In large applications composed of several files, it is common for global variable definitions to be grouped and separated from the rest of the source files. When you want to use any of the global variables in a source file, you must include the file in which the variables are defined using the precompilation directive #include."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Practical Example 5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Using the extern type modifier."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nvoid one_function();\nvoid another_function();\nmain()\n{\nextern int variable;\nvariable = 9;\nprintf(\"The value of variable is: %d\\n\", variable);\none_function();\nprintf(\"Now the value of variable is: %d\\n\", variable);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nvoid one_function()\n{\nextern int variable;\nprintf(\"In the function one_function, variable is: %d\\n\", variable);\n}\nint variable;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Its output is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "The value of variable is: 9 In the function one_function, variable is: 9 Now the value of variable is: 9"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.9 Static Variables"
+    },
+    {
+      "type": "paragraph",
+      "text": "Another type of storage are static variables identified by the reserved word static. Static variables can be both local and global. A local static variable, like an automatic variable, is only associated with the function in which it is declared with the exception that its existence is permanent."
+    },
+    {
+      "type": "paragraph",
+      "text": "In other words, its content is not deleted when the function ends, but maintains its value until the end of the program. For example, in the following program we declare the counter variable as static within the print_value function and from the main function we call this function several times:"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nvoid print_value();\nmain()\n{\nprint_value();\nprint_value();\nprint_value();\nprint_value();"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nvoid print_value()\n{\nstatic int counter = 0;\nprintf(\"The value of counter is: %d\\n\", counter);"
+    },
+    {
+      "type": "paragraph",
+      "text": "counter++;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The first time the print_value function is called, its value is initialized to zero, and after printing its value it is incremented. In successive calls, the value of the counter variable is maintained and the result is as follows:"
+    },
+    {
+      "type": "paragraph",
+      "text": "The value of counter is: 0 The value of counter is: 1 The value of counter is: 2 The value of counter is: 3 As we have seen, the value of the counter variable is maintained from one call to another of the print_value function. This means that local static variables provide a private means of permanent storage in a function."
+    },
+    {
+      "type": "paragraph",
+      "text": "On the other hand, applying the static qualifier to global variables makes them accessible only from the source file in which they were defined and not from any other source file. For example, if we define the global variables time and clock in the following source file:"
+    },
+    {
+      "type": "code",
+      "text": "static int time;\nstatic int clock;\nmain()\n{"
+    },
+    {
+      "type": "code",
+      "text": "}\nvoid function1()\n{"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "any other function that is part of the application and that is not part of this source file will not be able to have access to time or clock. Moreover, the same names can be used to define variables in functions in other files without any problem."
+    },
+    {
+      "type": "paragraph",
+      "text": "Like global variables, functions are external objects whose names, generally, you want to be known globally. However, in some situations it is desirable to limit such access to the file in which the function is declared. In these cases, the reserved word static is used and its application mechanism is similar to the case of variables, as we can see in the following example:"
+    },
+    {
+      "type": "code",
+      "text": "static int square(int number)\n{\nint calculation = 0;\ncalculation = number * number;"
+    },
+    {
+      "type": "paragraph",
+      "text": "return calculation;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Limiting access to both global variables and functions, by declaring them as static, is useful in some situations where you want to avoid them conflicting with other variables or functions, even inadvertently."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.10 Register Variables"
+    },
+    {
+      "type": "paragraph",
+      "text": "When we declare a variable as a register variable, we are telling the compiler that we want the variable to be stored in a fast-access location, generally in the registers of the computer's central processing unit. To declare a variable as a register variable, we must place the reserved word register before the variable declaration. Let's see some examples:"
+    },
+    {
+      "type": "code",
+      "text": "register int counter;\nregister char a;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Variables can only be declared as register if they are automatic (local) variables or formal arguments of a function. Let's see an example of using register in the formal arguments of a function:"
+    },
+    {
+      "type": "paragraph",
+      "text": "function_A(register int input, register int number)"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "When a register type variable is used, it is not guaranteed that its value will be stored in a register. For the value of that variable to be stored in a register, one must be available, otherwise C ignores the register qualifier and creates the variable locally as we have already seen."
+    },
+    {
+      "type": "paragraph",
+      "text": "Due to hardware restrictions, there are certain limitations when using register variables. For this reason, only a certain number of variables can be declared as register within a function. There are also limitations regarding the type of variables. It is the compiler that is responsible for ignoring the register qualifier if there are too many declarations or the types used are not allowed."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.11 Passing Arguments and Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "In C, all arguments passed to a function are passed by value. In other words, a copy of the argument's value is passed and not the argument itself (for this reason, this procedure is sometimes known as pass by copy). By passing a copy of the original argument to the function, any modification made to this copy will have no effect on the original argument used in the function call. An argument passed by value can be considered as a local variable of the function to which it has been passed, such that changes made to it will have effect only within the function."
+    },
+    {
+      "type": "paragraph",
+      "text": "Let's see an example of passing arguments by value to a function:"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nvoid modify(int variable);\nmain()\n{\nint i = 1;\nprintf(\"\\ni=%d before calling the modify function\", i);\nmodify(i);\nprintf(\"\\ni=%d after calling the modify function\", i);\n}\nvoid modify(int variable)\n{\nprintf(\"\\nvariable = %d inside modify\", variable);\nvariable = 9;\nprintf(\"\\nvariable = %d inside modify\", variable);\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Since what is passed to the modify function is a copy of the variable i, the value of i in the main function is not altered when the value of variable is changed inside the modify function. Hence, the output of the previous example is as follows:"
+    },
+    {
+      "type": "paragraph",
+      "text": "i=1 before calling the modify function variable = 1 inside modify variable = 9 inside modify i=1 after calling the modify function As we have already seen, when an argument is passed by value, a copy of it is actually passed, and if this copy is modified the original argument is not altered. However, on many occasions what we want is for a function to change the values of the arguments we pass to it. To achieve this, what is known as passing arguments by reference is used. In these cases, a copy of the argument is not passed, but the argument itself."
+    },
+    {
+      "type": "paragraph",
+      "text": "When we pass arguments by reference in C, we are actually passing memory addresses. In other words, what we pass to the function are the memory addresses of the arguments. As we saw in the previous unit, this operation is achieved through the use of pointers. In this way, when we call a function, what we actually pass to it are pointers to the arguments we want to modify. Let's see the previous example using passing arguments by reference:"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nvoid modify(int *variable);\nmain()\n{\nint i = 1;\nprintf(\"\\ni=%d before calling the modify function\", i);\nmodify(&i);\nprintf(\"\\ni=%d after calling the modify function\", i);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nvoid modify(int *variable)\n{\nprintf(\"\\nvariable = %d inside modify\", *variable);\n*variable = 9;\nprintf(\"\\nvariable = %d inside modify\", *variable);\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The output of this example would be:"
+    },
+    {
+      "type": "paragraph",
+      "text": "i=1 before calling the modify function variable = 1 inside modify variable = 9 inside modify i=9 after calling the modify function As can be observed, the value of i has changed since the modify function has used the memory address of this variable in the assignment statement *variable = 9. Let's carefully analyze this example. The first thing we have to keep in mind is that the premise that in C all arguments are passed by value is still true. What happens is that in this case we are passing the value of the memory address of variable i and not the value of its content (1). To pass the memory address of a variable, the & operator is used. At the end of the function, the value of that address remains the same and what has been modified is the content of that memory address. Within the function, pointers are used to work with memory addresses (*variable)."
+    },
+    {
+      "type": "paragraph",
+      "text": "Since passing arguments by reference is common in C, it is convenient that at this point we expand the concept of pointer. Consider the following declarations:"
+    },
+    {
+      "type": "code",
+      "text": "int data;"
+    },
+    {
+      "type": "paragraph",
+      "text": "int *pointer; The first of the declarations reserves memory to store a variable of integer type (int) while the second declaration reserves memory to store an address. Although it points to a variable of integer type, what is going to be stored is an address. Since at its core a pointer can point to anything, C allows the declaration of void type pointers. Let's suppose that the compiler reserves the address in hexadecimal bffff120 for the data variable and the address in hexadecimal 0012fed4 for pointer."
+    },
+    {
+      "type": "paragraph",
+      "text": "Figure 3.1 graphically shows the representation of the declaration of the previous variables:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Variable Memory Address Content data bffff120 ?"
+    },
+    {
+      "type": "paragraph",
+      "text": "pointer 0012fed4 ?"
+    },
+    {
+      "type": "paragraph",
+      "text": "Figure 3.1. Variable declaration."
+    },
+    {
+      "type": "paragraph",
+      "text": "If we then assign a value to the data variable, it would be stored at memory address bffff120. In the case of pointer, if we assign content to it (the address of the data variable), the memory address of the data variable would be stored at address 0012fed4. Let's suppose we perform the following assignments:"
+    },
+    {
+      "type": "code",
+      "text": "data = 99;\npointer = &data;"
+    },
+    {
+      "type": "paragraph",
+      "text": "The result in memory is shown in Figure 3.2. We must remember that through the & operator we obtain the address of a variable."
+    },
+    {
+      "type": "paragraph",
+      "text": "Variable Memory Address Content data bffff120 99 pointer 0012fed4 bffff120 Figure 3.2. Value assignment."
+    },
+    {
+      "type": "paragraph",
+      "text": "Once the previous assignment is made, we have two ways to access the content of the data variable. The first way to access is through the variable name and the second through the pointer that points to that variable. To access the data variable through pointer, the * operator is used."
+    },
+    {
+      "type": "paragraph",
+      "text": "One utility of passing arguments by reference is related to returning values from a function. As we already know, in C a function can only return a single value. However, it is often necessary for a function to return more than one value, and this is where we can use passing arguments by reference."
+    },
+    {
+      "type": "paragraph",
+      "text": "In addition, using passing arguments by reference allows us to save time and space. In the case that we wanted to pass something to a function whose size is large, for example a structure, it would be convenient to pass it by reference, since if we do it by value, a copy of it has to be made and placed on the stack, which implies consumption of time and space."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.12 Recursion"
+    },
+    {
+      "type": "paragraph",
+      "text": "Functions in C can be recursive, in other words, they can call themselves directly or indirectly. Direct recursion is the process by which a function calls itself from the function body itself, while indirect recursion involves more than one function."
+    },
+    {
+      "type": "paragraph",
+      "text": "A recursive process must have a termination condition, otherwise it could continue indefinitely."
+    },
+    {
+      "type": "paragraph",
+      "text": "A typical example of applying recursion is calculating the factorial of an integer. Let's remember that the factorial of an integer (n!) is calculated as follows:"
+    },
+    {
+      "type": "paragraph",
+      "text": "n! = n * (n-1) * (n-2) * ... * 2 * 1 In principle, the solution to this problem could be done without having to use recursion with the following program:"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nint factorial(int number);\nmain()\n{\nint value = 4;\nint result;\nresult = factorial(value);\nprintf(\"The factorial of %d is %d \\n\", value, result);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nint factorial(int number)\n{\nint i;\nint returns = 1;"
+    },
+    {
+      "type": "paragraph",
+      "text": "for(i = 1; i <= number; i++)"
+    },
+    {
+      "type": "code",
+      "text": "{\nreturns = returns * i;\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "return returns;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "However, it is more intuitive given the definition of factorial number to use a recursive function like the following:"
+    },
+    {
+      "type": "code",
+      "text": "int factorial(int number)\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "if(number == 1) return 1; else"
+    },
+    {
+      "type": "code",
+      "text": "return (number * factorial(number - 1));\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "In the previous function, in case the argument used in the call is 1, it returns 1, and otherwise a product is calculated that involves the number variable and a new call to the function whose argument is smaller by one unit (number - 1)."
+    },
+    {
+      "type": "paragraph",
+      "text": "The operation of a recursive function is performed by storing pending calls, with their arguments, on the stack at runtime. Let's see an example: imagine that we use the value 4 as an argument of the function that calculates the factorial, that is, factorial(4), the process of calls will be as follows:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Call #1:"
+    },
+    {
+      "type": "paragraph",
+      "text": "number = 4 number != 1 then we execute the following statement"
+    },
+    {
+      "type": "code",
+      "text": "return (4 * (we make the second call))"
+    },
+    {
+      "type": "paragraph",
+      "text": "Call #2:"
+    },
+    {
+      "type": "paragraph",
+      "text": "number = 3 number != 1 then we execute the following statement"
+    },
+    {
+      "type": "code",
+      "text": "return (3 * (we make the third call))"
+    },
+    {
+      "type": "paragraph",
+      "text": "Call #3:"
+    },
+    {
+      "type": "paragraph",
+      "text": "number = 2 number != 1 then we execute the following statement"
+    },
+    {
+      "type": "code",
+      "text": "return (2 * (we make the fourth call))"
+    },
+    {
+      "type": "paragraph",
+      "text": "Call #4:"
+    },
+    {
+      "type": "paragraph",
+      "text": "number = 1 number == 1 then the if statement is executed:"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 1 End Call #4 -> RETURNS 1"
+    },
+    {
+      "type": "code",
+      "text": "return (2 * 1)"
+    },
+    {
+      "type": "paragraph",
+      "text": "End Call #3 -> RETURNS 2"
+    },
+    {
+      "type": "code",
+      "text": "return (3 * 2)"
+    },
+    {
+      "type": "paragraph",
+      "text": "End Call #2 -> RETURNS 6"
+    },
+    {
+      "type": "code",
+      "text": "return (4 * 6)"
+    },
+    {
+      "type": "paragraph",
+      "text": "End Call #1 -> RETURNS 24"
+    },
+    {
+      "type": "code",
+      "text": "return (4 * 6)"
+    },
+    {
+      "type": "paragraph",
+      "text": "End Call #1 -> RETURNS 24 In Figure 3.3 we can see illustrated the process described above."
+    },
+    {
+      "type": "paragraph",
+      "text": "Figure 3.3. Recursive calls."
+    },
+    {
+      "type": "paragraph",
+      "text": "On many occasions, solving a problem using a recursive function is conceptually clearer than the solution using an iterative function. Such is the case with some data structures like binary trees, whose handling is simple using a recursive function. However, the iterative function is somewhat more complex. It is evident that there are tasks that can be solved using recursive functions or iterative functions, although it is the programmer who has to opt for one solution or another."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.13 Library Functions"
+    },
+    {
+      "type": "paragraph",
+      "text": "C offers a set of standard functions that support the most frequently used operations. These functions are grouped in libraries. To use any of the functions that are part of the C standard libraries, you only need to make a call to that function."
+    },
+    {
+      "type": "paragraph",
+      "text": "The functions that are part of the C standard library, standard or predefined functions, are divided into groups. All functions that belong to the same group are defined in the same header file."
+    },
+    {
+      "type": "paragraph",
+      "text": "The names of C header files are shown in the following table:"
+    },
+    {
+      "type": "paragraph",
+      "text": "assert ctype errno float limits locale math setjmp signal stdarg stddef stdio stdlib string time"
+    },
+    {
+      "type": "code",
+      "text": "When we want to use any of the C standard functions, we must first use the precompilation directive #include to include the header files in our program. On the other hand, before using a function, we must first know the characteristics of that function, that is, the number and data type of its arguments and the type of value it returns. This information is provided by function prototypes."
+    },
+    {
+      "type": "paragraph",
+      "text": "The most common standard function groups are:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Standard input/output Mathematical Conversion Diagnostic Memory manipulation Process control Sorting Directories Date and time Searching String manipulation Graphics And more We can include as many header files as we need, including the header files we have created and where we have defined our functions. In the rest of this section we will see some of the most used standard input/output functions."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "3.14 Standard Input/Output"
+    },
+    {
+      "type": "paragraph",
+      "text": "Until now we have used the printf function to write data to the computer's standard output (console). However, it is not the only function for data output in C. Similarly, just as there are functions for data output, there are functions for data input, among which is the scanf function."
+    },
+    {
+      "type": "paragraph",
+      "text": "The printf function is the generic console output that is used by any C compiler. On the other hand, standard input, which is generally by keyboard, is performed using the scanf function. Both the printf function and the scanf function allow specifying the format in which data will be written or read. This is known as formatted input/output."
+    },
+    {
+      "type": "paragraph",
+      "text": "C provides other less sophisticated input/output mechanisms that allow reading or writing simply one character at a time to standard input/output. This is done using the getchar and putchar functions."
+    },
+    {
+      "type": "paragraph",
+      "text": "A. The printf Function"
+    },
+    {
+      "type": "code",
+      "text": "As we have already seen throughout this unit and previous units, the printf function basically prints a character string on the computer screen. Both this function and other input/output functions are defined in the stdio library. For this reason, every time we want to make use of it we have to include the stdio.h file using the precompilation directive #include <stdio.h>."
+    },
+    {
+      "type": "paragraph",
+      "text": "The syntax of the printf function is as follows:"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"control string\", argument list);"
+    },
+    {
+      "type": "paragraph",
+      "text": "The control string contains the format specifiers for the arguments. These tell printf how the arguments should be displayed on the screen and their number. After the control string, the function arguments appear separated by commas."
+    },
+    {
+      "type": "paragraph",
+      "text": "Table 3.2 shows some of the format specifiers used in the printf function."
+    },
+    {
+      "type": "paragraph",
+      "text": "Table 3.2. Format specifiers."
+    },
+    {
+      "type": "paragraph",
+      "text": "Specifier Argument Type %c Character %d Decimal integer %e Scientific notation %f Floating point decimal %g Use %e or %f, whichever is shorter %o Octal %s Character string %u Unsigned decimal %i Integer %x or %X Hexadecimal The control string can contain both characters to print and format specifiers for the function arguments. Format specifiers can appear anywhere in the control string."
+    },
+    {
+      "type": "paragraph",
+      "text": "When the printf function is called, the first thing it does is analyze the control string. Those printable characters that are not preceded by a percent symbol (%) are displayed on the screen directly. When it finds a format specifier within the control string, it uses it to determine how the corresponding argument is displayed. We must keep in mind that format specifiers and arguments must match from left to right. On the other hand, the number of specifiers in the control string tells printf how many arguments to expect."
+    },
+    {
+      "type": "paragraph",
+      "text": "The % symbol is used to identify format specifiers. If we want to print this symbol within the control string, we will have to use two percent symbols (%%)."
+    },
+    {
+      "type": "paragraph",
+      "text": "When we want to print an argument of character type that uses the format specifier %c, it must be enclosed in single quotes, for example, 'b'. On the other hand, if what we want to print is a character string that uses the format specifier %s, it must be enclosed in double quotes, for example \"this is a character string\"."
+    },
+    {
+      "type": "paragraph",
+      "text": "On the other hand, the use of escape sequences within the printf function is very common, for example, the newline (\\n). In the previous unit we have seen escape sequences and their use in C."
+    },
+    {
+      "type": "paragraph",
+      "text": "B. The scanf Function A program can receive data through various sources, for example the keyboard or files stored on disk. In this section, we are going to consider standard keyboard input. The most used input function is the scanf function since it is versatile and allows formatted input."
+    },
+    {
+      "type": "paragraph",
+      "text": "Like the printf function, the scanf function is defined in the stdio.h header file. In general terms, scanf allows reading data from standard input, according to the format specified in the first argument and storing this data in the variables it receives as an argument. The syntax of this function is as follows:"
+    },
+    {
+      "type": "code",
+      "text": "scanf(\"control string\", argument list);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Where the control string contains the data types and, if desired, their width, while the argument list are the variables of the type indicated by the format specifiers. The most common format specifiers are those we have used in the printf function, except %h which is used to indicate short integer type."
+    },
+    {
+      "type": "paragraph",
+      "text": "Unlike the printf function which receives arguments by value, the scanf function receives arguments by reference. In this way, it can fill them with the values read. For example, the following statement will return in the data variable the integer read from the keyboard:"
+    },
+    {
+      "type": "code",
+      "text": "scanf(\"%i\", &data);"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Practical Example 6"
+    },
+    {
+      "type": "paragraph",
+      "text": "A program that asks for two quantities to be entered, one integer and one floating point, and then writes them within a sentence."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nmain()\n{\nint age;\nchar gender;\nprintf(\"Enter your age (in years) and gender (M or F):\\n\");\nscanf(\"%i %c\", &age, &gender);\nprintf(\"Your gender is %c and your age %i years\\n\", gender, age);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "If we enter 30 and M from the keyboard, the output is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Your gender is M and your age 30 years C. Other Input/Output Functions There are other standard input/output functions defined in the stdio.h header file. Among these functions are the getchar and putchar functions."
+    },
+    {
+      "type": "paragraph",
+      "text": "The getchar function allows us to read characters one by one. This function does not require arguments and simply returns the character read from standard input as an unsigned integer. The prototype of this function is:"
+    },
+    {
+      "type": "code",
+      "text": "int getchar(void);"
+    },
+    {
+      "type": "paragraph",
+      "text": "On the other hand, the putchar function is the symmetric function to getchar. This function receives a single argument which is the character that will be printed to standard output. Its prototype is:"
+    },
+    {
+      "type": "code",
+      "text": "int putchar(int);"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Practical Example 7"
+    },
+    {
+      "type": "paragraph",
+      "text": "The following example shows the use of the getchar and putchar functions."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nmain()\n{\nchar x;\nprintf(\"Enter a character:\\n\");\nx = getchar();\nprintf(\"The character entered is:\\n\");\nputchar(x);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The output is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Enter a character 6 The character entered is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "6 Additional Functions There are other console input/output functions in C that we will see throughout the development of this book. Among those functions we can mention the following:"
+    },
+    {
+      "type": "paragraph",
+      "text": "getch:Read a character without displaying it on screen."
+    },
+    {
+      "type": "paragraph",
+      "text": "getche:Read a character displaying it on screen."
+    },
+    {
+      "type": "paragraph",
+      "text": "gets:Read a character string."
+    },
+    {
+      "type": "paragraph",
+      "text": "puts:Write a character string."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Practical Example 8"
+    },
+    {
+      "type": "paragraph",
+      "text": "The following program reads 10 characters from the keyboard and then prints them in a table in reverse order accompanied by their respective ASCII codes."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nchar characters[10];\nint i;\nmain()\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "for(i = 0; i < 10; i++)"
+    },
+    {
+      "type": "code",
+      "text": "{\nprintf(\"Enter a character\\n\");\ncharacters[i] = getchar();"
+    },
+    {
+      "type": "paragraph",
+      "text": "getchar(); /* used to read the carriage return */"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* Print table header */"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"***********************************\\n\");\nprintf(\"CHARACTER \\tASCII CODE\\n\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* Loop to print the characters read in reverse order */ for(i = 9; i >= 0; i--)"
+    },
+    {
+      "type": "code",
+      "text": "{\nputchar(characters[i]);\nprintf(\"\\t\\t\"); /* print two tabs */\nprintf(\"%d\", characters[i]);\nprintf(\"\\n\");\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Assuming we enter the first 10 letters of the alphabet, the output is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "*********************************** CHARACTER    ASCII CODE j            106 i            105 h            104 g            103 f            102 e            101 d            100 c            99 b            98 a            97"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exercises"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exercise 1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Write a program in C that implements and uses a function that calculates the factorial of an integer to determine the possible podiums that can occur in a race between 8 runners. Use the variation formula:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Vn,r = n! / (n - r)!"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exercise 2"
+    },
+    {
+      "type": "paragraph",
+      "text": "Write a program in C that allows calculating the probability of figures appearing when choosing three cards from those of one suit of the deck. Use the combination formula:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Cn,r = n! / (r! × (n - r)!)"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exercise 3"
+    },
+    {
+      "type": "paragraph",
+      "text": "Calculate the Greatest Common Divisor (GCD) of two numbers read from the keyboard using a function nextprime(num, start) that returns the next prime divisor of num greater than start."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exercise 4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Calculate the Least Common Multiple (LCM) of two numbers read from the keyboard using a function nextprime(num, start) that returns the next prime divisor of num greater than start."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example (problems 3 and 4)"
+    },
+    {
+      "type": "paragraph",
+      "text": "Numbers: 120, 144 120 = 2³ × 3 × 5 144 = 2⁴ × 3² gcd = 2³ × 3 = 24 lcm = 2⁴ × 3² × 5 = 720"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exercise 5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Write a program that implements and uses a function to determine if a number is positive or negative. Read an integer from the keyboard and print on screen if the number read is positive or negative using the defined function."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exercise 6"
+    },
+    {
+      "type": "paragraph",
+      "text": "Create a function that, given a character string and a character, returns the number of occurrences of that character in the string. Create a program that reads a character string from the keyboard and writes on screen the number of occurrences in the string of each of the vowels using the defined function."
+    },
+    {
+      "type": "paragraph",
+      "text": "Evaluation"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 1"
+    },
+    {
+      "type": "paragraph",
+      "text": "What is a function?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 2"
+    },
+    {
+      "type": "paragraph",
+      "text": "What is a function call?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 3"
+    },
+    {
+      "type": "paragraph",
+      "text": "What is the difference between formal arguments and actual arguments?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 4"
+    },
+    {
+      "type": "paragraph",
+      "text": "Can the return instruction only appear once within a function?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 5"
+    },
+    {
+      "type": "paragraph",
+      "text": "Can we call a function more than once from different parts of a program?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 6"
+    },
+    {
+      "type": "paragraph",
+      "text": "What difference exists between passing arguments by value and passing arguments by reference?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 7"
+    },
+    {
+      "type": "paragraph",
+      "text": "What does C use to implement passing arguments by reference?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 8"
+    },
+    {
+      "type": "paragraph",
+      "text": "When is a function recursive?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 9"
+    },
+    {
+      "type": "paragraph",
+      "text": "What are library functions?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Question 10"
+    },
+    {
+      "type": "paragraph",
+      "text": "How are arguments passed to the scanf function?"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Practical Activities"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Activity 1: Calculator Program"
+    },
+    {
+      "type": "paragraph",
+      "text": "Write a program in C that simulates a small calculator that implements the following operations:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Multiplication Addition Subtraction Division Power Root All operations must be implemented as functions. The selection of the operation will be done through a small menu displayed on screen. Each operation will use two operands."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Activity 2: Temperature Statistics"
+    },
+    {
+      "type": "paragraph",
+      "text": "There is a matrix of temperatures (positive and negative real values) at different points measured on different days (n × m matrix, where n is the number of points, and m is the number of days). Calculate the mean and dispersion of temperature on each of those days. The dispersion is the square root of the variance, and the variance in turn is calculated as follows:"
+    },
+    {
+      "type": "paragraph",
+      "text": "where x̄ corresponds to the mean and xi to each of the elements."
+    },
+    {
+      "type": "paragraph",
+      "text": "Requirements:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Develop a program in C that contains a function that receives as an argument a pointer to a vector that contains all the temperatures taken in one day, that is a vector of size n, and that returns in another vector of size 2 the mean and the dispersion. To do this, this function will use two other functions of real type that will calculate one the mean and the other the variance; the first receiving a pointer to the temperature vector and the second a pointer to the temperature vector and the already calculated mean."
+    },
+    {
+      "type": "paragraph",
+      "text": "The main program should, using successive calls to the function, display on screen the mean and dispersion for each of the days (m). For the problem, consider any value for n and m that you want, but keep in mind that it should be easy to change them in the program (use of constants)."
+    }
+  ]
+}

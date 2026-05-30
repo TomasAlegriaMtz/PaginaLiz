@@ -1,1 +1,90 @@
-<p>gallery works!</p>
+<header class="main-header">
+    <p class="universidad">Benemérita Universidad Autónoma de Aguascalientes</p>
+    <h1 class="nombreCompleto">Dra. Estela Lizbeth Muñoz Andrade</h1>
+</header>
+
+<div class="masonry-grid">
+    <div class="card item-1" (click)="openImage(foto1)">
+        <img src="/foto.jpg" alt="Foto 1">
+        <div class="noise-overlay"></div>
+    </div>
+    <ng-template #foto1 let-modal>
+        <div class="modal-body p-0 bg-transparent text-center">
+            <img src="/foto.jpg" class="img-fluid rounded shadow-lg" alt="Grande">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                (click)="modal.dismiss()"></button>
+        </div>
+    </ng-template>
+
+    <div class="card item-2" (click)="openImage(foto1)">
+        <img src="/foto.jpg" alt="Foto 1">
+        <div class="noise-overlay"></div>
+    </div>
+    <ng-template #foto1 let-modal>
+        <div class="modal-body p-0 bg-transparent text-center">
+            <img src="/foto.jpg" class="img-fluid rounded shadow-lg" alt="Grande">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                (click)="modal.dismiss()"></button>
+        </div>
+    </ng-template>
+
+    <div class="card item-3" (click)="openImage(foto1)">
+        <img src="/foto.jpg" alt="Foto 1">
+        <div class="noise-overlay"></div>
+    </div>
+    <ng-template #foto1 let-modal>
+        <div class="modal-body p-0 bg-transparent text-center">
+            <img src="/foto.jpg" class="img-fluid rounded shadow-lg" alt="Grande">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                (click)="modal.dismiss()"></button>
+        </div>
+    </ng-template>
+
+    <div class="card item-4" (click)="openImage(foto1)">
+        <img src="/foto.jpg" alt="Foto 1">
+        <div class="noise-overlay"></div>
+    </div>
+    <ng-template #foto1 let-modal>
+        <div class="modal-body p-0 bg-transparent text-center">
+            <img src="/foto.jpg" class="img-fluid rounded shadow-lg" alt="Grande">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                (click)="modal.dismiss()"></button>
+        </div>
+    </ng-template>
+
+    <div class="card item-5" (click)="openImage(foto1)">
+        <img src="/foto.jpg" alt="Foto 1">
+        <div class="noise-overlay"></div>
+    </div>
+    <ng-template #foto1 let-modal>
+        <div class="modal-body p-0 bg-transparent text-center">
+            <img src="/foto.jpg" class="img-fluid rounded shadow-lg" alt="Grande">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                (click)="modal.dismiss()"></button>
+        </div>
+    </ng-template>
+
+    <div class="card item-6" (click)="openImage(foto1)">
+        <img src="/foto.jpg" alt="Foto 1">
+        <div class="noise-overlay"></div>
+    </div>
+    <ng-template #foto1 let-modal>
+        <div class="modal-body p-0 bg-transparent text-center">
+            <img src="/foto.jpg" class="img-fluid rounded shadow-lg" alt="Grande">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                (click)="modal.dismiss()"></button>
+        </div>
+    </ng-template>
+
+    <div class="card item-7" (click)="openImage(foto1)">
+        <img src="/foto.jpg" alt="Foto 1">
+        <div class="noise-overlay"></div>
+    </div>
+    <ng-template #foto1 let-modal>
+        <div class="modal-body p-0 bg-transparent text-center">
+            <img src="/foto.jpg" class="img-fluid rounded shadow-lg" alt="Grande">
+            <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                (click)="modal.dismiss()"></button>
+        </div>
+    </ng-template>
+</div>

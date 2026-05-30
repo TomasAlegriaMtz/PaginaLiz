@@ -1,0 +1,39 @@
+{
+  "title": "Enumerations",
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "Unit 3. Structured Data Types"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Enumerations"
+    },
+    {
+      "type": "paragraph",
+      "text": "An enumeration is a set of integer constants. Automatically, they usually start at 0 and then continue ascending.An enumeration can be assigned a name, which will behave as a new data type that can only contain the values specified in the enumeration.Declarations can be made inside or outside the main program. There are also anonymous enumerations, meaning they have no name to refer to them. Example:enum {list_of_identifiers};It is common to use named enumerations, whose declaration takes the following form:enum [type_name] {list_of_identifiers};The identifiers that are part of enumerations cannot be entered from the keyboard or written directly to the screen. Examples:"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>enum my_data {systems, electronics};enum my_data one, two;int main(int argc, const char * argv[]) {    one = systems;    two = electronics;    printf(\"%d \\n\", one);    printf(\"%d \\n\", two);    return 0;}\n#include <stdio.h>enum my_data {systems, electronics};enum my_data one, two;int main(int argc, const char * argv[]) {    enum days{ monday, tuesday, wednesday, thursday, friday, saturday, sunday};    return 0;}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The usefulness of enumerations lies in the fact that it is easier to remember a name than a specific integer value, as in the case of constants created with #define, and in addition, the compiler automatically assigns values.Enumerations, like structures or records, are tools that allow the programmer to handle data more easily."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>#include <iostream>int main(int argc, const char * argv[]) {    enum cars{chevy, toyota, ferrari, bmw} car1, car2, car3, car4;    car1 = chevy;    car2 = toyota;    car3 = ferrari;    car4 = bmw;    printf(\"%d\",car1);    return 0;}"
+    },
+    {
+      "type": "paragraph",
+      "text": "It is common to find enumerations used as tools for working with menus. In this way, each identifier (which represents an option for the user) is assigned an integer number. It is worth mentioning that enumerations can contain a maximum of 256 elements."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>#include <stdlib.h>#define NUMOPT 5int main(int argc, const char * argv[]) {    enum {NewFile, Open, Save, Close, Exit};    char menu[][10] = {\"New\", \"Open\", \"Save\", \"Close\", \"Exit\"};    int opt;    do{        printf(\"Select the desired option \\n\");        for(int i=0; i<NUMOPT; i++){            printf(\"%s (%d) \", menu[i], i);        }        scanf(\"%d\",&opt);        switch(opt){            case NewFile : printf(\"You selected the option %s \\n\",menu[opt]);  break;            case Open : printf(\"You selected the option %s \\n\",menu[opt]);  break;            case Save : printf(\"You selected the option %s \\n\",menu[opt]);  break;            case Close : printf(\"You selected the option %s \\n\",menu[opt]);  break;            case Exit : printf(\"You selected the option %s \\n\",menu[opt]);  break;            default : printf(\"Incorrect option \\n\");  break;        }//switch    }while(opt != Exit);    return 0;}"
+    }
+  ]
+}

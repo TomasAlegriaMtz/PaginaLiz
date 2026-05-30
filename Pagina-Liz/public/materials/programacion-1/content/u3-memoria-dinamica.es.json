@@ -1,0 +1,715 @@
+{
+  "title": "Memoria Dinámica",
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Unidad 4. Memoria Dinámica"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros Los apuntadores son una parte fundamental del lenguaje C, ya que estos proporcionan gran flexibilidad a los programas. Un puntero o apuntador es una variable que referencia una región de memoria; en otras palabras es una variable cuyo valor es una dirección de memoria."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si se tiene una variable ' p ' de tipo puntero que contiene una dirección de memoria en la que se encuentra almacenado un valor ' v ' se dice que ' p ' apunta a ' v '."
+    },
+    {
+      "type": "paragraph",
+      "text": "Los punteros son utilizados explícitamente con: arreglos, estructuras y funciones. El lenguaje C/C++ requiere una definición para cada variable. Para definir una variable apuntador se debe seguir la sintaxis:"
+    },
+    {
+      "type": "paragraph",
+      "text": "tipoDato *nombreVariable; donde:"
+    },
+    {
+      "type": "paragraph",
+      "text": "tipoDato puede ser cualquier tipo (int, char, flota, struct, etc.), *nombreVariable representa el “puntero a”, esto es, que la variable apuntador puede contener una dirección de memoria donde se encuentra un valor del tipo de dato especificado en la declaración."
+    },
+    {
+      "type": "paragraph",
+      "text": "Ejemplos:"
+    },
+    {
+      "type": "paragraph",
+      "text": "int *apuntadort;//puntero a un valor entero char *nombre;//puntero a un valor caracter float *calif;//puntero a un valor real Los punteros son variables dinámicas que almacenan posibles direcciones de memoria disponibles, éstas direcciones se almacenan en el heap de la memoria, aunque previamente es necesario reservar espacio suficiente para el tipo de dato que  pretendemos almacenar."
+    },
+    {
+      "type": "paragraph",
+      "text": "En el siguiente ejemplo se crean dos variables una entera y un puntero y advertiremos que el puntero almacena la dirección de la variable entera y a partir de ella manipula su contenido, tenga en cuenta que el puntero nunca  pierde su dirección, pero su contenido (dirección de memoria) puede ser re direccionado a cualquier variable de memoria. Debido a esta característica de los punteros, su utilidad en el manejo de estructuras complejas es primordial."
+    },
+    {
+      "type": "code",
+      "text": "int main(){"
+    },
+    {
+      "type": "paragraph",
+      "text": "// (a)"
+    },
+    {
+      "type": "code",
+      "text": "int A = 7; // variable entera inicializada en 7"
+    },
+    {
+      "type": "paragraph",
+      "text": "int *ptr = NULL; // puntero inicializado en 0 cout << \"dirección de A \" << &A << \" y ptr \" << &ptr << endl << \"valor en A \" << A << \" y en ptr \" << ptr << \"\\n\"; // (b) ptr = &A; // ptr toma la dirección de A cout << \"dirección de A \" << &A << endl << \"dirección de ptr \" << &ptr << \" su valor apunta a \" << ptr << \"\\n\"; cout << \"valor en A \" << A << \" contenido en *ptr \" << *ptr << endl; // (c) *ptr = 14; // el valor de A ahora es 14 cout << \"valor en A \" << A << \" contenido en *ptr \" << *ptr << endl; return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "La salida que generara este programa es la siguiente (recuerde, las direcciones de  memoria pueden cambiar de maquina a máquina), observe como  el puntero  ptr toma la dirección de A y manipula su contenido. En C/C++ los operadores de dirección & e in-dirección * son los mismos:"
+    },
+    {
+      "type": "paragraph",
+      "text": "dirección de A 0022FF64 y ptr 0022FF68 valor en A  7 y en ptr  00000000 dirección de A   0022FF64 dirección de ptr 0022FF68 su valor apunta a 0022FF64 valor en A  7  y contenido en *ptr 7 valor de A  14 y contenido en *ptr 14 Las imágenes muestran las fases del código donde se van ajustando los valores para cada variable, así como las direcciones que ocuparían en memoria. En  (a) tenemos a ptr apuntando a NULL y la variable A con el valor que se inicializo, en  (b) observamos como a ptr se le asigna el valor de la dirección de A, finalmente en  (c) vemos que podemos manipular el contenido de la variable A empleando el operador de in-dirección a través del puntero ptr."
+    },
+    {
+      "type": "paragraph",
+      "text": "Aritmética de punteros Como ya se ha visto, los punteros son variables que guardan información -no sólo de la dirección a la que apuntan-, sino también del tipo de variable almacenado en esa dirección. Esto implica que no están permitidas las operaciones que no tienen sentido con direcciones de variables, como multiplicar o dividir, pero sí otras como sumar o restar. Además estas operaciones se realizan de un modo correcto, pero que no es el ordinario. Así, la sentencia:"
+    },
+    {
+      "type": "code",
+      "text": "p = p+1;"
+    },
+    {
+      "type": "paragraph",
+      "text": "hace que p apunte a la dirección siguiente de la que apuntaba, teniendo en cuenta el tipo de dato."
+    },
+    {
+      "type": "paragraph",
+      "text": "Por ejemplo, si el valor apuntado por p es short int y ocupa 2 bytes, el sumar 1 a p implica añadir 2 bytes a la dirección que contiene, mientras que si p apunta a un double, sumarle 1 implica añadirle 8 bytes."
+    },
+    {
+      "type": "paragraph",
+      "text": "También tiene sentido la diferencia de punteros al mismo tipo de variable. El resultado es la distancia entre las direcciones de las variables apuntadas por ellos, no en bytes sino en datos de ese mismo tipo. Las siguientes expresiones tienen pleno sentido en C:"
+    },
+    {
+      "type": "code",
+      "text": "p = p + 1;p = p - 1;\np = p + i;p = p - i;\np += 1;p -= 1;\np += i;p -= i;"
+    },
+    {
+      "type": "paragraph",
+      "text": "p++;p--; ++p;--p; Relación entre arreglos y punteros Existe una relación muy estrecha entre los vectores y los punteros. El nombre de un vector es un puntero a la dirección de memoria que contiene el primer elemento del vector."
+    },
+    {
+      "type": "paragraph",
+      "text": "Nota: es importante recordar que el nombre de un vector, a pesar de ser un puntero, este representa un puntero constante, en el sentido de que no puede apuntar a otra variable distinta de aquélla a la que apunta."
+    },
+    {
+      "type": "paragraph",
+      "text": "Suponga las siguientes declaraciones y sentencias:"
+    },
+    {
+      "type": "code",
+      "text": "double array[10]; // array es un puntero a array[0]"
+    },
+    {
+      "type": "paragraph",
+      "text": "double *p; ..."
+    },
+    {
+      "type": "code",
+      "text": "p = &array[0]; // p = array;"
+    },
+    {
+      "type": "paragraph",
+      "text": "El identificador array, es decir el nombre del vector, es un puntero al primer elemento del vector array[]. Esto es lo mismo que decir que el valor de array es &array[0]. Existen más puntos de coincidencia entre los vectores y los punteros:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puesto que el nombre de un vector es un puntero, obedecerá las leyes de la aritmética de punteros. Por tanto:"
+    },
+    {
+      "type": "paragraph",
+      "text": "si array apunta a array[ 0 ], (array + 1) apuntará a array[ 1 ], y (array + i) apuntará a array[ i]."
+    },
+    {
+      "type": "paragraph",
+      "text": "Recíprocamente, a los punteros se les pueden poner subíndices, igual que a los vectores. Así pues, si p apunta a array[ 0 ] se puede escribir:"
+    },
+    {
+      "type": "code",
+      "text": "p[3] = p[2]*2.0; // equivalente a array[3] = array[2]*2.0;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Si se supone que p = array, la relación entre punteros y vectores puede resumirse como se indica en las líneas siguientes:"
+    },
+    {
+      "type": "paragraph",
+      "text": "*p equivale a array[0], a *array y a p[0] *(p + 1) equivale a array[1], a *(array + 1) y a p[1] *(p + i) equivale a array[i], a *(array + i) y a p[i] Como ejemplo de la relación entre vectores y punteros, se presentan las diferentes formas para sumar los N elementos de un vector vec[ ]. Suponga la siguiente declaración y las siguientes sentencias:"
+    },
+    {
+      "type": "code",
+      "text": "int vec[N], suma, i, *p;"
+    },
+    {
+      "type": "paragraph",
+      "text": "for(i=0, suma=0; i < N; ++i) // forma 1"
+    },
+    {
+      "type": "code",
+      "text": "suma += vec[i];"
+    },
+    {
+      "type": "paragraph",
+      "text": "for(i=0, suma=0; i < N; ++i) // forma 2"
+    },
+    {
+      "type": "code",
+      "text": "suma += *(vec+i);"
+    },
+    {
+      "type": "paragraph",
+      "text": "for(p=vec, i=0, suma=0; i < N; ++i) // forma 3"
+    },
+    {
+      "type": "code",
+      "text": "suma += p[i];"
+    },
+    {
+      "type": "paragraph",
+      "text": "for(p=vec, suma=0; p < &vec[N]; ++p)// forma 4"
+    },
+    {
+      "type": "code",
+      "text": "suma += *p;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puntero a puntero Un puntero almacena la dirección de memoria donde se encuentra un dato; un puntero a puntero, almacena la dirección de memoria de otro puntero. La notación de puntero a puntero requiere de un doble asterisco, **. Ejemplo:"
+    },
+    {
+      "type": "code",
+      "text": "int a = 4;int* pt1 = &a;int**pt2 = &pt1;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Por un lado tenemos el valor que almacena la variable 'a', el puntero 'pt1' almacena la dirección de esa variable, y el puntero 'pt2' almacena la dirección del puntero 'pt1'. Son tres identificadores, cada uno tiene un doble aspecto: la localidad de memoria donde se asienta, y el valor que almacena en esa localidad de memoria."
+    },
+    {
+      "type": "paragraph",
+      "text": "Declaración e  inicialización Dirección de memoria  (hipotética) Valor que almacena en tal dirección de memoria"
+    },
+    {
+      "type": "code",
+      "text": "int a = 4;"
+    },
+    {
+      "type": "paragraph",
+      "text": "0xfff6 4"
+    },
+    {
+      "type": "code",
+      "text": "int* pt1 = &a;"
+    },
+    {
+      "type": "paragraph",
+      "text": "0xfff4 0xfff6"
+    },
+    {
+      "type": "code",
+      "text": "int**pt2 = &pt1;"
+    },
+    {
+      "type": "paragraph",
+      "text": "0xfff2 0xfff4 Es interesante comprobar las diferentes salidas en pantalla de 'pt2' en los siguientes casos:"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout<<pt2; //Imprime la dirección del propio puntero 'pt2', aquí: \"0xfff2\" cout<<*pt2;    //Imprime la dirección almacenada en 'pt2',\"0xfff4\" cout<<**pt2;   //Imprime el valor almacenado en '*pt1 = a', \"4\"."
+    },
+    {
+      "type": "paragraph",
+      "text": "El comportamiento de la salida en pantalla es coherente, pues se cumplen las siguientes igualdades:   *pt2 == pt1;           //Desreferenciacion de 'pt2'*(*pt2) == *(pt1);        //Aplicamos '*' a ambos lados    *pt1 == a;             //De esto y la línea previa se deduce...  **pt2 == a;             //...esta igualdad Los ejemplos anteriores se deben interpretar como “igualdades” (comparaciones que dan como resultado un Falso o un Verdadero) y no como asignaciones."
+    },
+    {
+      "type": "paragraph",
+      "text": "La estrecha relación existente entre los conceptos de puntero y array, es la razón de que el asterisco doble (**) pueda ser interpretado indistintamente como puntero a puntero, o bien como un array de punteros."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Memoria Dinámica"
+    },
+    {
+      "type": "paragraph",
+      "text": "El manejo de memoria puede realizarse mediante datos estáticos y dinámicos; para el caso de los datos estáticos su tamaño y forma es constante durante la ejecución del programa y por tanto se determinan en tiempo de compilación, éste es el caso de los arreglos. Las estructuras estáticas tienen algunas limitaciones de diseño, pues como es necesario declararlas de antemano, el espacio de memoria suele no ser ocupado por completo derivando en un posible desperdicio de recursos de memoria."
+    },
+    {
+      "type": "paragraph",
+      "text": "Por otro lado, las estructuras dinámicas suelen tener muchos beneficios, su tamaño es variable a lo largo de un programa, por lo que se crean y destruyen en tiempo de ejecución. Esto permite dimensionar la estructura de datos de una forma precisa ya que se va asignando espacio de memoria en tiempo de ejecución según se va necesitando, este es el caso de los punteros."
+    },
+    {
+      "type": "paragraph",
+      "text": "Cuando el sistema operativo carga un programa para ejecutarlo, a éste se le asignan cuatro partes lógicas en memoria principal: texto, datos, pila y una zona libre (heap). La zona libre o heap de memoria es la zona donde se aloja el espacio dinámico, debido a su naturaleza suele ser un espacio de memoria con alta fragmentación debido a que se crean y se destruyen los enlaces de memoria asignados; por lo que siempre es recomendable liberar dichos espacios, pues de no hacerlo se puede tener el caso de una saturación del heap de memoria. Por otro lado, la pila es un espacio de memoria que también varia en dimensión, pero este es controlado por el sistema operativo."
+    },
+    {
+      "type": "paragraph",
+      "text": "Para trabajar con datos dinámicos es necesario:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Contar con un lenguaje de programación que nos permita gestionar la memoria de manera dinámica (asignación/liberación)."
+    },
+    {
+      "type": "paragraph",
+      "text": "Algún tipo de dato que nos permita acceder y manipular a estos datos dinámicos."
+    },
+    {
+      "type": "paragraph",
+      "text": "La asignación dinámica de memoria, es un mecanismo de programación que nos permite crear variables y arreglos de manera dinámica, para ello es necesario emplear variables que nos permitan el acceso a la memoria dinámica, es decir, los punteros."
+    },
+    {
+      "type": "paragraph",
+      "text": "Los punteros son variables dinámicas que apuntan a posibles direcciones de inicio del heap, aun que previamente es necesario reservar espacio suficiente para el tipo de dato que pretendemos almacenar. En tal caso el puntero sirve como una llave de acceso al inicio del bloque de datos que se acaba de crear en memoria dinámica."
+    },
+    {
+      "type": "paragraph",
+      "text": "Función Descripción"
+    },
+    {
+      "type": "code",
+      "text": "void* malloc (totalBytes);"
+    },
+    {
+      "type": "paragraph",
+      "text": "asigna el número especificado de bytes"
+    },
+    {
+      "type": "code",
+      "text": "void* realloc (totalElem, totalBytes);"
+    },
+    {
+      "type": "paragraph",
+      "text": "aumenta o disminuye el tamaño del bloque de memoria especificada. Reasigna si es necesario"
+    },
+    {
+      "type": "code",
+      "text": "void* calloc (totalElem, totalBytes);"
+    },
+    {
+      "type": "paragraph",
+      "text": "asigna el número especificado de bytes y los inicializa a cero(0)."
+    },
+    {
+      "type": "code",
+      "text": "void free (void* ptr);"
+    },
+    {
+      "type": "paragraph",
+      "text": "libera el bloque de memoria especificada de nuevo al sistema La función malloc al igual que calloc regresan un apuntador de tipo void que puede ser asignado a un puntero de cualquier tipo a través de un cast. En caso de que no existiera suficiente espacio en el heap de memoria, ambas funciones regresaran un valor de tipo nulo (NULL) que indican que el puntero no apunta a alguna dirección de memoria. La función calloc permite  generar arreglos dinámicos de distintos tipos, ya que tiene la particularidad de inicializar todas  las localidades de bytes a cero."
+    },
+    {
+      "type": "paragraph",
+      "text": "El siguiente ejemplo muestra la manera de crear un buffer de cadena (string) de tamaño definido por el usuario, recuerde que existe una estrecha relación entre los arreglos y los punteros en C y C++, el nombre de un arreglo en si mimo es un puntero al inicio del arreglo, es por ello que la variable buffer la podemos manipular como si se tratara de un arreglo de caracteres.  Por otra parte creamos una variable dinámica de tipo flotante llamada numero a la que le reservamos un espacio de memoria suficiente para almacenar números de ese tipo."
+    },
+    {
+      "type": "code",
+      "text": "int main() {"
+    },
+    {
+      "type": "paragraph",
+      "text": "char *buffer;"
+    },
+    {
+      "type": "code",
+      "text": "int n = 0;"
+    },
+    {
+      "type": "paragraph",
+      "text": "float *numero; cout << \"tamaño de la cadena ? \"; cin >> n; cout <<  \"Introduce la cadena \"; // también es posible usar buffer = (char *) calloc(n, sizeof(char)) if ( (buffer = (char *) malloc(n * sizeof(char)) ) == NULL){ cout << \"No hay memoria\";"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "else { cin >> buffer; cout << buffer;"
+    },
+    {
+      "type": "code",
+      "text": "free(buffer);\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout << \"Introduce un numero \";"
+    },
+    {
+      "type": "code",
+      "text": "numero = (float *)calloc(1,sizeof(float));"
+    },
+    {
+      "type": "paragraph",
+      "text": "cin >> *numero; cout << *numero ;"
+    },
+    {
+      "type": "code",
+      "text": "free(numero);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Para el caso de almacenar datos de diferente tamaño se emplea el operador sizeof para determinar la cantidad de bytes de un tipo de dato en particular, incluyendo tipos compuestos como estructuras o uniones. Para el caso de malloc solo es necesario realizar una simple multiplicación para determinar el espacio requerido."
+    },
+    {
+      "type": "paragraph",
+      "text": "Una vez establecido y utilizado un bloque de memoria, será siempre necesario liberarlo para evitar dejar basura en el heap de memoria. Para ello es necesario emplear la función free que se encarga de dicha tarea. La función free únicamente necesita saber la dirección de inicio del bloque que va a eliminara, es decir, el nombre del puntero."
+    },
+    {
+      "type": "paragraph",
+      "text": "En el lenguaje C++, el manejo de memoria resulta un proceso un poco mas sencillo. Solo existe un solo operador que realiza la asignación de memoria, el operador new, su sintaxis es la siguiente:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sintaxis:"
+    },
+    {
+      "type": "paragraph",
+      "text": "<tipo dato> * <nombre puntero>"
+    },
+    {
+      "type": "code",
+      "text": "<nombre puntero> = new <tipo dato> <[dimensión]>;"
+    },
+    {
+      "type": "paragraph",
+      "text": "El operado new crea automáticamente un espacio en memoria suficiente para almacenar el tipo indicado y devuelve, si es el caso, una dirección de inicio valida de memoria. En caso de ser aplicado a objetos, se llamará al constructor de dicho objeto. Si new es incapaz de alojar espacio suficiente, regresara 0 (NULL). El operador delete se encargara de liberar el espacio de memoria solicitado por el operador new. En el caso de los objetos el espacio será liberado a partir de su destructor. El operador delete únicamente necesita la dirección de inicio del bloque, es decir, el nombre del puntero."
+    },
+    {
+      "type": "paragraph",
+      "text": "El siguiente ejemplo realiza exactamente las mismas operaciones del ejemplo anterior, solo que se trata de una implementación en C++, empleamos el operador new y delete para asignar y liberar espacio dinámico."
+    },
+    {
+      "type": "code",
+      "text": "int main(void) {"
+    },
+    {
+      "type": "paragraph",
+      "text": "char *buffer;"
+    },
+    {
+      "type": "code",
+      "text": "int n = 0;"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout << \"tamaño de la cadena ? \"; cin >> n;"
+    },
+    {
+      "type": "code",
+      "text": "cin.ignore();"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout << \"dame la cadena \"; if ( (buffer = new char [n]) == NULL )//asigna espacio para el arreglo cout << \"No hay memoria\"; else { cout << \"buffer \";"
+    },
+    {
+      "type": "code",
+      "text": "cin.getline(buffer, n);"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout << \"salida \" << buffer << endl; delete buffer;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout << \"dame un numero \"; float *numero = new float; // asigna espacio para el flotante cin >> *numero; cout << \"valor \" << *numero << endl; delete numero;"
+    },
+    {
+      "type": "code",
+      "text": "system(\"pause\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Recuerde que también es posible crear estructuras mas complejas que nos permiten almacenar datos dinámicos, solo es necesario recordar que el acceso a miembro dinámicos de tipo estructura conlleva el uso de otros operadores de acceso distintos al de punto (.) que generalmente se emplean en estructuras simples."
+    },
+    {
+      "type": "paragraph",
+      "text": "A continuación se presenta un programa que involucra la construcción de estructuras dinámicas, en el cual emplearemos una estructura con dos componentes y crearemos tres tipos distintos de variables a partir de ellas."
+    },
+    {
+      "type": "code",
+      "text": "struct dosDatos {\nint  a;\nfloat  b;\n};\nint main(void) {"
+    },
+    {
+      "type": "paragraph",
+      "text": "dosDatos simple; cout << \"Guardar valores en Simple, entero/real\"; cin >> simple.a; //accede al mimbro a cin >> simple.b; //accede al mimbro b"
+    },
+    {
+      "type": "code",
+      "text": "cout << \"a = \" << simple.a << \" b = \" << simple.b;"
+    },
+    {
+      "type": "paragraph",
+      "text": "dosDatos *puntero = new dosDatos;//crea-reserva espacio para dosDatos cout << \"Guardar valores en Puntero, entero/real \"; cin >> puntero->a; //accede al mimbro a cin >> (*puntero).b; //accede al mimbro b"
+    },
+    {
+      "type": "code",
+      "text": "cout << \"a = \"<< (*puntero).a << \" b =\" << puntero->b;"
+    },
+    {
+      "type": "paragraph",
+      "text": "delete puntero; cout <<  \"tamaño del arreglo \";"
+    },
+    {
+      "type": "code",
+      "text": "int n = 0;"
+    },
+    {
+      "type": "paragraph",
+      "text": "cin >> n; dosDatos *array = new dosDatos [n];// se reserva espacio en memoria for (int i = 0; i < n; i++) { cout <<  \"valores entero real \"; cin >> puntero[i].a;"
+    },
+    {
+      "type": "code",
+      "text": "cin >> (puntero+i)->b;\ncout << \"a =\" << (*(puntero + i)).a << \" b = \" << puntero[i].b;\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "delete array; return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Simple es una variable de segmento de dato, es decir que no es un valor dinámico, su acceso a miembros es a partir del operador punto (.). A continuación creamos una variable dinámica de tipo estructura llamada puntero, observe que el acceso a sus miembros es a trabes del operador “->” ó “(*).” que se pueden emplear de manera indistinta. Finalmente se tiene un arreglo dinámico llamado array de tamaño n introducido por el usuario, observe que todos los operadores de acceso a este tipo de estructura es valido, debido principalmente a esa estrecha relación entre punteros y arreglos. En realidad en todos los casos el índice sirve como una unidad de desplazamiento entre elementos (casillas)."
+    },
+    {
+      "type": "paragraph",
+      "text": "Arreglos como apuntadores Debido a la estrecha relación que existe entre los punteros y los arreglos, y además como sabemos, un arreglo es en esencia un puntero con dimensiones especificas, entonces podemos emplear un puntero en conjunto con un la instrucción calloc() para diseñar espacios dinámicos de memoria (arreglos dinámicos)."
+    },
+    {
+      "type": "paragraph",
+      "text": "La función calloc(), reserva un espacio especifico de memoria de un tamaño determinado por el primer argumento y de un tipo de dato especificado por el segundo argumento. En el siguiente ejemplo se construye un arreglo dinámico de tamaño n que podrá contener tipos de datos flotantes."
+    },
+    {
+      "type": "code",
+      "text": "int main(int argc, char *argv[]){"
+    },
+    {
+      "type": "paragraph",
+      "text": "float *arreglo; // declara un puntero llamado arreglo"
+    },
+    {
+      "type": "code",
+      "text": "int i, n;"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout << \"numero de elementos \"; cin >> n ; //reserva n espacios de tipo float en memoria"
+    },
+    {
+      "type": "code",
+      "text": "arreglo = (float *)calloc(n, sizeof(float));"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* en caso de no existir suficiente memoria regresa NULL */ if ( arreglo == NULL){ cout << \"no hay memoria\"; return 1;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* empleamos el puntero arreglo como si fuera un vector */ for ( i = 0; i < n; i++ ) { cout << \"elemento \" <<  i; cin >>  arreglo [ i ] ;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout << \"la dirección del arreglo es \" << arreglo; cout << \"y el contenido \"; /* mostramos el contenido del vector dinámico arreglo */ for ( i = 0; i < n; i++ ) cout <<  arreglo[i]; /* liberamos el espacio dinámico */"
+    },
+    {
+      "type": "code",
+      "text": "free( arreglo );"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout << \"\\n\";"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros a función Un puntero a función es una variable que almacena la dirección de memoria de una función. Esta función puede ser llamada más tarde, a través del puntero. Este tipo de construcción es útil ya que encapsula el comportamiento de una función, que puede ser llamado a través de un puntero."
+    },
+    {
+      "type": "paragraph",
+      "text": "Un puntero puede apuntar a código. La declaración es similar a esta:"
+    },
+    {
+      "type": "code",
+      "text": "void (*ptr_fun) (int,int);"
+    },
+    {
+      "type": "paragraph",
+      "text": "En este caso se está declarando una variable, ptr_fun, que apunta a una función “void” que admite dos parámetros enteros."
+    },
+    {
+      "type": "paragraph",
+      "text": "Para tomar la dirección de una función, se escribe su nombre sin paréntesis ni parámetros."
+    },
+    {
+      "type": "paragraph",
+      "text": "Para llamar a una función apuntada por un puntero, se usa el nombre del puntero como si fuera una función."
+    },
+    {
+      "type": "code",
+      "text": "int suma (int a, int b){"
+    },
+    {
+      "type": "paragraph",
+      "text": "return a+b;"
+    },
+    {
+      "type": "code",
+      "text": "}\nint resta (int a, int b){"
+    },
+    {
+      "type": "paragraph",
+      "text": "return a-b;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "// declaramos un puntero a funciones con dos parámetros // enteros que devuelven un entero"
+    },
+    {
+      "type": "code",
+      "text": "int (*funcion) (int,int);\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "funcion = suma;     // ‘funcion’ apunta a ‘suma’ x = funcion(4,3);  // x=suma(4,3) funcion = resta;   // ‘funcion’ apunta a ‘resta’ x = funcion(4,3);  // x=resta(4,3)"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Los punteros a funciones también se usan para realizar funciones de callback."
+    },
+    {
+      "type": "paragraph",
+      "text": "Callback, es una función que se pasa a otra función como un argumento, que luego se invoca dentro de la función externa para completar algún tipo de rutina o acción."
+    },
+    {
+      "type": "paragraph",
+      "text": "Punteros como parámetros En C++ existe el paso de parámetros por valor y por referencia a una función, en el paso de parámetros por valor, sabemos que se crea una copia local en la función, que almacena el mismo valor enviado por el argumento, además no existe ninguna relación entre dichas variables de manera que el valor de la variable involucrada en la llamada es ajena a cambios. A diferencia del paso de parámetros por valor, el paso de parámetros por referencia permite que la función invocada modifique el valor original de las variables usadas como argumentos. Más adelante veremos que en C++ es posible emplear dos mecanismos diferentes de referencia de variables."
+    },
+    {
+      "type": "paragraph",
+      "text": "En C existe el paso de parámetros por referencia empleando el operador de referencia &, que especifica que la dirección de la variable será pasada como argumento, de tal manera que la función deberá recibir como parámetro un puntero del mismo tipo de la variable, lo que implica que podemos modificar el contenido de dicha variable, empleando el puntero como vehículo de dirección auxiliándonos del operador de dereferencia (*) sobre el mismo puntero."
+    },
+    {
+      "type": "paragraph",
+      "text": "En C++ existen los mismos mecanismos de referencia que en C, pero, además es posible realizar un tipo de referencia creando un alias del identificador de la variable, de esta manera el argumento es referenciado de manera natural, y en la función es recibido con un alias empleando el operador de referencia &, de tal manera que sigue siendo la misma variable referenciada."
+    },
+    {
+      "type": "paragraph",
+      "text": "El siguiente ejemplo ilustra la manera en que se realiza el paso de parámetros en C++:"
+    },
+    {
+      "type": "code",
+      "text": "void cambio( int , int * , int &);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* El primer argumento será pasado por valor, el siguiente por referencia y el último por referencia de alias */"
+    },
+    {
+      "type": "code",
+      "text": "int main(){\nint A = 5, B = 7, C = 10;  // A vale 5, B vale 7 y C vale 10"
+    },
+    {
+      "type": "paragraph",
+      "text": "cout << \"valores antes de la llamada \\n\" << \"A = \"<< A <<\" B = \"<< B"
+    },
+    {
+      "type": "code",
+      "text": "<< \" C = \"<< C << endl;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* A es pasada por valor, mientras que B y C se van por referencia */ cambio( A, &B, C ); /* después de la llamada a cambio, A vale 5, B vale 9 y C vale 32 */"
+    },
+    {
+      "type": "code",
+      "text": "cout << \"valores después de la llamada \\n\" << \"A = \"<< A <<\" B = \"<< B << \" C = \" << C << endl;\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* valor copia únicamente el valor de la variable A, mientras que ref recibe la dirección de B, y la variable C es recibida como referencia de \"sobrenombre o alias\" en alias */"
+    },
+    {
+      "type": "code",
+      "text": "void cambio( int val, int *ref, int &alias ){"
+    },
+    {
+      "type": "paragraph",
+      "text": "val += 7; // val <-parámetro por valor (*ref) += 3; // ref <-parámetro por referencia alias += val + (*ref)--; //alias <-parámetro por referencia alias"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "valores antes de la llamada A = 5 B = 7C = 20 valores después de la llamada A = 5 B = 9C = 32"
+    },
+    {
+      "type": "code",
+      "text": "Direcciones y valores de las variables en la función main() antes de la llamada a cambio()"
+    },
+    {
+      "type": "paragraph",
+      "text": "Valores en la función cambio() antes de finalizar su ejecución, es decir las variables locales a cambio(). La variable val recibe el valor de A (5) y se suma 7, se crea un puntero ref que apunta a la dirección de B (7) e indirectamente le agrega 3 y se le resta 1. Finalmente la variable alias que en esencia se trata de la misma variable C, note como se tiene la misma dirección de memoria que C, o sea que se trata de la misma variable, no se creó ninguna variable local en la función cambio(), solo se recibe la referencia directa de la misma variable."
+    },
+    {
+      "type": "code",
+      "text": "Los valores en la función main() después de la llamada a cambio() note como A nunca cambio su valor, mientras que las otras dos sí."
+    },
+    {
+      "type": "paragraph",
+      "text": "En la función cambio, la variable valor copia únicamente el valor de la variable A, de esta forma val es una variable local y al finalizar la función dicha variable será destruida. Por otro lado el puntero ref, recibe la dirección de la variable B, lo que implica que su valor podrá ser modificado utilizando el operador de de-referencia. Finalmente la variable C es enviada a la función y recibida como referencia de sobrenombre (alias), lo que implica que su dirección es referenciada por alias, de tal forma que podemos modificar sin problema su contenido. La ventaja de la “referencia por sobrenombre o alias\" es que podemos referirnos a la misma variable por un sobre nombre."
+    },
+    {
+      "type": "paragraph",
+      "text": "La referencia por alias es quizás uno de los mecanismos de programación más cercano al concepto real de referencia que se aplica en la mayoría de los lenguajes orientados a objetos, de manera que resulta un mecanismo muy útil, simple y económico de referencia."
+    }
+  ]
+}

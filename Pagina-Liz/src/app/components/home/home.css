@@ -1,0 +1,273 @@
+/* General Setup */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fdfcf8;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    gap: 40px;
+    padding: 20px 50px;
+    font-size: 0.9rem;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #444;
+}
+
+/* Containers */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.section-title {
+    font-family: 'Crimson Pro', serif;
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Sobre Mi */
+.intro-name {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #8a4a3a;
+    margin-bottom: 20px;
+}
+
+.textoSobreMi {
+    text-align: center;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.4rem;
+    max-width: 750px;
+    margin: 0 auto 60px auto;
+}
+
+/* Info Grid */
+.grid-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    text-align: center;
+}
+
+.label {
+    display: block;
+    color: #8a4a3a;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+}
+
+.info-card h3 {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.info-card p {
+    font-size: 0.85rem;
+    color: #666;
+}
+
+/* Experiencia */
+.experiencia {
+    margin-top: 100px;
+}
+
+.exp-content {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.exp-image img,
+.carreras-image img {
+    width: 350px;
+    max-width: 100%;
+    border-radius: 8px;
+    height: auto;
+}
+
+.exp-text .years {
+    color: #8a4a3a;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+}
+
+.exp-text ul {
+    list-style: none;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.3rem;
+}
+
+.exp-text li::before {
+    content: "• ";
+    color: #333;
+}
+
+/* Carreras */
+.carreras {
+    margin-top: 100px;
+}
+
+.sub-text {
+    font-size: 0.85rem;
+    margin-bottom: 30px;
+}
+
+.carreras-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+.lista-carreras {
+    list-style: none;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.8rem;
+}
+
+.lista-carreras li {
+    margin-bottom: 15px;
+    border-left: 1px solid #ddd;
+    padding-left: 20px;
+}
+
+/* --- Responsive: Tablet --- */
+@media (max-width: 992px) {
+    .section-title {
+        font-size: 2.4rem;
+        margin-bottom: 30px;
+    }
+
+    .textoSobreMi {
+        font-size: 1.25rem;
+        margin-bottom: 50px;
+    }
+
+    .container {
+        padding: 50px 20px;
+    }
+
+    .experiencia,
+    .carreras {
+        margin-top: 70px;
+    }
+
+    .exp-content {
+        gap: 30px;
+        padding: 30px;
+    }
+
+    .exp-image img,
+    .carreras-image img {
+        width: 280px;
+    }
+
+    .lista-carreras {
+        font-size: 1.5rem;
+    }
+}
+
+/* --- Responsive: Mobile --- */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 24px;
+    }
+
+    .textoSobreMi {
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+    }
+
+    .container {
+        padding: 40px 16px;
+    }
+
+    .grid-info {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .info-card h3 {
+        font-size: 1.4rem;
+    }
+
+    .experiencia,
+    .carreras {
+        margin-top: 60px;
+    }
+
+    .exp-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 25px;
+        padding: 25px 20px;
+    }
+
+    .exp-image img,
+    .carreras-image img {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .exp-text ul {
+        text-align: left;
+        font-size: 1.15rem;
+    }
+
+    .carreras-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .lista-carreras {
+        font-size: 1.4rem;
+        text-align: left;
+    }
+
+    .sub-text {
+        text-align: center;
+    }
+}
+
+/* --- Responsive: Small Mobile --- */
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .textoSobreMi {
+        font-size: 1rem;
+    }
+
+    .lista-carreras {
+        font-size: 1.2rem;
+    }
+
+    .lista-carreras li {
+        padding-left: 16px;
+        margin-bottom: 12px;
+    }
+}

@@ -1,0 +1,14 @@
+<header class="main-header">
+    <p class="universidad">Benemérita Universidad Autónoma de Aguascalientes</p>
+    <h1 class="nombreCompleto">Dra. Estela Lizbeth Muñoz Andrade</h1>
+</header>
+
+<ngb-carousel>
+    @for (img of images; track img) {
+    <ng-template ngbSlide>
+        <div class="picsum-img-wrapper ">
+            <img [src]="img" alt="Slide" class="d-block w-100">
+        </div>
+    </ng-template>
+    }
+</ngb-carousel>

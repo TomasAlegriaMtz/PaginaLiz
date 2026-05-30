@@ -1,0 +1,22 @@
+{
+  "title": "Unions — Part I",
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "2.3. Unions"
+    },
+    {
+      "type": "paragraph",
+      "text": "In a structure, each field has its own memory space to store its value.However, there are special situations in which data structures can waste memory.Suppose that an application can identify users using one of the following five possible data types:- NIF: eight digits followed by a letter.- CIF: a letter followed by 8 digits.- Passport: eight letters and/or numbers.- NIE: a letter followed by 7 digits and a second letter.- Username: a text string of up to 16 letters.A possible data structure to store this information is shown on the left side of the following figure:"
+    },
+    {
+      "type": "paragraph",
+      "text": "If we assume that integers occupy 4 bytes and characters 1 byte, the structure requires 40 bytes to be stored in memory as shown on the right side of the previous figure. But of all the fields, only one contains information; the rest are empty. This means that the data structure will only use between 12.5% and 40% of the space it occupies. More than half of the memory is wasted.C provides a structure in which all fields share the same memory space, and it is specifically designed for cases where only one of those fields is used at a time. This structure is defined by replacing the word “struct” with “union”. The following figure shows the definition of user data using a union."
+    },
+    {
+      "type": "paragraph",
+      "text": "When a “union” is defined, only the space of the largest field is reserved.The data is stored starting from the same memory position and with the structure of the selected field. This construction does not keep track of which field is being used. If that information is needed, the programmer must store it in an auxiliary data structure. Access to the fields of a “union” is performed in the same way as in a structure."
+    }
+  ]
+}

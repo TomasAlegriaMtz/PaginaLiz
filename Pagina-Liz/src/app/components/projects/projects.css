@@ -1,0 +1,403 @@
+:root {
+    --bg-card: grey;
+    --text-main: #333;
+    --text-muted: #666;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fdfcf8;
+    /* Color crema de fondo */
+    color: #333;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+/* Header */
+.main-header {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.universidad {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.nombreCompleto {
+    font-family: 'Crimson Pro', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+}
+
+/* Hero Image */
+.hero-image img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    display: block;
+}
+
+
+/*Container*/
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* --- Proyectos Grid --- */
+.proyectos-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.proyectos-header h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    max-width: 300px;
+    line-height: 1.1;
+}
+
+.card {
+    background: rgb(238, 238, 238);
+    padding: 30px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.card h3 {
+    margin: 0 0 10px 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.card .anio {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: #8a4a3a;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Iconos de las tarjetas */
+.card::before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: 33px;
+    width: 12px;
+    height: 12px;
+}
+
+.card-diamond::before {
+    background: #a5a5a5;
+    transform: rotate(45deg);
+}
+
+.card-circle::before {
+    background: #a5a5a5;
+    border-radius: 50%;
+}
+
+.card-triangle::before {
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 12px solid #a5a5a5;
+    background: transparent;
+}
+
+.leer-mas {
+    display: block;
+    text-align: right;
+    color: var(--text-main);
+    text-decoration: none;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* --- Tesis Section --- */
+.divider {
+    border: 0;
+    border-top: 1px solid lightgrey;
+    margin: 60px 0;
+}
+
+.tesis-section h2,
+.publicaciones-section h2,
+.capitulos-section h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.tesis-item {
+    border-top: 1px solid #eee;
+    padding: 25px 0;
+}
+
+.tesis-item h3 {
+    font-size: 1.1rem;
+    margin: 8px 0 0;
+    color: var(--text-main);
+    font-weight: 600;
+    max-width: 800px;
+    line-height: 1.4;
+}
+
+.tesis-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+}
+
+.badge-nivel,
+.badge-estado {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.badge-nivel {
+    background: #e9e1d8;
+    color: #8a4a3a;
+}
+
+.badge-nivel.doctorado {
+    background: #8a4a3a;
+    color: #fff;
+}
+
+.badge-estado {
+    background: #e7f7ec;
+    color: #1d7a3e;
+}
+
+.badge-estado.en-proceso {
+    background: #fff4d6;
+    color: #a07000;
+}
+
+.tesis-meta .anio {
+    font-size: 0.85rem;
+    color: #999;
+    font-style: italic;
+}
+
+/* --- Publicaciones / Capítulos --- */
+.pub-item {
+    border-top: 1px solid #eee;
+    padding: 25px 0;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+}
+
+.pub-item .anio-grande {
+    font-family: 'Crimson Pro', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: #8a4a3a;
+    min-width: 80px;
+    flex-shrink: 0;
+    line-height: 1;
+    padding-top: 4px;
+}
+
+.pub-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.pub-item h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin: 0 0 8px;
+    line-height: 1.4;
+    max-width: 750px;
+}
+
+.pub-item .fuente {
+    font-style: italic;
+    color: #8a4a3a;
+    font-size: 0.95rem;
+    margin: 0 0 6px;
+}
+
+.pub-item .autores {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin: 0;
+    max-width: 800px;
+}
+
+/* --- Responsive: Tablet --- */
+@media (max-width: 992px) {
+    .main-header {
+        padding: 30px 16px;
+    }
+
+    .nombreCompleto {
+        font-size: 2.8rem;
+    }
+
+    .hero-image img {
+        height: 350px;
+    }
+
+    .container {
+        padding: 30px 18px;
+    }
+
+    .divider {
+        margin: 45px 0;
+    }
+
+    .proyectos-grid {
+        gap: 28px;
+    }
+
+    .proyectos-header h2,
+    .tesis-section h2,
+    .publicaciones-section h2,
+    .capitulos-section h2 {
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+    }
+}
+
+/* --- Responsive: Mobile --- */
+@media (max-width: 768px) {
+    .nombreCompleto {
+        font-size: 2.2rem;
+    }
+
+    .universidad {
+        font-size: 0.78rem;
+    }
+
+    .hero-image img {
+        height: 250px;
+    }
+
+    .proyectos-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .proyectos-header h2,
+    .tesis-section h2,
+    .publicaciones-section h2,
+    .capitulos-section h2 {
+        font-size: 1.85rem;
+        max-width: 100%;
+        line-height: 1.2;
+    }
+
+    .card {
+        padding: 24px;
+    }
+
+    .card h3 {
+        margin-left: 22px;
+        font-size: 1rem;
+    }
+
+    .tesis-item {
+        padding: 20px 0;
+    }
+
+    .tesis-item h3 {
+        font-size: 1rem;
+    }
+
+    .pub-item {
+        flex-direction: column;
+        gap: 4px;
+        padding: 20px 0;
+    }
+
+    .pub-item .anio-grande {
+        font-size: 1.5rem;
+        min-width: auto;
+        padding-top: 0;
+    }
+
+    .pub-item h3 {
+        font-size: 1.05rem;
+    }
+
+    .divider {
+        margin: 35px 0;
+    }
+}
+
+/* --- Responsive: Small Mobile --- */
+@media (max-width: 480px) {
+    .main-header {
+        padding: 24px 12px;
+    }
+
+    .nombreCompleto {
+        font-size: 1.8rem;
+    }
+
+    .proyectos-header h2,
+    .tesis-section h2,
+    .publicaciones-section h2,
+    .capitulos-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .tesis-meta {
+        gap: 6px;
+    }
+
+    .badge-nivel,
+    .badge-estado {
+        font-size: 0.65rem;
+        padding: 2px 7px;
+    }
+
+    .pub-item h3,
+    .tesis-item h3 {
+        font-size: 0.95rem;
+    }
+
+    .pub-item .fuente {
+        font-size: 0.85rem;
+    }
+
+    .pub-item .autores {
+        font-size: 0.78rem;
+    }
+}

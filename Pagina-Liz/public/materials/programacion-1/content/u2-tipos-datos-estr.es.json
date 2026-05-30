@@ -1,0 +1,1484 @@
+{
+  "title": "Tipos de Datos Estructurados",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Este capítulo examina estructuras, uniones, enumeraciones y tipos definidos por el usuario que permite a un programador crear nuevos tipos de datos. La capacidad para crear nuevos tipos es una característica importante y potente de C y libera a un programador de restringirse al uso de los tipos ofrecidos por el lenguaje. Una estructura contiene múltiples variables, que pueden ser de tipos diferentes. La estructura es importante para la creación de programm potentes, tales como bases de datos u otras aplicaciones que requieran grandes cantidades de datos. Por otra parte, se analizará el concepto de unión,otro tipo de dato no tan importante como las estructuras array y estructura, pero si necesarias en algunos casos."
+    },
+    {
+      "type": "paragraph",
+      "text": "Un tipo de dato enumerado es una colección de miembros con nombre que tienen valores enteros equivalentes. Un typedef es de hecho no un nuevo tipo de dato sino simplemente un sinónimo de un tipo existente."
+    },
+    {
+      "type": "paragraph",
+      "text": "'I CONCEPTOS CLAVE o sizeof. o union."
+    },
+    {
+      "type": "code",
+      "text": "Estructura.           o typedef."
+    },
+    {
+      "type": "paragraph",
+      "text": "0 Estructuras anidadas. 0 Operadores de bits, o Selector de campos. e struct."
+    },
+    {
+      "type": "paragraph",
+      "text": "296 Programación en C.Metodología, algoritmos y estructura de datos 9.1. ESTRUCTURAS Los arrays son estructuras de datos que contienen un número determinado de elementos (su tamaño) y todos los elementos han de ser del mismo tipo de datos; es una estructura de datos homogénea. Esta característica supone una gran limitación cuando se requieren grupos de elementos con tipos diferentes de datos cada uno. Por ejemplo, si se dispone de una lista de temperaturas, es muy Útil un array; sin embargo, si se necesita una lista de información de clientes que contengan elementos tales como el nombre, la edad, la dirección, el número de la cuenta, etc., los arrays no son adecuados. La solución a este problema es utilizar un tipo de dato registro, en C llamado estructura."
+    },
+    {
+      "type": "paragraph",
+      "text": "Los componentes individuales de una estructura se llaman miembros. Cada miembro (elemento) de una estructura puede contener datos de un tipo diferente de otros miembros. Por ejemplo, se puede utilizar una estructura para almacenar diferentes tipos de información sobre una persona, tal como nombre, estado civil, edad y fecha de nacimiento. Cada uno de estos elementos se denominan nombre del miembro."
+    },
+    {
+      "type": "paragraph",
+      "text": "Una estructura puede contener cualquier número de miembros, cada uno de los cuales tiene un nombre único, denominado nombre del miembro. Supongamos que se desea almacenar los datos de una colección de discos compactos (CD) de música. Estos datos pueden ser:"
+    },
+    {
+      "type": "paragraph",
+      "text": "o Título. O Artista. O Número de canciones. O Precio. O Fecha de compra."
+    },
+    {
+      "type": "paragraph",
+      "text": "La estructura CD contiene cinco miembros. Tras decidir los miembros, se debe decidir cuáles son los tipos de datos para utilizar por los miembros. Esta información se representa en la tabla siguiente:"
+    },
+    {
+      "type": "paragraph",
+      "text": "~~ Tipo de dato Nombre miembro Array de caracteres de tamaño 30. Array de caracteres de tamaño 25. Título Entero. Artista Coma flotante. Número de canciones Array de caracteres de tamaño 8. Precio Fecha de compra La Figura 9.1 contiene la estructura CD, mostrando gráficamente los tipos de datos dentro de la estructura. Obsérvese que cada miembro es un tipo de dato diferente."
+    },
+    {
+      "type": "paragraph",
+      "text": "Título I Artista Número de canciones Ay, a y , a y , cómo se a l e j a el sol. Precio NO me p i s e s la sandalias. Fecha de compra 10 2222.25 8-10-1999 ~~ ~ Figura 9.1. Representación gráfica d e una estructura CD. IC- 9.1.1. Declaración de una estructura Una estructura es un tipo de dato definido por el usuario, que se debe declarar antes de que se pueda utilizar. El formato de la declaración es:"
+    },
+    {
+      "type": "code",
+      "text": "struct <nombre de la estructura>"
+    },
+    {
+      "type": "paragraph",
+      "text": "i <tipo de dato miembro > <nombre miembro> <tipo de dato miembro> <nombre miembro> ..."
+    },
+    {
+      "type": "paragraph",
+      "text": "<tipo de dato miembro> <nombre miembro> 1; La declaración de la estructura CD es"
+    },
+    {
+      "type": "code",
+      "text": "struct coleccion-CD"
+    },
+    {
+      "type": "code",
+      "text": "char titulo[30] ;\nchar artista[25];\nint num-canciones;\nfloat precio;\nchar fecha-compra[ 81 ;"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejemplo"
+    },
+    {
+      "type": "code",
+      "text": "struct complejo"
+    },
+    {
+      "type": "code",
+      "text": "{\nfloat parte-real, parte-imaginaria;"
+    },
+    {
+      "type": "paragraph",
+      "text": "1; , En este otro ejemplo se declara el tipo estructura v e n t a ;"
+    },
+    {
+      "type": "code",
+      "text": "struct venta"
+    },
+    {
+      "type": "code",
+      "text": "char vededor [ 3 O I ;\nunsigned int codigo;\nint inids-articulos;\nfloat precio-unit;"
+    },
+    {
+      "type": "paragraph",
+      "text": "1; 9.1.2. Definición de variables de estructuras AI igual que a los tipos de datos enumerados, a una estructura se accede utilizando una variable o 1 variables que se deben definir después de la declaración de la estructura. Del mismo modo que sucede I en otras situaciones, en C existen dos conceptos similares a considerar, declaración y dejnición. La diferencia técnica es la siguiente, una declaración especifica simplemente el nombre y el formato de la estructura de datos, pero no reserva almacenamiento en memoria; la declaración especifica un nuevo tipo de dato: struct <nombre-estructura>.Por consiguiente, cada definición de variable para una estructura dada crea un área en memoria en donde los datos se almacenan de acuerdo al formato estructurado declarado."
+    },
+    {
+      "type": "paragraph",
+      "text": "Las variables de estructuras se pueden definir de dos formas: 1) listándolas inmediatamente después de la llave de cierre de la declaración de la estructura, o 2) listando el tipo de la estructura creado seguida por las variables correspondientes en cualquier lugar del programa antes de utilizarlas. La definición y declaración de la estructura colecciones-CDse puede hacer por cualquiera de los dos métodos: F 298 Programación en C.Metodología, algoritmos y estructura de datos"
+    },
+    {
+      "type": "code",
+      "text": "1. struct colecciones-CD"
+    },
+    {
+      "type": "code",
+      "text": "char titulo[301 ;\nchar artistar251 ;\nint num-canciones;\nfloat precio;\nchar fecha_compra[8];"
+    },
+    {
+      "type": "paragraph",
+      "text": "} cdl, cd2, cd3;"
+    },
+    {
+      "type": "code",
+      "text": "2. struct colecciones-CD c d l , cd2, cd3;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Otros ejemplos de definición/declaración Considérese un programa que gestione libros y procese los siguientes datos: título del libro, nombre del autor, editorial y año de publicación. Una estructura info-libropodría ser:"
+    },
+    {
+      "type": "code",
+      "text": "struct info-libro\n{\nchar titulo[60];\nchar autor [ 3 O I ;\nchar editorial [30];\nint anyo;"
+    },
+    {
+      "type": "paragraph",
+      "text": "i; La definición de la estructura se puede hacer así:"
+    },
+    {
+      "type": "code",
+      "text": "1.struct info-libro"
+    },
+    {
+      "type": "code",
+      "text": "char titulo[601;\nchar autor [301;\nchar editorial [301;\nint anyo ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "} librol, llbro2, libro3;"
+    },
+    {
+      "type": "code",
+      "text": "2.struct info-libro librol, libro2, libro3;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ahora se nos plantea una aplicación de control de los participantes en una carrera popular, cada participante se representa por los datos: nombre, edad, sexo, categoría, club y tiempo. El registro se representa con la estructura corredor :"
+    },
+    {
+      "type": "code",
+      "text": "struct corredor"
+    },
+    {
+      "type": "code",
+      "text": "char nombre [ 40I ;\nint edad;\nchar sexo;\nchar categoria[201 ;\nchar clubL261 ;\nfloat tiempo;"
+    },
+    {
+      "type": "paragraph",
+      "text": "1; La definición de variables estructura se puede hacer así:"
+    },
+    {
+      "type": "code",
+      "text": "struct corredor vl, sl, cl;"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.1.3. Uso de estructuras en asignaciones"
+    },
+    {
+      "type": "code",
+      "text": "Como una estructura es un tipo de dato similar a un int o un char,se puede asignar una estructura a"
+    },
+    {
+      "type": "paragraph",
+      "text": "otra. Por ejemplo, se puede hacer que libro3,libro4 y libro5 tengan los mismos valores en sus miembros que 1ibrol.Por consiguiente, seda necesario realizar las siguientes sentencias: I7 libro3 = librol; Estructuras y uniones 299"
+    },
+    {
+      "type": "code",
+      "text": "libro4 = librol;\nlibro5 = librol;"
+    },
+    {
+      "type": "paragraph",
+      "text": "De modo alternativo se puede escribir"
+    },
+    {
+      "type": "code",
+      "text": "libro4 = libro5 = libro6 = librol;"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.1.4. Inicialización de una declaración de estructuras Se puede inicializar una estructura de dos formas. Se puede inicializar una estructura dentro de la sección de código de su programa, o bien se puede inicializar la estructura como parte de la definición. Cuando se inicializa una estructura como parte de la definición, se especifican los valores iniciales, entre llaves, después de la definición de variables estructura. El formato general en este caso:"
+    },
+    {
+      "type": "code",
+      "text": "struct <tipo> <nombre vdriable estructura> ="
+    },
+    {
+      "type": "paragraph",
+      "text": "{ valor miembro, valor miembro , ..."
+    },
+    {
+      "type": "paragraph",
+      "text": "valor miembro I;"
+    },
+    {
+      "type": "code",
+      "text": "struct info-libro"
+    },
+    {
+      "type": "code",
+      "text": "char titulo[bOl ;\nchar auto[30];\nchar editorial [30];\nint anyo;\n} librol = {\"Maravilla del saber \",l'Lucas Garcia\", \"McGraw-Hill\", 1999);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Otro ejemplo podría ser:"
+    },
+    {
+      "type": "code",
+      "text": "struct coleccion-CD"
+    },
+    {
+      "type": "code",
+      "text": "char titulo[30];\nchar artista[25];\nint num-canciones;\nfloat precio;\nchar fecha-compra[8];"
+    },
+    {
+      "type": "paragraph",
+      "text": "} cdl = { \"El humo nubla tus o j o s \" , \"col Porter\", 15, 2545, \" O 2 / 6/ 99I' 1; Otro ejemplo con la estructura corredor:"
+    },
+    {
+      "type": "code",
+      "text": "struct corredor vl = i"
+    },
+    {
+      "type": "paragraph",
+      "text": "\"Salvador Rapido\", 29, 'V' , I'senior'I , 'Independiente', 0.0 1; 300 Programación en C. Metodología, algoritmos y estructura de datos 9.1.5. El tamaño de una estructura El operador sizeof se aplica sobre un tipo de datos, o bien sobre una variable. Se puede aplicar para determinar el tamaño que ocupa en memoria una estructura. El siguiente programa ilustra el uso del operador s izeof para determinar el tamaño de una estructura:"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * declarar una estructura Persona * /"
+    },
+    {
+      "type": "code",
+      "text": "struct persona"
+    },
+    {
+      "type": "code",
+      "text": "char nombre [30I ;\nint edad;\nfloat altura;\nfloat peso;"
+    },
+    {
+      "type": "code",
+      "text": "void main( )"
+    },
+    {
+      "type": "code",
+      "text": "struct persona mar;\nprintf (\"Sizeof(persona): %d \\n\",sizeof (mar)) ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Al ejecutar el programa se produce la salida:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sizeof (persona) : 40 El resultado se obtiene determinando el número de bytes que ocupa la estructura Persona Miembros dato Tamaño (bytes) nombre [ 301 char(1) 30"
+    },
+    {
+      "type": "code",
+      "text": "int (2)        2"
+    },
+    {
+      "type": "paragraph",
+      "text": "edad float (4) altura float ( 4) 4 peso Total 4 9.2. ACCESO A ESTRUCTURAS Cuando se accede a una estructura, o bien se almacena información en la estructura o se recupera la información de la estructura. Se puede acceder a los miembros de una estructura de una de estas dos formas: 1) utilizando el operador punto (.), o bien 2) utilizando el operador puntero ->."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.2.1. Almacenamiento de información en estructuras Se puede almacenar información en una estructura mediante inicialización, asignación directa o lectura del teclado. El proceso de inicialización ya se ha examinado, veamos ahora la asignación directa y la lectura del teclado."
+    },
+    {
+      "type": "paragraph",
+      "text": "Acceso a una estructura de datos mediante el operador punto La asignación de datos a los miembros de una variable estructura se hace mediante el operador punto. La sintaxis en C es:"
+    },
+    {
+      "type": "code",
+      "text": "<nombre variable estructura> . <nombre miembro> = datos;"
+    },
+    {
+      "type": "paragraph",
+      "text": "b m Algunos ejemplos:"
+    },
+    {
+      "type": "code",
+      "text": "strcpy(cd1.titulo,\"Granada\");\ncdl.precio = 3450.75;\ncdl.num-canciones = 7;"
+    },
+    {
+      "type": "paragraph",
+      "text": "El operador punto proporciona el camino directo al miembro correspondiente. Los datos que se almacenan en un miembro dado deben ser del mismo tipo que el tipo declarado para ese miembro. En el siguiente ejemplo se lee del teclado los datos de una variable estructura corredor:"
+    },
+    {
+      "type": "code",
+      "text": "struct corredor cr;\nprintf (\"Nombre: \" ) ;\ngets(cr.nombre);\nprintf (\"edad: \" ) ;\nscanf ( \"%d\",&cr .edad);\nprintf (\"Sexo: \" ) ;\nscanf ( \"%c\",&cr.sexo);\nprintf (\"Club: \" ) ;\ngets(cr.club);"
+    },
+    {
+      "type": "paragraph",
+      "text": "if (cr.edad <= 18)"
+    },
+    {
+      "type": "code",
+      "text": "cr .categoria = \"Juvenil\";"
+    },
+    {
+      "type": "paragraph",
+      "text": "elseif (cr.edad <= 40)"
+    },
+    {
+      "type": "code",
+      "text": "cr.categoria = \"Senior\";"
+    },
+    {
+      "type": "code",
+      "text": "cr.categoria = 'Veterano\";"
+    },
+    {
+      "type": "paragraph",
+      "text": "Acceso a una estructura de datos mediante el operadorpuntero El operador puntero, ->, sirve para acceder a los datos de la estructura a partir de un puntero. Para utilizar este operador se debe definir primero una variable puntero para apuntar a la estructura. A continuación, utilice simplemente el operador puntero para apuntar a un miembro dado."
+    },
+    {
+      "type": "paragraph",
+      "text": "La asignación de datos a estructuras utilizando el operador puntero tiene el formato:"
+    },
+    {
+      "type": "code",
+      "text": "<puntero estructura> - > <nombre miembro> = datos;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Así, por ejemplo, una estructura estudiante"
+    },
+    {
+      "type": "code",
+      "text": "struct estudiante"
+    },
+    {
+      "type": "code",
+      "text": "char Nombre [ 41I ;\nint Num-Estudiante;\nint Anyo-de-matricula;\nfloat Nota;"
+    },
+    {
+      "type": "paragraph",
+      "text": "I; Se puede definir ptr-est como un puntero a la estructura"
+    },
+    {
+      "type": "code",
+      "text": "struct estudiante *ptr-est;\nstruct estudiante mejor;"
+    },
+    {
+      "type": "paragraph",
+      "text": "A los miembros de la estructura estudiante se pueden asignar datos como sigue (siempre y cuando la estructura ya tenga creado su espacio de almacenamiento, por ejemplo, con malloc ( ) ; o bien, tenga la dirección de una variable estructura)."
+    },
+    {
+      "type": "paragraph",
+      "text": "ptr-est = &mejor; / * ptr-est tiene la direcciÓn(apunta a) mejor * /"
+    },
+    {
+      "type": "code",
+      "text": "strcpy(ptr-est->Nombre, \"Pepe alomdra\");\nptr-est - > Num-Estudiante = 3425;\nptr-est - > Nota = 8.5;"
+    },
+    {
+      "type": "paragraph",
+      "text": "302 Programación en C. Metodología, algoritmos y estructura de datos"
+    },
+    {
+      "type": "heading",
+      "level": 4,
+      "text": "Nota"
+    },
+    {
+      "type": "paragraph",
+      "text": "Previamentehabría que crear espaciode almacenamientoen memoria;por ejemplo, con la función malloc ( 1 ."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.2.2. Lectura de información de una estructura Si ahora se desea introducir la información en la estructura basta con acceder a los miembros de la estructura con el operador punto o flecha (puntero). Se puede introducir la información desde el teclado o desde un archivo, o asignar valores calculados."
+    },
+    {
+      "type": "paragraph",
+      "text": "Así, si z es una variable de tipo estructura complejo, se lee parte real, parte imaginaria y se calcula el módulo:"
+    },
+    {
+      "type": "code",
+      "text": "struct complejo"
+    },
+    {
+      "type": "code",
+      "text": "float pr;\nfloat pi;\nfloat modulo;"
+    },
+    {
+      "type": "code",
+      "text": "struct complejo z;\nprintf (\"\\nParte real: \" ) ;\nscanf (\"%í\",&z.pr);\nprintf (\"\\nParte imaginaria: \" ) ;\nscanf (\"%f\",&z.pi);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * calculo del módulo * /"
+    },
+    {
+      "type": "code",
+      "text": "z.modulo = sqrt(z.pr*z.pr + z.pi*z.pi);"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.2.3. Recuperación de información de una estructura Se recupera información de una estructura utilizando el operador de asignación o una sentencia de salida (printf ( ) , puts ( ) , ...). Igual que antes, se puede emplear el operador punto o el operador flecha (puntero). El formato general toma uno de estos formatos:"
+    },
+    {
+      "type": "paragraph",
+      "text": "1. <nombre variable> = <nombre variable estructura>.<nombre miembro>; o bien <nombre variable> = <puntero de estructura> -> <nombre miembro>; .2 para salida:"
+    },
+    {
+      "type": "code",
+      "text": "printf(\" \",<nombre variable estructura>.<nombre miembro>);"
+    },
+    {
+      "type": "paragraph",
+      "text": "o bien"
+    },
+    {
+      "type": "code",
+      "text": "printf(\" \",<punterode estructura>-> <nombre miembro>);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Algunos ejemplos del uso de la estructura complejo:"
+    },
+    {
+      "type": "code",
+      "text": "float x , y ;\nstruct complejo z;\nstruct complejo *pz;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Estructuras y uniones 303"
+    },
+    {
+      "type": "code",
+      "text": "pz = &z;\nx = z.pr;\ny = z.pi;"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"\\nNÚmero complejo (%.lf,%.lf),módulo: %.2f\","
+    },
+    {
+      "type": "paragraph",
+      "text": "pz->pr,pz->pi,pz->modulo); 9.3. ESTRUCTURAS ANIDADAS Una estructura puede contener otras estructuras llamadas estructuras anidadas.Las estructuras anidadas ahorran tiempo en la escritura de programas que utilizan estructuras similares. Se han de definir los miembros comunes sólo una vez en su propia estructura y a continuación utilizar esa estructura como un miembro de otra estructura. Consideremos las siguientes dos definiciones de estructuras:"
+    },
+    {
+      "type": "code",
+      "text": "struct empleado\n{\nchar nombre-emp [ 3O I ;\nchar direccion [25];\nchar ciudad [ 2 O I ;\nchar provincia [2O];\nlong int cod-postal;\ndouble salario;"
+    },
+    {
+      "type": "code",
+      "text": "struct clientes\nchar nombre_cliente[30];\nchar direccion [ 2 5 I ;\nchar ciudad[20];\nchar provincia[201;\nlong int cod-postal;\ndouble saldo;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "Estas estructuras contienen muchos datos diferentes, aunque hay datos que están solapados. Así, se podría disponer de una estructura, info-dir, que contuviera los miembros comunes."
+    },
+    {
+      "type": "code",
+      "text": "struct info-dir\nchar direccion[25] ;\nchar ciudadL201;\nchar provincia [2O];\nlong int cod-postal;"
+    },
+    {
+      "type": "paragraph",
+      "text": "1; Esta estructura se puede utilizar como un miembro de las otras estructuras, es decir, anidarse."
+    },
+    {
+      "type": "code",
+      "text": "struct empleado\n{\nchar nombre-emp [ 3 O ] ;\nstruct info-dir direccion-emp;\ndouble salario;"
+    },
+    {
+      "type": "code",
+      "text": "struct clientes"
+    },
+    {
+      "type": "paragraph",
+      "text": "i Y 304 Programación en C. Metodología, algoritmos y estructura de datos"
+    },
+    {
+      "type": "code",
+      "text": "char nombre_cliente[30];\nstruct info-dir direccion-clien;\ndouble saldo;"
+    },
+    {
+      "type": "paragraph",
+      "text": "I; Gráficamente se podrían mostrar estructuras anidadas en la Figura 9.2."
+    },
+    {
+      "type": "paragraph",
+      "text": "empleado: cliente: nombre-emp nombre-cliente in f o-di r direccion i n f o-di r I direccion salario ciudad I ciudad saldo provincia provincia cod-po sta1 cod-postal Figura 9.2. Estructuras anidadas."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.3.1. Ejemplo de estructuras anidadas Se desea diseñar una estructura que contenga información de operaciones financieras. Esta estructura debe constar de un número de cuenta, una cantidad de dinero, el tipo de operación (depósito=O, retirada de fondos=l, puesta al día=2 o estado de la cuenta=3) y la fecha y hora en que la operación se ha realizado. A fin de realizar el acceso correcto a los campos día, mes y año, así como el tiempo (la hora y minutos) en que se efectuó la operación, se define una estructura fecha y una estructura tiempo. La estructura registro-operacion tiene como miembros una variable (un campo) de tipo fecha, otra variable del tipo tiempo y otras variables para representar los otros campos. La representación del tipo de operación se hace con una variable entera, aunque el tipo apropiado es un tipo enumerado (descrito en siguientes apartados). A continuación se declara estos tipos, se escribe una función que lee una operación financiera y devuelve la operación leída. La fecha y hora es captada del sistema."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <dos.h>\nstruct registro-operation entrada();\nstruct fecha\n{\nunsigned int mes, dia, anyo;"
+    },
+    {
+      "type": "code",
+      "text": "struct tiempo\n{\nunsigned int horas, minutos;"
+    },
+    {
+      "type": "code",
+      "text": "struct registro-operacion"
+    },
+    {
+      "type": "paragraph",
+      "text": "I long numero-cuenta;"
+    },
+    {
+      "type": "code",
+      "text": "float cantidad;\nint tipo-operacion;\nstruct fecha f ;\nstruct tiempo t ;"
+    },
+    {
+      "type": "code",
+      "text": "int main()\n{\nstruct registro-operacion w;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Estructuras y uniones 305"
+    },
+    {
+      "type": "code",
+      "text": "w = entrada();\nprintf (\"\\n\\nOperaciCn realizada\\n \" ) ;\nprint f ( 'I\\ t% 1d\\n\",w .numero-cuenta ) ;\nprintf(\"\\t%d-%d-%d\\n\",w.f.dia,w.f.mes,w.f.anyo;)\nprintf ( \" \\ t%d:%d\\n\",w.t.horas,w.t.minutos ) ;\nreturn O ;\nstruct registro-operacion entrada0"
+    },
+    {
+      "type": "code",
+      "text": "struct time t ;\nstruct date d;\nstruct registro-operacion una;\nprintf (\"\\nNÚmerode cuenta: \" ) ;\nscanf (\"%ld\"&,una.numero-cuenta) ;\nputs (\"\\n\\tTipode operación\");\nputs(\"Deposito(0)\");\nputs (\"Retirada de fondos (1)\" ) ;\nputs('Puesta al dia(2)\");\nputs (\"Estado de la cuenta ( 3 ) I' ) ;\nscanf ( \"%d\",&una.tipo-operacion) ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Fecha y tiempo del sistema * /"
+    },
+    {
+      "type": "code",
+      "text": "gettime (&t) ;\nuna.t.horas = t.ti-hour;\nuna.t.minutos = t.timin;\ngetdate (&d);\nuna.f.anyo = d.dajear;\nuna.f.mes = d.darnon;\nuna.f.dia = d.da-day;\nreturn una;"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejercicio 9.1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Se desea registrar una estructura PersonaEmpleado que contenga como miembros los datos de una persona empleado que a su vez tenga los datos de lafecha de nacimiento. En un programa se muestra el uso de la estructura, se define unafunción para dar entrada a los datos de la estructura y otrafinción para dar salida a los datos de una estructura persona. A la función de entrada se transmite por dirección (&p) la variable estructura, por lo que el argumento correspondiente tiene que ser un I puntero( *p)y el acceso a los campos se hace con el selector -> I I persona-Empleado I I fecha"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nstruct fecha"
+    },
+    {
+      "type": "code",
+      "text": "unsigned int dia, mes, anyo;"
+    },
+    {
+      "type": "paragraph",
+      "text": "1; [i- - 7! - 306 Programación en C. Metodología, algoritmos y estructura de datos"
+    },
+    {
+      "type": "code",
+      "text": "struct persona i\nchar nombre [ 2O 1 ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned int edad;"
+    },
+    {
+      "type": "code",
+      "text": "int altura;\nint peso;\nstruct fecha fec;"
+    },
+    {
+      "type": "code",
+      "text": "struct persona-empleado"
+    },
+    {
+      "type": "code",
+      "text": "struct persona unapersona;"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned int salario; unsigned int horas_por-semana; I; / * prototipos de funciones * /"
+    },
+    {
+      "type": "code",
+      "text": "void entrada(struct persona-empleado *p);\nvoid muestra(struct persona-empleado up);\nvoid main()"
+    },
+    {
+      "type": "paragraph",
+      "text": "i / * define una variable persona-empleado * /"
+    },
+    {
+      "type": "code",
+      "text": "struct persona-empleado p;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * llamada a entrada() transmitiendo la direccion * /"
+    },
+    {
+      "type": "code",
+      "text": "entrada(&p);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * salida de los datos almacenados * /"
+    },
+    {
+      "type": "code",
+      "text": "muestra(p);"
+    },
+    {
+      "type": "code",
+      "text": "void entrada(struct persona-empleado *p)\n{\nprintf (\"\\nIntroduzca su nombre: \" ) ;\ngets(p->unapersona.nombre);\nprintf (\"introduzca su edad: \" 1 ;\nscanf (\"%d\",&p->unapersona.edad);\nprintf (\"Introduzca su altura: \" ) ;\nscanf ( \"%d\",&p->unapersona.altura);\nprintf ('Introduzca su peso: \" ) ;\nscanf ( \"%d\",&p->unapersona. p e s o ) ;\nprintf(\"1ntroduzca su fecha de nacimiento: \" ) ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "scanf ( \"%d %d %d\",&p->unapersona.fec.dia, &p->unapersona.fec.mes, &p->unapersona.fec.anyo);"
+    },
+    {
+      "type": "code",
+      "text": "printf (\"Introduzca su salario:\");\nscanf (\"%d\"&,p->salario);\nprintf (\"introduzca numero de horas:\");\nscanf ( \"%d\",&p->horas-por-semana) ;\nvoid muestra(struct persona-empleado up)"
+    },
+    {
+      "type": "code",
+      "text": "puts ( \"\\n\\n\\tDatos de un empleado\") ;\nputs (\"\\n\\n\\t                     \");\nprint€(\"Nombre: %s \\n\",up.unapersona.nombre);\nprintf(\"Edad: %d \\n\",up.unapersona.edad);\nprintf(\"fecha de nacimiento: %d-%d-&d\\n\","
+    },
+    {
+      "type": "paragraph",
+      "text": "P- '."
+    },
+    {
+      "type": "paragraph",
+      "text": "up.unapersona.fec.dia, up.unapersona.tec.mes, up.unapersona.fec.anyo);"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"A1tura: %d \\ n \" , u p . u n a p e r s o n a . a I t u r d ) ;\nprintf(\"Peso: %d \\n\",up.unapersona.peso);\nprintf(\"Numero de horas: %d \\n\",up.horas-por-semana);"
+    },
+    {
+      "type": "paragraph",
+      "text": "El acceso a miembros dato de estructuras anidadas requiere el uso de múitiples operadores punto. Ejemplo: acceso ai áía del mes de la fecha de nacimiento de un e up.unapercona.Eec.dka Las estructuras se pueden anidar a cualquier grado. También es posible inicializar estructuras"
+    },
+    {
+      "type": "code",
+      "text": "anidadas en la definición. El siguiente ejemplo inicializa una variable Luis de tipo struct persona.\nstruct persona Luis { \" L u i s \" , 25, 1940, 40, (12, 1, 701);"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.4. ARRAYS DE ESTRUCTURAS Se puede crear un array de estructuras tal como se crea un array de otros tipos. Los arrays de estructuras son idóneos para almacenar un archivo completo de empleados, un archivo de inventario, o cualquier otro conjunto de datos que se adapte a un formato de estructura. Mientras que los arrays proporcionan un medio práctico de almacenar diversos valores del mismo tipo, los arrays de estructuras le permiten almacenar juntos diversos valores de diferentes tipos, agrupados como estructuras."
+    },
+    {
+      "type": "paragraph",
+      "text": "Muchos programadores de C utilizan arrays de estructuras como un método para almacenar datos en un archivo de disco. Se pueden introducir y calcular sus datos de disco en arrays de estructuras y a continuación almacenar esas estructuras en memoria. Los arrays de estructuras proporcionan también un medio de guardar datos que se leen del disco."
+    },
+    {
+      "type": "paragraph",
+      "text": "La declaración de un array de estructuras info-libro se puede hacer de un modo similar a cualquier array, es decir,"
+    },
+    {
+      "type": "code",
+      "text": "struct info-libro libros[100];"
+    },
+    {
+      "type": "paragraph",
+      "text": "asigna un array de 100elementos denominado libros.Para acceder a los miembros de cada uno de los elementos estructura se utiliza una notación de array. Para inicializar el primer elemento de 1ibros,por ejemplo, su código debe hacer referencia a los miembros de libros [ O I de la forma siguiente:"
+    },
+    {
+      "type": "code",
+      "text": "strcpy(libros[O].titulo, \"C++ a su alcance\");\nstrcpy(1ibros[O] .autor, \"Luis Joyanes\");\nstrcpy(1ibros[ O ] .editorial, \"McGrdw-Hill') ;\nlibros[O].anyo = 1999;"
+    },
+    {
+      "type": "paragraph",
+      "text": "También puede inicializarse un array de estructuras en el punto de la declaración encerrando la lista de inicializadores entre llaves, ( }. Por ejemplo,"
+    },
+    {
+      "type": "code",
+      "text": "struct info-libro libros[3] = { \"C++ a su alcance\", \"Luis Joyanes\","
+    },
+    {
+      "type": "paragraph",
+      "text": "'McGraw-Hill\",1999, \"Estructura de datos\", \"Luis Joyanes\", \"McGraw-Hill\",1999, \"Problemas en Pascal\", \"Angel Hermoso\", \"McGraw-Hill\",19971 ; En el siguiente ejemplo se declara una estructura que representa a un número racional, un array de números racionales es inicializado con valores al azar. 308 Programación en C.Metodología, algoritmos y estructura de datos"
+    },
+    {
+      "type": "code",
+      "text": "struct racional\n{\nint N,\nint D;"
+    },
+    {
+      "type": "code",
+      "text": "struct racinal rs[4] = { 1,2, 2 , 3 , -4,7, O,l};"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.4.1. Arrays como miembros Los miembros de las estructuras puede ser asimismo arrays. En este caso, será preciso extremar las precauciones cuando se accede a los elementos individuales del array."
+    },
+    {
+      "type": "paragraph",
+      "text": "Considérese la siguiente definición de estructura. Esta sentencia declara un array de 1 O 0 estructuras, cada estructura contiene información de datos de empleados de una compañía."
+    },
+    {
+      "type": "code",
+      "text": "struct nomina                / * array de tipo float * /"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Un array de 100 empleados * / I"
+    },
+    {
+      "type": "code",
+      "text": "char nombre [ 3O 1 ;\nint dependientes;\nchar departamento[ 101 ;\nfloat horas_dias[71;\nfloat salario;"
+    },
+    {
+      "type": "paragraph",
+      "text": "} empleado [lo01;"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejemplo 9.1"
+    },
+    {
+      "type": "paragraph",
+      "text": "Una librería desea cafalogar su inventario de libros. El siguiente programa crea un array de 100 estructuras, donde cada estructura contiene diversos tipos de variables, incluyendo arrays."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <ctype.h>\n#include <stdlib.h>\nstruct inventario"
+    },
+    {
+      "type": "code",
+      "text": "char titulo [25];\nchar €echasub [ 2O 1 ;\nchar autor [ 3 0 1 ;\nint num;\nint pedido;"
+    },
+    {
+      "type": "paragraph",
+      "text": "€loat precio-venta; I;"
+    },
+    {
+      "type": "code",
+      "text": "int main ( )\n{\nstruct inventario libro[1001;\nint total = O ;\nchar resp, b[211 ;"
+    },
+    {
+      "type": "code",
+      "text": "printf (\"Total libros %d \\n\",(total+l));\nprintf (\"¿Cuál es el título?: \" 1 ;\ngets(libro[totall .titulo);\nprintf(\"iCuá1 es la fecha de publicación?: \" ) ;\ngets ( libro [totalI .fechagub) ;"
+    },
+    {
+      "type": "code",
+      "text": "printf (\"¿Quién es el autor?\") ;\ngets(libro[total].autor);\nprintf (\"¿Cuántos libros existen?: \" ) ;\nscanf ( \"%d\",&libro [totalI .num);\nprintf(\"¿Cuántos ejemplares existen pedidos?: \" 1 ;\nscanf ('%d\",&libro[total].pedido);\nprintf(\"¿Cuál es el precio de venta?: \" ) ;\ngets (b);"
+    },
+    {
+      "type": "paragraph",
+      "text": "libro[total].precio-venta = atof(b); / * conversión a real * /"
+    },
+    {
+      "type": "code",
+      "text": "fflush (stdin);\nprintf (\"\\n¿ H a y más libros? (S/N)\");\nscanf (\"%e\"&,resp);\nfflush (stdin);"
+    },
+    {
+      "type": "paragraph",
+      "text": "resp = toupper(resp); / * convierte a mayúsculas * / if (resp == 'S') i total++; continue;"
+    },
+    {
+      "type": "code",
+      "text": "} while (resp == ' S ' ) ;\nreturn O ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.5. UTILIZACIÓN DE ESTRUCTURAS COMO PARÁMETROS C permite pasar estructuras a funciones, bien por valor o bien por referencia utilizando el operador &. Si la estructura es grande, el tiempo necesario para copiar un parámetro struct a la pila puede ser prohibitivo. En tales casos, se debe considerar el método de pasar la dirección de la estructura."
+    },
+    {
+      "type": "paragraph",
+      "text": "El listado siguiente muestra un programa que pasa la dirección de una estructura a una función para entrada de datos. La misma variable estructura la pasa por valor a otra función para salida de los campos."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Define el tipo estructura infogersona * /"
+    },
+    {
+      "type": "code",
+      "text": "struct info-persona {\nchar nombre [ 2O I ;\nchar calle[30];\nchar ciudadL251;\nchar provincia[25];\nchar codiqopostal[ól;"
+    },
+    {
+      "type": "paragraph",
+      "text": "1; / * prototipos de funciones * /"
+    },
+    {
+      "type": "code",
+      "text": "void entrad_pna(struct infogersona* pp);\nvoid ver-info(struct infogersona p);\nvoid main (void)\n{\nstruct info-persona reg-dat;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Pasa por referencia la variable * /"
+    },
+    {
+      "type": "code",
+      "text": "entradgna(&reg-dat);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Pasa por valor * /"
+    },
+    {
+      "type": "code",
+      "text": "ver-info(reg-dat);"
+    },
+    {
+      "type": "paragraph",
+      "text": "310 Programación en C.Metodología, algoritmos y estructura de datos"
+    },
+    {
+      "type": "code",
+      "text": "printt( \"\\nPulsa cualquier carácter p a r a continuar\\n\");\ngetchar ( ) ;\n}\nvoid entrad_pna(struct infogersona\" p p )"
+    },
+    {
+      "type": "code",
+      "text": "puts(\"\\n Entrada de los datos de una persona\\n\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Para aceder a los campos se utiliza el selector - > * /"
+    },
+    {
+      "type": "code",
+      "text": "printf (\"Nombre: ; 'I) gets (pp->nombre);\nprintf (\"Calle: \" ) ; gets (pp->calle);\nprintf (\"Ciudad: \" ) ; gets (pp->ciudad);\nprintf (\"Provincia: \" ) ; gets (pp->provincia);\nprintf (\"Código postal: \" ) ; gets (pp->codigopostal);\nvoid ver-info(struct into-persona p )"
+    },
+    {
+      "type": "code",
+      "text": "puts('\\n\\tInformación realativa a la persona\");\nputs (p.nombre);\nputs ( p .calle);\nputs ( p .ciudad);\nputs (p.provincia);\nputs (p.codigoposta1);"
+    },
+    {
+      "type": "paragraph",
+      "text": "i Si se desea pasar la estructura por referencia, necesita situar un operadorde referencia & antes de regdat en la llamada a la función e n t r a d a s n a ( ) . El parhetro . de ser tipo puntero s t r u c t i n f o q e r s o n a * pp El acceso a miembro a partir de un puntero requiere el uso del selector ->."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.6. UNIONES Las uniones son similares a las estructuras en cuanto que agrupa a una serie de variables, pero la forma de almacenamiento es diferente y, por consiguiente, efectos diferentes. Una estructura (struct)permite almacenar variables relacionadas juntas y almacenadas en posiciones contiguas en memoria. Las uniones, declaradas con la palabra reservada union, almacenan también miembros múltiples en un paquete; sin embargo, en lugar de situar sus miembros unos detrás de otros, en una unión, todos los miembros se solapan entre sí en la misma posición. El tamaño ocupado por una unión se determina así: es analizado el tamaño de cada variable de la unión, el mayor tamaño de variable será el tamaño de la unión. La sintaxis de una unión es la siguiente:"
+    },
+    {
+      "type": "code",
+      "text": "union n o m b r e {"
+    },
+    {
+      "type": "paragraph",
+      "text": "tipol miembrol; t i p o 2 mi enibro2; ..."
+    },
+    {
+      "type": "paragraph",
+      "text": "1; Un ejemplo:"
+    },
+    {
+      "type": "code",
+      "text": "union Pruebaünion\n{\nfloat Iteml;\nint Item2;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Estructuras y uniones 311 La cantidad de memoria reservada para una unión es igual a la anchura de la variable más grande. En el tipo union,cada uno de los miembros dato comparten memoria con los otros miembros de la unión. La cantidad total de memoria utilizada por la unión comparte es de 8 bytes, ya que el elemento"
+    },
+    {
+      "type": "code",
+      "text": "double es el miembro dato mayor de la unión.\nunion comparte\n{\nchar letra;\nint elemento;\nfloat precio;\ndouble z;"
+    },
+    {
+      "type": "paragraph",
+      "text": "1; Una razón para utilizar una unión es ahorrar memoria. En muchos programas se deben tener varias variables, pero no necesitan utilizarse todas al mismo tiempo. Considérese la situación en que se necesitan tener diversas cadenas de caracteres de entrada. Se pueden crear varios arrays de cadenas de caracteres, tales como las siguientes:"
+    },
+    {
+      "type": "code",
+      "text": "char linea_ordenes[80];\nchar mensaje-error [ 80 I ;\nchar ayuda [ 80I ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Estas tres variables ocupan 240 bytes de memoria. Sin embargo, si su programa no necesita utilizar las tres variables simultáneamente, ¿por qué no permitirle compartir la memoria utilizando una unión? Cuando se combinan en el tipo union frases,estas variables ocupan un total de sólo 80 bytes."
+    },
+    {
+      "type": "code",
+      "text": "union frases {\nchar linea_ordenes[80];\nchar mensaje_error[80];\nchar ayuda [80];"
+    },
+    {
+      "type": "paragraph",
+      "text": "} cadenas, *pc; Para referirse a los miembros de una unión, se utiliza el operador punto (.), o bien el operador -> si se hace desde un puntero a unión. Así:"
+    },
+    {
+      "type": "paragraph",
+      "text": "cadenas.ayuda; cadenas.mensaje-error; pc - > mensaje-error; 9.7. ENUMERACIONES Un enum es un tipo definido por el usuario con constantes de nombre de tipo entero. En la declaración de un tipo enum se escribe una lista de identificadores que internamente se asocian con las constantes enteras O, 1, 2, etc."
+    },
+    {
+      "type": "paragraph",
+      "text": "Formato 1. enum"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "enumerador , enumerador , . . .enumerador I; 2. enum nombre i enumerador , enumerador , . . . enumerador 1; Y -7 312 Programación en C. Metodología, algoritmos y estructura de datos En la declaración del tipo enum pueden asociarse a los identificadores valores constantes en vez de la asociación que por defecto se hace (O, 1, 2, etc.). Para ello se utiliza este formato:"
+    },
+    {
+      "type": "paragraph",
+      "text": "3. enum nombre"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "enumeradorl = expresiÓn-constantel, enumerador = expresión-constante , ..."
+    },
+    {
+      "type": "paragraph",
+      "text": "enumerador,= exprsesión-constante, I;"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejemplo 9.2"
+    },
+    {
+      "type": "paragraph",
+      "text": "Usos tipicos de enUm enum Interruptor"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "ENCENDIDO, APAGADO I; enum Boolean"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "FALSE, TRUE I;"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejemplo"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum I ROJO, VERDE, AZUL 1; define tres constantes ROJO,VERDE y AZUL de valores iguales a O, 1 y 2, respectivamente. Los miembros datos de un enum se llaman enumeradores y la constante entera por defecto del primer enumerador de la lista de los miembros datos es igual a O. Obsérvese que, al contrario que struct y union, los miembros de un tipo enum se separan por el operador coma. El ejemplo anterior es equivalente a la definición de las tres constantes, ROJO, VERDE y AZUL, tal como:"
+    },
+    {
+      "type": "code",
+      "text": "const int ROJO = O ;\nconst int VERDE = 1;\nconst int AZUL = 2;"
+    },
+    {
+      "type": "paragraph",
+      "text": "En la siguiente declaración de tipo enumerado se le da un nombre al tipo enum dias-semana"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "LUNES, MARTES, MIERCOLES, JUEVES, VIERNES, SABADO, DOMINGO 1; Una variable de tipo enum dias-semana puede tomar los valores especificados en la declaración del tipo. El siguiente bucle está controlado por una variable del tipo enumerado."
+    },
+    {
+      "type": "paragraph",
+      "text": "enum dias-semana dia; for (dia = LUNES; dia <= DOMINGO; dia++) ..."
+    },
+    {
+      "type": "paragraph",
+      "text": "Estructuras y uniones 313"
+    },
+    {
+      "type": "code",
+      "text": "printf (\"%d \",dia);"
+    },
+    {
+      "type": "paragraph",
+      "text": "La ejecución del bucle escribiría en pantalla: O 1 2 3 4 5 6. A los enumeradores se pueden asignar valores constantes o expresiones constantes durante la declaración:"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum Hexaedro i VERTICES = 8, LADOS = 12, CARAS =6"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejercicio 9.2"
+    },
+    {
+      "type": "paragraph",
+      "text": "El siguiente programa muestra el uso de la enumeracidn boo1ean . El programa lee un texto y cuenta las vocales leídas. La función vocal ( ) devuelve TRUE si el carácter de entrada es vocal."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <ctype.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum boolean i FALSE, TRUE 1;"
+    },
+    {
+      "type": "code",
+      "text": "enum boolean vocal(char c);\nvoid main()\n{\nchar car;\nint numvocal = O ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "puts(\"\\nIntroduce un texto. Para terminar: INTRO"
+    },
+    {
+      "type": "code",
+      "text": "while ( (car = getchar ( ) ) ! = ' \\n')"
+    },
+    {
+      "type": "paragraph",
+      "text": "i if (vocal(tolower(car)) ) numvocal++;"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"\\n Total de vocales leidas: %d\\n\",numvocal);"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum boolean vocal(char c) switch (c)"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "case 'a':"
+    },
+    {
+      "type": "paragraph",
+      "text": "case 'e':"
+    },
+    {
+      "type": "paragraph",
+      "text": "case 'ir:"
+    },
+    {
+      "type": "paragraph",
+      "text": "n case ' o ' :"
+    },
+    {
+      "type": "paragraph",
+      "text": "case 'u':"
+    },
+    {
+      "type": "code",
+      "text": "return TRUE;"
+    },
+    {
+      "type": "paragraph",
+      "text": "default:"
+    },
+    {
+      "type": "code",
+      "text": "return FALSE;"
+    },
+    {
+      "type": "paragraph",
+      "text": "I i 314 Programación en C.Metodología, algoritmos y estructura de datos 9.7.1. sizeof de tipos de datos estructurados El tamaño en bytes de una estructura, de una unión o de un tipo enumerado se puede determinar con el operador sizeof."
+    },
+    {
+      "type": "paragraph",
+      "text": "El siguiente programa extrae el tamaño de una estructura (struct), de una unión (union) con miembros dato idénticos, y de un tipo enumerado."
+    },
+    {
+      "type": "code",
+      "text": "/ * declara una union */\nunion tipo-union"
+    },
+    {
+      "type": "code",
+      "text": "char c;\nint i;\nfloat f ;\ndouble d;"
+    },
+    {
+      "type": "paragraph",
+      "text": "I; / * declara una estructura */"
+    },
+    {
+      "type": "code",
+      "text": "struct tipo-estructura"
+    },
+    {
+      "type": "code",
+      "text": "char c;\nint i;\nfloat f ;\ndouble d;"
+    },
+    {
+      "type": "paragraph",
+      "text": "I; / * declara un tipo enumerado */ enum monedas"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "PESETA, DURO, CINCODUROS, CIEN I; ..."
+    },
+    {
+      "type": "paragraph",
+      "text": "printf (\"\\nsizeof(tipo-estructura): %d\\n\","
+    },
+    {
+      "type": "code",
+      "text": "sizeof(struct tipo-estructura)1 ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "printf (\"\\nsizeof(tipo-union): Bd\\n\","
+    },
+    {
+      "type": "code",
+      "text": "sizeof(union tipo-union));"
+    },
+    {
+      "type": "paragraph",
+      "text": "printf (\"\\nsizeof(monedas): %d\\n\","
+    },
+    {
+      "type": "code",
+      "text": "sizeof(enum monedas));"
+    },
+    {
+      "type": "paragraph",
+      "text": "La salida que se genera con estos datos:"
+    },
+    {
+      "type": "paragraph",
+      "text": "sizeof(tipo_estructura):15 sizeof(tipo-union): 8 sizeof(monedas): 2 9.7.2. typedef"
+    },
+    {
+      "type": "code",
+      "text": "Un typedef permite a un programador crear un sinónimo de un tipo de dato definido por el usuario o"
+    },
+    {
+      "type": "paragraph",
+      "text": "de un tipo ya existente. Estructuras y uniones 315"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejemplo Uso de typedefpara declarar un nuevo nombre, Longi t u d , de tipo de dato double."
+    },
+    {
+      "type": "code",
+      "text": "typedef double Longitud;"
+    },
+    {
+      "type": "code",
+      "text": "Longitud Distancia (const struct Pto* p, const struct Pto* p2)\n{"
+    },
+    {
+      "type": "code",
+      "text": "Longitud longitud = sqrt(r-cua);\nreturn longitud;"
+    },
+    {
+      "type": "paragraph",
+      "text": "I Otros ejemplos:"
+    },
+    {
+      "type": "code",
+      "text": "typedef char* String;\ntypedef const char* string;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puede declararse un tipo estructura o un tipo unión y a continuación asociar el tipo estructrura a un nombre con typedef."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejemplo Declaración del tipo de dato complejo y asociación a complex."
+    },
+    {
+      "type": "code",
+      "text": "struct complejo\n{\nfloat x,y;"
+    },
+    {
+      "type": "code",
+      "text": "typedef struct complejo complex;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * definición de un array de complejos * / complex v[121;"
+    },
+    {
+      "type": "code",
+      "text": "La ventaja de typedef es que permite dar nombres L; tipos LV datos más acordescon lo que"
+    },
+    {
+      "type": "paragraph",
+      "text": "representan en una determinada aplicación."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.8. CAMPOS DE BIT El lenguaje c permite realizar operaciones con los bits de una palabra. Ya se han estudiado los operadores de manejo de bits: >>, <<, . . . Con los campos de bits, C permite acceder a un número de bits de una palabra entera. Un campo de bits es un conjunto de bits adyacentes dentro de una palabra entera. La sintaxis para declarar campos de bits se basa en la declaración de estructuras. El formato general:"
+    },
+    {
+      "type": "code",
+      "text": "struct identificador-campo {"
+    },
+    {
+      "type": "paragraph",
+      "text": "tipo nombrel: longitudl; tipo nombre2: longitud2; tipo nombre3: longitud3; tipo nombren: longitudn; i; Programación en C.Metodología, algoritmos y estructura de datos tipo ha de ser entero, int;generalmente unsigned int longitud es el número de bits consecutivos que se toman"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejemplo 9.3"
+    },
+    {
+      "type": "paragraph",
+      "text": "En este ejemplo se declara un campo de bits para representar enformato comprimido el día, mes aiio (los dos últimos dígitos) y si el año es bisiesto."
+    },
+    {
+      "type": "code",
+      "text": "struct fecha {"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned dia: 5; unsigned mes: 4; unsigned año: 7; unsigned bisiesto: 1; I;"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Ejemplo 9.4"
+    },
+    {
+      "type": "paragraph",
+      "text": "El siguiente ejemplo muestra cómo puede utilizarse campos de bits para representar .si están o no conectados diversos componentes eléctricos. Cada componente se representa con un pag, con un bit; t cuando esté puesto a cero es que no está conectado, cuando esté puesto a uno está conectado."
+    },
+    {
+      "type": "code",
+      "text": "struct componentes {"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned diodo: 1; unsigned resistencia: 1; unsigned amperimetro: 1; unsigned transistor: 1; unsigned condensador: 1; unsigned inductancia: 1; 1; Los campos individuales se referencian como cualquier otro miembro de una estructura: selector punto ( . ). Por ejemplo,"
+    },
+    {
+      "type": "code",
+      "text": "struct componentes ct;\nct.diodo = 1;"
+    },
+    {
+      "type": "paragraph",
+      "text": "if (ct.amperimetro) i Al declarar campos de bits, la suma de los bits declarados puede exceder el tamaño de un entero; en ese caso se emplea la siguiente posición de almacenamiento entero. No está permitido que un campo de bits solape los límites entre dos int."
+    },
+    {
+      "type": "paragraph",
+      "text": "Al declarar una estructura puede haber miembros que sean variables y otros campos de bits. La siguiente estructura tiene esta característica:"
+    },
+    {
+      "type": "code",
+      "text": "struct reg-estudiante{\nchar nombre [ 3 3 1 ;\nchar ape111 [ 3 3 1 ;\nchar ape112 [331 ;"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned masculino: 1; unsigned femenino: 1; unsigned curso: 3 ; 1; Estructuras y uniones 317 Los campos de bits se utilizan para rutinas de encriptación de datos y fundamentalmente para ciertos interfaces de dispositivos externos. Presentan ciertas restricciones. Así, no se puede tomas la dirección de una variable campo de bits; no puede haber arrays de campos de bits; no se puede solapar fronteras de int.Depende del procesador que los campos de bits se alineen de izquierda a derecha o de derecha a izquierda (conviene hacer una comprobación para cada procesador, utilizando para ello un union con variable entera y campos de bits)."
+    },
+    {
+      "type": "paragraph",
+      "text": "Ejemplo 9.5 Se tiene la función peticion-acceso í 1 capaz de direccionar una posición de memoria de 8 bits si recibe como argumento una variable llamada ochobits.Con esta variable controla a través de cada bit las peticiones de acceso a cada uno de los ocho periféricos distintos con que trabaja; eventos externos son los que se encargan de cargar la variable ochobits."
+    },
+    {
+      "type": "paragraph",
+      "text": "Se quiere escribir una función que determine cuantos accesos se producen por cada periférico en un bucle de 1000 llamadas a la función peticion-acceso ( ) . Se supone que cada llamada sólo activa un periférico."
+    },
+    {
+      "type": "paragraph",
+      "text": "Análisis El tipo de la variable ochobitsva a ser una estructura de campos de bits, cada campo con longitud 1; por lo que puede tener dos estados, O o 1, para indicar no acceso o sí acceso. Un array de 8 elementos, tantos como periféricos se utiliza para contar los accesos a cada periférico."
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Tipo estructura de campos de bits * /"
+    },
+    {
+      "type": "code",
+      "text": "struct perifericos{"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned perfl: 1; unsigned perf2: 1; unsigned perf3: 1; unsigned perf4: 1; unsigned perf5: 1; unsigned perfó: 1; unsigned perf7: 1; unsigned perf8: 1; I; / * Prototipo de función peticion-acceso0 * /"
+    },
+    {
+      "type": "code",
+      "text": "void petition-acceso (const struct perifericos ochobits);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Función que contabiliza los accesos a cada periférico. * /"
+    },
+    {
+      "type": "code",
+      "text": "void accesosgerf(int acceper[])"
+    },
+    {
+      "type": "code",
+      "text": "int i;"
+    },
+    {
+      "type": "paragraph",
+      "text": "const struct perifericos ochobits;"
+    },
+    {
+      "type": "code",
+      "text": "const neventos=1000;"
+    },
+    {
+      "type": "paragraph",
+      "text": "for (izo; i<8; )"
+    },
+    {
+      "type": "code",
+      "text": "accper [i++l= 0;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Bucle principal de 1000 llamadas * / for (¡=O; i<neventos; i++)"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "318 Programación en C.Metodología, algoritmos y estructura de datos"
+    },
+    {
+      "type": "code",
+      "text": "petition-acceso(ochobits);"
+    },
+    {
+      "type": "paragraph",
+      "text": "if (ochobits.perf1) ++acceper[O I ;"
+    },
+    {
+      "type": "code",
+      "text": "elseif (ocho.bits.perf2);"
+    },
+    {
+      "type": "paragraph",
+      "text": "++acceper[ 13 ;"
+    },
+    {
+      "type": "code",
+      "text": "elseif (ocho.bits.perf3);"
+    },
+    {
+      "type": "paragraph",
+      "text": "++acceper[2];"
+    },
+    {
+      "type": "code",
+      "text": "elseif (ocho.bits.perf4);"
+    },
+    {
+      "type": "paragraph",
+      "text": "++acceper[ 3 I ;"
+    },
+    {
+      "type": "code",
+      "text": "elseif (ocho.bits.perf5);"
+    },
+    {
+      "type": "paragraph",
+      "text": "++acceper[ 43 ;"
+    },
+    {
+      "type": "code",
+      "text": "elseif (ocho.bits.perf6);"
+    },
+    {
+      "type": "paragraph",
+      "text": "++acceper[ 51 ;"
+    },
+    {
+      "type": "code",
+      "text": "elseif (ocho.bits.perf7);"
+    },
+    {
+      "type": "paragraph",
+      "text": "++acceper[ 61 ;"
+    },
+    {
+      "type": "code",
+      "text": "elseif (ocho.bits.perf8);"
+    },
+    {
+      "type": "paragraph",
+      "text": "++acceper[7]; Ejemplo 9.6 Haciendo uso de una estructura de campo de bits y de una union,en este ejercicio se escribe un programa para visualizar la decodijkación en bits de cualquier carácter leído por teclado."
+    },
+    {
+      "type": "paragraph",
+      "text": "Análisis Se declara un tipo estructura campo de bits, con tantos campos como bits tiene un byte, que a su vez es el almacenamiento de un carácter. La decodificación es inmediata declarando una union entre una variable carácter y una variable campo de bits del tipo indicado."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <conio.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "#define mayus (ch) ((ch>=’a’&& ch<=‘z’) ? (ch+’A’-’a‘): ch) stuct byte {"
+    },
+    {
+      "type": "code",
+      "text": "unsigned int a: 1;\nunsigned int b: 1;\nunsigned int c: 1;\nunsigned int d: 1;\nunsigned int e: 1;\nunsigned int f: 1;\nunsigned int g: 1;\nunsigned int h: 1;"
+    },
+    {
+      "type": "code",
+      "text": "union charbits{\nchar ch;\nstruct byte bits;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Icaracter;"
+    },
+    {
+      "type": "code",
+      "text": "void decodifica (struct byte b);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Estructuras y uniones 319"
+    },
+    {
+      "type": "code",
+      "text": "void main()"
+    },
+    {
+      "type": "code",
+      "text": "puts ('Teclea caracteres. Para salir carácter XI);"
+    },
+    {
+      "type": "code",
+      "text": "caracter.ch = getcheo;\nprintf ( ' I : \" ) ;\ndecodifica(caracter.bits);\n)while mayusc(caracter.ch) !='X');\nvoid decodifica(struct byte b)"
+    },
+    {
+      "type": "paragraph",
+      "text": "/ * Los campos de bits se alinean de derecha a izquierda, por esa razón se escriben los campos en orden inverso * / printf ( \" % 2 u % 2 u % 2 ~ % 2 ~ % 2 u % 2 ~ %\\2nUu%',2 u % ~ u b.h, b.g, b.f, b.e, b.d, b.c, b.b, b.a); 9.9. RES N Para crear una variable estnictura se escribe sinónimo de un tipo existente."
+    },
+    {
+      "type": "code",
+      "text": "struct empleado pepe;                                typedef struct empleado"
+    },
+    {
+      "type": "paragraph",
+      "text": "I 320 Programación en C.Metodología, algoritmos y estructura de datos 9.10. EJERCICIOS Estructuras y uniones 321 9.11. PROBLEMAS 9.1. cular el número de Número de perdidas de balón."
+    },
+    {
+      "type": "paragraph",
+      "text": "as; declarar fecha 4 Número de rebotes cogidos."
+    },
+    {
+      "type": "paragraph",
+      "text": "92. Escribe un programa de facturación de clientes. * Nombre del mejor anotador de triples. Los clientes tienen un nombre, el número de unidades solicitadas, el precio de cada unidad y se encuentra: motoso, atrasado, de futbol aiiadir la información:"
+    },
+    {
+      "type": "paragraph",
+      "text": "ama debe generar a los diversos 93. Modifiqueel pro de facturación de clieninformación para todos los equipos integrantes tes de tal modo que se puedan obtener los en ambas ligas. siguientes listados. * Clientes en estado moroso. siguientes informes o datos."
+    },
+    {
+      "type": "paragraph",
+      "text": "Clientes en estado pagado con fachira mayor Listado de los mejores triplistas de cada de una determinada cantidad. equipo. 9.4. Escribe un programa que permita hacer las operaciones de suma, resta, multiplicación y división de números complejos. El tipo complejo ha de definirse como una estructura, 9.5. Un número racional se caracteriza por el numerador y denominador. Escribe un programa para número racional."
+    },
+    {
+      "type": "paragraph",
+      "text": "información:"
+    }
+  ]
+}

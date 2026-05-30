@@ -1,0 +1,35 @@
+{
+  "title": "Unions — Part II",
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "Unit 3. Structured Data Types"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Unions"
+    },
+    {
+      "type": "paragraph",
+      "text": "By definition, a variable is a memory segment characterized by its starting address, length, and interpretation.A union is analogous to a structure, except for one detail: all the fields that make up a structure start at the same position, which is the beginning address of the structure.Consequently, unions have a length that corresponds exactly to the largest of their fields.In other words, a union is a structure in which all the fields are superimposed, occupying the same portion of physical memory.If some fields are shorter and others longer, memory utilization may not be complete.A union is declared in the same way as a struct.First, we declare the union type, and then we declare variables of that type.For example:"
+    },
+    {
+      "type": "code",
+      "text": "union union_name{    int valueInt;    float valueFloat;    char valueChar[15];};"
+    },
+    {
+      "type": "paragraph",
+      "text": "Union-type variables:"
+    },
+    {
+      "type": "paragraph",
+      "text": "union_name data1, *data2;  // data1 is a static value and data2 is a dynamic value The variable will be large enough to hold the largest of the three types.Values of any of those types can be assigned to data1 and then used in expressions as long as the use is consistent: the retrieved type must be the type that was most recently stored.*It is the programmer’s responsibility to keep track of the type currently stored in a union.The result of referencing a union member different from the last one saved is undefined, as the stored data is treated as a different type.Accessing the members of a union:"
+    },
+    {
+      "type": "paragraph",
+      "text": "union_variable.memberExample:data1.valueFloat;data2->valueInt; Unions can appear within structures and arrays, and vice versa.The operations that can be performed on unions are the following:assigning one union to another of the same type, taking the address of a union type, and accessing the members of a union using either the structure member operator (.) or the pointer-to-structure operator (->).A union can be initialized with a value of the same type as its first member.*We cannot compare unions because it is unknown which member of each one is active."
+    }
+  ]
+}

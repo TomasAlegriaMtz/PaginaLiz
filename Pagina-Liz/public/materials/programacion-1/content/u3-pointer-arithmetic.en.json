@@ -1,0 +1,304 @@
+{
+  "title": "Pointer Arithmetic",
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 1: Pointer Arithmetic"
+    },
+    {
+      "type": "paragraph",
+      "text": "Introduction"
+    },
+    {
+      "type": "paragraph",
+      "text": "Addition"
+    },
+    {
+      "type": "paragraph",
+      "text": "Substraction"
+    },
+    {
+      "type": "paragraph",
+      "text": "Comparison"
+    },
+    {
+      "type": "paragraph",
+      "text": "Assignment"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "1"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 2: Introduction"
+    },
+    {
+      "type": "paragraph",
+      "text": "There is a specific arithmetic applicable to pointers, which differs from the arithmetic used for integers or real numbers."
+    },
+    {
+      "type": "paragraph",
+      "text": "The operations that can be performed are:"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Addition"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Subtraction"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Comparison"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Assignment"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "2"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 3: Addition"
+    },
+    {
+      "type": "paragraph",
+      "text": "Adding an integer value x to a pointer variable means moving x positions forward in memory."
+    },
+    {
+      "type": "paragraph",
+      "text": "To perform this displacement, we can also use the auto-increment operator (v++);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "3"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 4: Subtraction"
+    },
+    {
+      "type": "paragraph",
+      "text": "Subtracting an integer value x from a pointer variable means moving x positions backward in memory."
+    },
+    {
+      "type": "paragraph",
+      "text": "The auto-decrement operator (v--) can also be used;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "4"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 5: Comparison"
+    },
+    {
+      "type": "paragraph",
+      "text": "Comparing (==, !=) two pointers means evaluating the memory addresses they point to."
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "5"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 6: Assignment"
+    },
+    {
+      "type": "paragraph",
+      "text": "Like other variable types, pointers can also be assigned (=) a value, which will normally be a memory address."
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "6"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 7: Exercises"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "7"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 8: Exercises"
+    },
+    {
+      "type": "paragraph",
+      "text": "1. Given the following definitions and assignments, illustrate what memory would look like after executing them:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "8"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 9: Pointers as Function Arguments"
+    },
+    {
+      "type": "paragraph",
+      "text": "Variable scopes"
+    },
+    {
+      "type": "paragraph",
+      "text": "Parameter passing"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "9"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 10: Variable Scope"
+    },
+    {
+      "type": "paragraph",
+      "text": "In C, variables mainly act in two scopes:"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Local: Those whose lifetime ends when the \tfunction in which they were declared ends. Their use \tis restricted solely to that function."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Global: Those whose lifetime ends with the end of \tthe program. They are available in all functions that \tmake up that program."
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "10"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 11: Variable Scope - Example"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "11"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 12: Variable Scope - Example"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "12"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 13: Parameter Passing"
+    },
+    {
+      "type": "paragraph",
+      "text": "There are two ways to pass arguments to a function:"
+    },
+    {
+      "type": "paragraph",
+      "text": "• By value: The value passed is a copy of the \toriginal. The original value is not modified."
+    },
+    {
+      "type": "paragraph",
+      "text": "• By reference: The value passed is a pointer to the \tmemory address. The original value can be modified."
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "13"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 14: Example: Passing by Value"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "14"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Slide 15: Example: Passing by Reference"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pointers"
+    },
+    {
+      "type": "paragraph",
+      "text": "15"
+    }
+  ]
+}

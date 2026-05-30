@@ -1,0 +1,21 @@
+{
+  "title": "Uniones — Parte I",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Uniones En una estructura, cada campo tiene espacio en memoria para almacenar su valor. Pero hay situaciones especiales en la que las estructuras de datos pueden desperdiciar memoria. Supongamos que una aplicación puede identificar a los usuarios mediante uno de los siguientes posibles cinco datos:"
+    },
+    {
+      "type": "paragraph",
+      "text": "NIF: ocho dígitos seguidos de una letra. CIF: letra seguida de 8 dígitos. Pasaporte: ocho letras y/o números. NIE: letra seguida de 7 dígitos y una segunda letra. Nombre de usuario: cadena de texto de hasta 16 letras. Una posible estructura de datos para almacenar esta inforamación se muestra en la parte izquierda de la siguiente figura:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Si asumimos que los enteros ocupan 4 bytes y las letras 1 byte, la estructura necesita 40 bytes para ser almacenada en memoria tal y como se muestra en la parte derecha de la figura anterior. Pero de todos los campos sólo uno contiene información, el resto están vacíos. Esto quiere decir que la estructura de datos sólo utilizará entre un 12.5% y un 40% del espacio que ocupa. Más de la mitad de la memoria se desperdicia. C ofrece una estructura en la que todos los campos comparten el mismo espacio de memoria y que está pensada precisamente para aquellos casos en las que sólo uno de esos campos se utiliza en cada momento. Esta estructura se define reemplazando la palabra “struct” por “union”. La siguiente figura muestra la definición de los datos de usuario utilizando union. Cuando se define una “union” se reserva sólo el espacio del mayor de los campos."
+    },
+    {
+      "type": "paragraph",
+      "text": "Los datos se almacenan comenzando por la misma posición de memoria y con la estructura del campo seleccionado. Esta construcción no guarda en ningún lugar cuál de los campos se está utilizando. Si esa información es necesaria, el programador debe almacenarla en una estructura de datos auxiliar. El acceso a los campos de una “union” se realiza igual que en una estructura."
+    }
+  ]
+}

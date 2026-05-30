@@ -1,0 +1,161 @@
+{
+  "title": "Uniones — Parte III",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Objetos compuestos en C: estructuras y uniones Belarmino Pulido Tipos estructurados y de nidos por el usuario:"
+    },
+    {
+      "type": "code",
+      "text": "struct y union"
+    },
+    {
+      "type": "paragraph",
+      "text": "Además de los tipos de datos básicos, se pueden crear registros con las sentencias struct y union."
+    },
+    {
+      "type": "paragraph",
+      "text": "El formato general de una declaración struct es:"
+    },
+    {
+      "type": "code",
+      "text": "struct [nombre_estructura] {"
+    },
+    {
+      "type": "paragraph",
+      "text": "campo_1; campo_2; ..."
+    },
+    {
+      "type": "paragraph",
+      "text": "} [variable_estructura]; El formato general de una declaración union es:"
+    },
+    {
+      "type": "code",
+      "text": "union [nombre_union] {"
+    },
+    {
+      "type": "paragraph",
+      "text": "campo_1; campo_2; ..."
+    },
+    {
+      "type": "paragraph",
+      "text": "} [variable_union]; La diferencia entre una variable tipo union y un registro"
+    },
+    {
+      "type": "code",
+      "text": "struct es que la primera implica que todos los campos"
+    },
+    {
+      "type": "paragraph",
+      "text": "ocupan la misma posición de memoria (que será del tamaño del mayor de ellos)."
+    },
+    {
+      "type": "paragraph",
+      "text": "Se utiliza cuando se quiere que una misma variable pueda contener datos de distinto tipo, o cuando se quiere utilizar una misma variable desde distintos puntos de vista."
+    },
+    {
+      "type": "paragraph",
+      "text": "También se pueden renombrar tipos de datos existentes utilizando typedef. Struct De nición de un tipo de dato dirección: struct dir"
+    },
+    {
+      "type": "code",
+      "text": "struct dir {\nchar nombre[30], calle[40], ciudad[20], prov[20];"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned long int DP;"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "Si queremos de nir una variable:"
+    },
+    {
+      "type": "code",
+      "text": "struct dir ainfo;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Utilizando struct se pueden de nir los tipos y las varia- bles de ese tipo al mismo tiempo:"
+    },
+    {
+      "type": "code",
+      "text": "struct dir {\nchar nombre[30], calle[40], ciudad[20], prov[20];"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned long int DP; } ainfo, binfo, cinfo; También se pueden de nir variables de tipo registro, sin de nir un tipo estructurado:"
+    },
+    {
+      "type": "code",
+      "text": "struct {\nchar nombre[30];\nchar calle[40];\nchar ciudad[20];\nchar prov[20];"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned long int DP; } dinfo; Sólo debemos usar esta última opción cuando no vaya a reutilizarse el tipo de dato. Para referirnos a los elementos de una estructura o unión se utiliza la notación:"
+    },
+    {
+      "type": "paragraph",
+      "text": "nombre estructura.nombre campo"
+    },
+    {
+      "type": "code",
+      "text": "ainfo.DP = 33180;\nprintf (\"%d\\n\",ainfo.DP);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Si lo que queremos es tener un vector de estructuras, tendremos que de nir:"
+    },
+    {
+      "type": "code",
+      "text": "struct dir ainfo[100];\nprintf(\"%d\\n\",ainfo[i].DP);\nstruct x {\nint a[10][10];\nfloat b;"
+    },
+    {
+      "type": "paragraph",
+      "text": "} y; Union Cuando se crea la unión se reserva memoria para almacenar la mayor cantidad posible de información."
+    },
+    {
+      "type": "code",
+      "text": "union u {\nint i;\nchar ca;\n};\nunion u cnvt;"
+    },
+    {
+      "type": "paragraph",
+      "text": "El tamaño de la variable vendrá dado por el máximo de las longitudes de: cnvt.i ó cnvt.ca La función sizeof Dado que el tamaño de los distintos tipos de datos variará de unas máquinas a otras, se dispone de la función sizeof que devuelve el tamaño de la variable que se pase como argumento, sea esta del tipo que sea:"
+    },
+    {
+      "type": "code",
+      "text": "char ca; int i; float f;\nprintf (\"%d\\n\", sizeof(ca));\nprintf (\"%d\\n\", sizeof(i));\nprintf (\"%d\\n\", sizeof(f));"
+    },
+    {
+      "type": "paragraph",
+      "text": "Renombrar tipos de datos con typedef Si lo que queremos es utilizar la sentencia typedef para renombrar tipos de datos y que nos sea más sencilla la programación:"
+    },
+    {
+      "type": "code",
+      "text": "typedef float balance;"
+    },
+    {
+      "type": "paragraph",
+      "text": "balance deuda;"
+    },
+    {
+      "type": "code",
+      "text": "struct dir {\nchar nombre[30], calle[40], ciudad[20], prov[20];\nunsigned long int DP;\n};\ntypedef struct dir direccion;"
+    },
+    {
+      "type": "paragraph",
+      "text": "direccion dire;"
+    },
+    {
+      "type": "code",
+      "text": "typedef struct {\nfloat credito;\nint deuda;\nchar nombre[40];"
+    },
+    {
+      "type": "paragraph",
+      "text": "} cliente; cliente clist[NUMCLIENTES]; /* Define un array de estructuras del tipo cliente, que es una estructura */ Con este método la programación es más sencilla, pero no se están de niendo realmente nuevos tipos de datos."
+    }
+  ]
+}

@@ -1,0 +1,139 @@
+{
+  "title": "Unions — Part III",
+  "blocks": [
+    {
+      "type": "heading",
+      "level": 1,
+      "text": "Composite Objects in C: Structures and Unions"
+    },
+    {
+      "type": "paragraph",
+      "text": "Belarmino Pulido"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Structured and User-Defined Types: struct and union"
+    },
+    {
+      "type": "paragraph",
+      "text": "In addition to basic data types, records can be created using the statements struct and union.The general format of a struct declaration is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "struct [structure_name] {    field_1;    field_2;    ...} [structure_variable]; The general format of a union declaration is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "union [union_name] {    field_1;    field_2;    ...} [union_variable]; The difference between a union-type variable and a struct record is that the former implies that all fields share the same memory position (which will be the size of the largest one).It is used when we want a single variable to be able to contain data of different types, or when we want to use the same variable from different points of view.Existing data types can also be renamed using typedef."
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Struct"
+    },
+    {
+      "type": "paragraph",
+      "text": "Definition of an address data type: struct dir"
+    },
+    {
+      "type": "code",
+      "text": "struct dir {    char name[30], street[40], city[20], state[20];    unsigned long int ZIP;};"
+    },
+    {
+      "type": "paragraph",
+      "text": "If we want to define a variable:"
+    },
+    {
+      "type": "code",
+      "text": "struct dir ainfo;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Using struct, we can define both the types and the variables of that type at the same time:"
+    },
+    {
+      "type": "code",
+      "text": "struct dir {    char name[30], street[40], city[20], state[20];    unsigned long int ZIP;} ainfo, binfo, cinfo;"
+    },
+    {
+      "type": "paragraph",
+      "text": "We can also define record-type variables without defining a structured type:"
+    },
+    {
+      "type": "paragraph",
+      "text": "struct {    char name[30];    char street[40];    char city[20];    char state[20];    unsigned long int ZIP;} dinfo; We should only use this last option when the data type will not be reused."
+    },
+    {
+      "type": "paragraph",
+      "text": "To refer to the elements of a structure or union, we use the notation:"
+    },
+    {
+      "type": "code",
+      "text": "structure_name.field_nameainfo.ZIP = 33180;printf(\"%d\\n\", ainfo.ZIP);"
+    },
+    {
+      "type": "paragraph",
+      "text": "If we want to have an array of structures, we must define:"
+    },
+    {
+      "type": "code",
+      "text": "struct dir ainfo[100];printf(\"%d\\n\", ainfo[i].ZIP);\nstruct x {    int a[10][10];    float b;} y;"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Union"
+    },
+    {
+      "type": "paragraph",
+      "text": "When a union is created, memory is reserved to store the largest possible amount of information."
+    },
+    {
+      "type": "code",
+      "text": "union u {    int i;    char ca;};union u cnvt;"
+    },
+    {
+      "type": "paragraph",
+      "text": "The size of the variable will be determined by the maximum length of either:cnvt.i or cnvt.ca"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "The sizeof Function"
+    },
+    {
+      "type": "paragraph",
+      "text": "Since the size of different data types varies from one machine to another, the sizeof function is available. It returns the size of the variable passed as an argument, regardless of its type:"
+    },
+    {
+      "type": "code",
+      "text": "char ca; int i; float f;printf(\"%d\\n\", sizeof(ca));printf(\"%d\\n\", sizeof(i));printf(\"%d\\n\", sizeof(f));"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Renaming Data Types with typedef"
+    },
+    {
+      "type": "paragraph",
+      "text": "If we want to use the typedef statement to rename data types and simplify programming:"
+    },
+    {
+      "type": "code",
+      "text": "typedef float balance;balance debt;struct dir {    char name[30], street[40], city[20], state[20];    unsigned long int ZIP;};typedef struct dir address;address addr;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Another example using typedef with a structure:"
+    },
+    {
+      "type": "code",
+      "text": "typedef struct {    float credit;    int debt;    char name[40];} client;client clist[NUMCLIENTS];/* Defines an array of structures of type client */"
+    },
+    {
+      "type": "paragraph",
+      "text": "With this method, programming becomes easier, but new data types are not actually being created."
+    }
+  ]
+}

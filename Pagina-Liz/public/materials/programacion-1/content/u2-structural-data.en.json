@@ -1,0 +1,1566 @@
+{
+  "title": "Structural Data Types",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "UNIT 2: STRUCTURAL DATA TYPES This chapter examines structures, unions, enumerations, and user-defined types that allow a programmer to create new data types. The ability to create new types is an important and powerful feature of C and frees programmers from being restricted to using the types offered by the language."
+    },
+    {
+      "type": "paragraph",
+      "text": "A structure contains multiple variables, which can be of different types. Structures are important for creating powerful programs, such as databases or other applications that require large amounts of data. Furthermore, we will analyze the concept of unions, another data type not as important as arrays and structures, but necessary in some cases."
+    },
+    {
+      "type": "paragraph",
+      "text": "An enumerated data type is a collection of named members that have equivalent integer values. A typedef is actually not a new data type but simply a synonym for an existing type."
+    },
+    {
+      "type": "paragraph",
+      "text": "KEY CONCEPTS Structure Nested structures Field selector struct sizeof union typedef Bit operators 9.1. STRUCTURES Arrays are data structures that contain a determined number of elements (their size) and all elements must be of the same data type; they are homogeneous data structures. This characteristic represents a great limitation when groups of elements with different data types are required. For example, if you have a list of temperatures, an array is very useful; however, if you need a list of customer information containing elements such as name, age, address, account number, etc., arrays are not adequate. The solution to this problem is to use a record data type, called structure in C."
+    },
+    {
+      "type": "paragraph",
+      "text": "The individual components of a structure are called members. Each member (element) of a structure can contain data of a different type from other members. For example, you can use a structure to store different types of information about a person, such as name, marital status, age, and date of birth. Each of these elements are called members."
+    },
+    {
+      "type": "paragraph",
+      "text": "A structure is a collection of one or more element types denominated members, each one of them can be a different data type."
+    },
+    {
+      "type": "paragraph",
+      "text": "A structure can contain any number of members, each of which has a unique name, called member name. Suppose you want to store data from a collection of music compact discs (CDs). This data could be:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Title Artist Number of songs Price Purchase date The CD structure contains five members. After deciding on the members, you must decide what data types to use for the members. This information is represented in the following table:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Member Name Data Type Title Character array of size 30 Artist Character array of size 25 Number of songs Integer Price Floating point Purchase date Character array of size 8 Figure 9.1 contains a CD’s structure, showing graphically the data types inside the structure. Observe that each member is a different data type."
+    },
+    {
+      "type": "paragraph",
+      "text": "Title Oh, oh, oh, how the sun goes away."
+    },
+    {
+      "type": "paragraph",
+      "text": "Artist Don’t step on my feet Number of songs 10 Price 2222.25 Purchase date 8-10-1999 Figure 9.1. Graphical representation of a CD structure."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.1.1. Declaring a Structure A structure is a user-defined data type that must be declared before it can be used. The declaration format is:"
+    },
+    {
+      "type": "paragraph",
+      "text": "struct <structure_name>"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "<member_data_type> <member_name>; <member_data_type> <member_name>; <member_data_type> <member_name>; ..."
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "The declaration of the CD structure is:"
+    },
+    {
+      "type": "code",
+      "text": "struct cd_collection\n{\nchar title[30];\nchar artist[25];\nint num_songs;\nfloat price;\nchar purchase_date[8];\n};"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example"
+    },
+    {
+      "type": "code",
+      "text": "struct complex\n{\nfloat real_part, imaginary_part;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "In this other example, the structure type sale is declared:"
+    },
+    {
+      "type": "code",
+      "text": "struct sale\n{\nchar seller[30];"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned int code;"
+    },
+    {
+      "type": "code",
+      "text": "int num_items;\nfloat unit_price;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.1.2. Defining Structure Variables Like enumerated data types, a structure is accessed using one or more variables that must be defined after the structure declaration. As in other situations, in C there are two similar concepts to consider: declaration and definition. The technical difference is as follows: a declaration simply specifies the name and format of the data structure, but does not reserve storage in memory; the declaration specifies a new data type: struct <structure_name>. Consequently, each variable definition for a given structure creates an area in memory where data is stored according to the declared structured format."
+    },
+    {
+      "type": "paragraph",
+      "text": "Structure variables can be defined in two ways: 1) listing them immediately after the closing brace of the structure declaration, or 2) listing the created structure type followed by the corresponding variables anywhere in the program before using them. The definition and declaration of the cd_collections structure can be done by either of the two methods:"
+    },
+    {
+      "type": "paragraph",
+      "text": "1. struct cd_collections"
+    },
+    {
+      "type": "code",
+      "text": "{\nchar title[30];\nchar artist[25];\nint num_songs;\nfloat price;\nchar purchase_date[8];"
+    },
+    {
+      "type": "paragraph",
+      "text": "} cd1, cd2, cd3; 2. struct cd_collections cd1, cd2, cd3; Other definition/declaration examples Consider a program that manages books and processes the following data: book title, author name, publisher, and year of publication. A book_info structure could be:"
+    },
+    {
+      "type": "code",
+      "text": "struct book_info\n{\nchar title[60];\nchar author[30];\nchar publisher[30];\nint year;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "The structure definition can be done like this:"
+    },
+    {
+      "type": "paragraph",
+      "text": "1. struct book_info"
+    },
+    {
+      "type": "code",
+      "text": "{\nchar title[60];\nchar author[30];\nchar publisher[30];\nint year;"
+    },
+    {
+      "type": "paragraph",
+      "text": "} book1, book2, book3; 2. struct book_info book1, book2, book3; Now we have an application for controlling participants in a popular race, each participant is represented by the data: name, age, gender, category, club, and time. The record is represented with the runner structure:"
+    },
+    {
+      "type": "code",
+      "text": "struct runner\n{\nchar name[40];\nint age;\nchar gender;\nchar category[20];\nchar club[26];\nfloat time;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "The definition of structure variables can be done like this:"
+    },
+    {
+      "type": "code",
+      "text": "struct runner v1, s1, c1;"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.1.3. Using Structures in Assignments Since a structure is a data type similar to an int or a char, you can assign one structure to another. For example, you can make book3, book4, and book5 have the same values in their members as book1. Therefore, the following statements would be necessary:"
+    },
+    {
+      "type": "code",
+      "text": "book3 = book1;\nbook4 = book1;\nbook5 = book1;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Alternatively, you can write:"
+    },
+    {
+      "type": "code",
+      "text": "book4 = book5 = book6 = book1;"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.1.4. Initializing a Structure Declaration You can initialize a structure in two ways. You can initialize a structure within the code section of your program, or you can initialize the structure as part of the definition. When you initialize a structure as part of the definition, you specify the initial values, in braces, after the structure variable definition. The general format in this case:"
+    },
+    {
+      "type": "paragraph",
+      "text": "struct <type> <structure_variable_name> ="
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "member_value, member_value, member_value ..."
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example:"
+    },
+    {
+      "type": "code",
+      "text": "struct book_info\n{\nchar title[60];\nchar author[30];\nchar publisher[30];\nint year;\n} book1 = {\"Wonder of Knowledge\", \"Lucas Garcia\", \"McGraw-Hill\", 1999};"
+    },
+    {
+      "type": "paragraph",
+      "text": "Another example could be:"
+    },
+    {
+      "type": "code",
+      "text": "struct cd_collection\n{\nchar title[30];\nchar artist[25];\nint num_songs;\nfloat price;\nchar purchase_date[8];"
+    },
+    {
+      "type": "paragraph",
+      "text": "} cd1 = { \"The smoke clouds your eyes\", \"Cole Porter\", 15, 2545, \"02/6/99\""
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "Another example with the runner structure:"
+    },
+    {
+      "type": "code",
+      "text": "struct runner v1 = {"
+    },
+    {
+      "type": "paragraph",
+      "text": "\"Salvador Rapido\", 29, 'M', \"senior\", \"Independent\", 0.0"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.1.5. The Size of a Structure The sizeof operator applies to a data type or to a variable. It can be applied to determine the size that a structure occupies in memory. The following program illustrates the use of the sizeof operator to determine the size of a structure:"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* declare a Person structure */"
+    },
+    {
+      "type": "code",
+      "text": "struct person\n{\nchar name[30];\nint age;\nfloat height;\nfloat weight;\n};\nvoid main()\n{\nstruct person mar;\nprintf(\"Sizeof(person): %d \\n\", sizeof(mar));\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "When running the program, the output is produced:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sizeof(person): 40 The result is obtained by determining the number of bytes occupied by the structure:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Person Data Members Size (bytes) name[30] char(1) 30 age int(2) 2 height float(4) 4 weight float(4) 4 Total 40 9.2. ACCESSING STRUCTURES When accessing a structure, you either store information in the structure or retrieve information from the structure. You can access the members of a structure in one of two ways: 1) using the dot operator (.), or 2) using the pointer operator ->."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.2.1. Storing Information in Structures You can store information in a structure through initialization, direct assignment, or keyboard input. The initialization process has already been examined; let's now look at direct assignment and keyboard input."
+    },
+    {
+      "type": "paragraph",
+      "text": "Accessing a data structure using the dot operator Assigning data to the members of a structure variable is done using the dot operator. The syntax in C is:"
+    },
+    {
+      "type": "code",
+      "text": "<structure_variable_name>.<member_name> = data;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Some examples:"
+    },
+    {
+      "type": "code",
+      "text": "strcpy(cd1.title, \"Granada\");\ncd1.price = 3450.75;\ncd1.num_songs = 7;"
+    },
+    {
+      "type": "paragraph",
+      "text": "The dot operator provides direct access to the corresponding member. The data stored in a given member must be of the same type as the type declared for that member. In the following example, the data for a runner structure variable is read from the keyboard:"
+    },
+    {
+      "type": "code",
+      "text": "struct runner cr;\nprintf(\"Name: \");\ngets(cr.name);\nprintf(\"Age: \");\nscanf(\"%d\", &cr.age);\nprintf(\"Gender: \");\nscanf(\"%c\", &cr.gender);\nprintf(\"Club: \");\ngets(cr.club);"
+    },
+    {
+      "type": "paragraph",
+      "text": "if (cr.age <= 18)"
+    },
+    {
+      "type": "code",
+      "text": "cr.category = \"Youth\";"
+    },
+    {
+      "type": "paragraph",
+      "text": "else if (cr.age <= 40)"
+    },
+    {
+      "type": "code",
+      "text": "cr.category = \"Senior\";"
+    },
+    {
+      "type": "code",
+      "text": "cr.category = \"Veteran\";"
+    },
+    {
+      "type": "paragraph",
+      "text": "Accessing a data structure using the pointer operator The pointer operator, ->, is used to access the structure data from a pointer. To use this operator, you must first define a pointer variable to point to the structure. Then, simply use the pointer operator to point to a given member."
+    },
+    {
+      "type": "paragraph",
+      "text": "Data assignment to structures using the pointer operator has the format:"
+    },
+    {
+      "type": "code",
+      "text": "<structure_pointer> -> <member_name> = data;"
+    },
+    {
+      "type": "paragraph",
+      "text": "For example, a student structure:"
+    },
+    {
+      "type": "code",
+      "text": "struct student\n{\nchar Name[41];\nint Student_Num;\nint Year_of_enrollment;\nfloat Grade;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "You can define ptr_stu as a pointer to the structure:"
+    },
+    {
+      "type": "code",
+      "text": "struct student *ptr_stu;\nstruct student best;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Data can be assigned to the members of the student structure as follows (provided that the structure has already created its storage space, for example, with malloc(); or has the address of a structure variable):"
+    },
+    {
+      "type": "paragraph",
+      "text": "ptr_stu = &best;  /* ptr_stu has the address (points to) best */"
+    },
+    {
+      "type": "code",
+      "text": "strcpy(ptr_stu->Name, \"Pepe Alondra\");\nptr_stu->Student_Num = 3425;\nptr_stu->Grade = 8.5;"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Note"
+    },
+    {
+      "type": "paragraph",
+      "text": "Previously, you would need to create storage space in memory; for example, with the malloc() function."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.2.2. Reading Information from a Structure If you now want to enter information into the structure, you simply need to access the structure members with the dot or arrow (pointer) operator. You can enter information from the keyboard or from a file, or assign calculated values."
+    },
+    {
+      "type": "paragraph",
+      "text": "Thus, if z is a variable of type complex structure, the real part and imaginary part are read and the modulus is calculated:"
+    },
+    {
+      "type": "code",
+      "text": "struct complex\n{\nfloat re;\nfloat im;\nfloat modulus;\n};\nstruct complex z;\nprintf(\"\\nReal part: \");\nscanf(\"%f\", &z.re);\nprintf(\"\\nImaginary part: \");\nscanf(\"%f\", &z.im);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* calculation of modulus */"
+    },
+    {
+      "type": "code",
+      "text": "z.modulus = sqrt(z.re*z.re + z.im*z.im);"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.2.3. Retrieving Information from a Structure"
+    },
+    {
+      "type": "code",
+      "text": "You retrieve information from a structure using the assignment operator or an output statement (printf(), puts(), ...). As before, you can use the dot operator or the arrow (pointer) operator. The general format takes one of these forms:\n1. <variable_name> = <structure_variable_name>.<member_name>;"
+    },
+    {
+      "type": "code",
+      "text": "<variable_name> = <structure_pointer> -> <member_name>;"
+    },
+    {
+      "type": "paragraph",
+      "text": "2. for output:"
+    },
+    {
+      "type": "code",
+      "text": "printf(\" \", <structure_variable_name>.<member_name>);"
+    },
+    {
+      "type": "code",
+      "text": "printf(\" \", <structure_pointer>-> <member_name>);"
+    },
+    {
+      "type": "paragraph",
+      "text": "Some examples of using the complex structure:"
+    },
+    {
+      "type": "code",
+      "text": "float x, y;\nstruct complex z;\nstruct complex *pz;\npz = &z;\nx = z.re;\ny = z.im;"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"\\nComplex number (%.1f,%.1f), modulus: %.2f\","
+    },
+    {
+      "type": "paragraph",
+      "text": "pz->re, pz->im, pz->modulus); 9.3. NESTED STRUCTURES A structure can contain other structures called nested structures. Nested structures save time in writing programs that use similar structures. You define common members only once in their own structure and then use that structure as a member of another structure. Consider the following two structure definitions:"
+    },
+    {
+      "type": "code",
+      "text": "struct employee\n{\nchar employee_name[30];\nchar address[25];\nchar city[20];\nchar province[20];"
+    },
+    {
+      "type": "paragraph",
+      "text": "long int postal_code;"
+    },
+    {
+      "type": "code",
+      "text": "double salary;\n};\nstruct customers\n{\nchar customer_name[30];\nchar address[25];\nchar city[20];\nchar province[20];"
+    },
+    {
+      "type": "paragraph",
+      "text": "long int postal_code;"
+    },
+    {
+      "type": "code",
+      "text": "double balance;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "These structures contain many different data, although there is overlapping data. Thus, you could have a structure, address_info, that contains the common members:"
+    },
+    {
+      "type": "code",
+      "text": "struct address_info\n{\nchar address[25];\nchar city[20];\nchar province[20];"
+    },
+    {
+      "type": "paragraph",
+      "text": "long int postal_code;"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "This structure can be used as a member of the other structures, that is, nested:"
+    },
+    {
+      "type": "code",
+      "text": "struct employee\n{\nchar employee_name[30];\nstruct address_info employee_address;\ndouble salary;\n};\nstruct customers\n{\nchar customer_name[30];\nstruct address_info customer_address;\ndouble balance;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "Grafically, nested structures could be shown in figure 9.2 employee:"
+    },
+    {
+      "type": "paragraph",
+      "text": "customer:"
+    },
+    {
+      "type": "paragraph",
+      "text": "employee_name├─ address├─ city├─ province└─ postal_code(address_info)salary customer_name├─ address├─ city├─ province└─ postal_code(address_info)balance Figure 9.2. Nested structures."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.3.1. Example of Nested Structures We want to design a structure that contains information about financial operations. This structure must consist of an account number, an amount of money, the type of operation (deposit=0, withdrawal=1, update=2 or account status=3), and the date and time when the operation was performed. In order to correctly access the day, month, and year fields, as well as the time (hour and minutes) when the operation was performed, we define a date structure and a time structure. The transaction_record structure has as members a variable (a field) of type date, another variable of type time, and other variables to represent the other fields. The representation of the operation type is done with an integer variable, although the appropriate type is an enumerated type (described in following sections). Next, these types are declared, and a function is written that reads a financial operation and returns the operation read. The date and time is captured from the system."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <dos.h>\nstruct transaction_record input();\nstruct date\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned int month, day, year;"
+    },
+    {
+      "type": "code",
+      "text": "};\nstruct time\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned int hours, minutes;"
+    },
+    {
+      "type": "code",
+      "text": "};\nstruct transaction_record\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "long account_number;"
+    },
+    {
+      "type": "code",
+      "text": "float amount;\nint operation_type;\nstruct date f;\nstruct time t;\n};\nint main()\n{\nstruct transaction_record w;\nw = input();\nprintf(\"\\n\\nOperation performed\\n\");\nprintf(\"\\t%ld\\n\", w.account_number);\nprintf(\"\\t%d-%d-%d\\n\", w.f.day, w.f.month, w.f.year);\nprintf(\"\\t%d:%d\\n\", w.t.hours, w.t.minutes);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}\nstruct transaction_record input()\n{\nstruct time t;\nstruct date d;\nstruct transaction_record one;\nprintf(\"\\nAccount number: \");\nscanf(\"%ld\", &one.account_number);\nputs(\"\\n\\tOperation type\");\nputs(\"Deposit(0)\");\nputs(\"Withdrawal(1)\");\nputs(\"Update(2)\");\nputs(\"Account status(3)\");\nscanf(\"%d\", &one.operation_type);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* System date and time */"
+    },
+    {
+      "type": "code",
+      "text": "gettime(&t);\none.t.hours = t.ti_hour;\none.t.minutes = t.ti_min;\ngetdate(&d);\none.f.year = d.da_year;\none.f.month = d.da_mon;\none.f.day = d.da_day;"
+    },
+    {
+      "type": "paragraph",
+      "text": "return one;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exercise 9.1"
+    },
+    {
+      "type": "paragraph",
+      "text": "We want to register a PersonEmployee structure that contains as members the data of an employee person who in turn has the data of the date of birth. In a program, the use of the structure is shown, a function is defined to input the structure data and another function to output the data of a person structure. The input function is passed by address (&p) the structure variable, so the corresponding argument has to be a pointer (*p) and access to the fields is done with the selector ->"
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\nstruct date\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned int day, month, year;"
+    },
+    {
+      "type": "code",
+      "text": "};\nstruct person\n{\nchar name[20];"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned int age;"
+    },
+    {
+      "type": "code",
+      "text": "int height;\nint weight;\nstruct date birth_date;\n};\nstruct person_employee\n{\nstruct person a_person;"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned int salary; unsigned int hours_per_week;"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* function prototypes */"
+    },
+    {
+      "type": "code",
+      "text": "void input(struct person_employee *p);\nvoid display(struct person_employee ap);\nvoid main()\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* define a person_employee variable */"
+    },
+    {
+      "type": "code",
+      "text": "struct person_employee p;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* call to input() passing the address */"
+    },
+    {
+      "type": "code",
+      "text": "input(&p);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* output of stored data */"
+    },
+    {
+      "type": "code",
+      "text": "display(p);\n}\nvoid input(struct person_employee *p)\n{\nprintf(\"\\nEnter your name: \");\ngets(p->a_person.name);\nprintf(\"Enter your age: \");\nscanf(\"%d\", &p->a_person.age);\nprintf(\"Enter your height: \");\nscanf(\"%d\", &p->a_person.height);\nprintf(\"Enter your weight: \");\nscanf(\"%d\", &p->a_person.weight);\nprintf(\"Enter your birth date: \");\nscanf(\"%d %d %d\", &p->a_person.birth_date.day,"
+    },
+    {
+      "type": "paragraph",
+      "text": "&p->a_person.birth_date.month, &p->a_person.birth_date.year);"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"Enter your salary: \");\nscanf(\"%d\", &p->salary);\nprintf(\"Enter number of hours: \");\nscanf(\"%d\", &p->hours_per_week);\n}\nvoid display(struct person_employee ap)\n{\nputs(\"\\n\\n\\tEmployee data\");\nprintf(\"Name: %s \\n\", ap.a_person.name);\nprintf(\"Age: %d \\n\", ap.a_person.age);\nprintf(\"Birth date: %d-%d-%d\\n\","
+    },
+    {
+      "type": "paragraph",
+      "text": "ap.a_person.birth_date.day, ap.a_person.birth_date.month, ap.a_person.birth_date.year);"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"Height: %d \\n\", ap.a_person.height);\nprintf(\"Weight: %d \\n\", ap.a_person.weight);\nprintf(\"Number of hours: %d \\n\", ap.hours_per_week);\nputs(\"\\n\\n\\t\");\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Access to data members of nested structures requires the use of multiple dot operators."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example: access to the day of the month of the birth date of an employee"
+    },
+    {
+      "type": "paragraph",
+      "text": "ap.a_person.birth_date.day Structures can be nested to any degree. It is also possible to initialize nested structures in the definition. The following example initializes a variable Luis of type struct person:"
+    },
+    {
+      "type": "code",
+      "text": "struct person Luis = {\"Luis\", 25, 1940, 40, {12, 1, 70}};"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.4. ARRAYS OF STRUCTURES You can create an array of structures just as you create an array of other types. Arrays of structures are ideal for storing a complete file of employees, an inventory file, or any other set of data that fits a structure format. While arrays provide a convenient way to store various values of the same type, arrays of structures allow you to store various values of different types together, grouped as structures."
+    },
+    {
+      "type": "paragraph",
+      "text": "Many C programmers use arrays of structures as a method for storing data in a disk file. You can input and process disk data into arrays of structures and then store those structures in memory. Arrays of structures also provide a means of saving data that is read from disk."
+    },
+    {
+      "type": "paragraph",
+      "text": "The declaration of an array of book_info structures can be done in a way similar to any array, that is:"
+    },
+    {
+      "type": "code",
+      "text": "struct book_info books[100];"
+    },
+    {
+      "type": "paragraph",
+      "text": "assigns an array of 100 elements called books. To access the members of each of the structure elements, array notation is used. To initialize the first element of books, for example, your code must reference the members of books[0] as follows:"
+    },
+    {
+      "type": "code",
+      "text": "strcpy(books[0].title, \"C++ at your fingertips\");\nstrcpy(books[0].author, \"Luis Joyanes\");\nstrcpy(books[0].publisher, \"McGraw-Hill\");\nbooks[0].year = 1999;"
+    },
+    {
+      "type": "paragraph",
+      "text": "You can also initialize an array of structures at the point of declaration by enclosing the list of initializers in braces, {}. For example:"
+    },
+    {
+      "type": "code",
+      "text": "struct book_info books[3] = {"
+    },
+    {
+      "type": "paragraph",
+      "text": "\"C++ at your fingertips\", \"Luis Joyanes\", \"McGraw-Hill\", 1999, \"Data structures\", \"Luis Joyanes\", \"McGraw-Hill\", 1999, \"Problems in Pascal\", \"Angel Hermoso\", \"McGraw-Hill\", 1997"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "In the following example, a structure representing a rational number is declared, and an array of rational numbers is initialized with random values:"
+    },
+    {
+      "type": "code",
+      "text": "struct rational\n{\nint numerator;\nint denominator;\n};\nstruct rational rs[4] = { {1,2}, {2,3}, {-4,7}, {0,1} };"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.4.1. Arrays as Members Structure members can also be arrays. In this case, extra precautions must be taken when accessing individual array elements."
+    },
+    {
+      "type": "paragraph",
+      "text": "Consider the following structure definition. This statement declares an array of 100 structures, where each structure contains information about employee data of a company:"
+    },
+    {
+      "type": "code",
+      "text": "struct payroll\n{\nchar name[30];\nint dependents;\nchar department[10];\nfloat daily_hours[7];  /* array of type float */\nfloat salary;"
+    },
+    {
+      "type": "paragraph",
+      "text": "} employee[100];  /* An array of 100 employees */"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example 9.1"
+    },
+    {
+      "type": "paragraph",
+      "text": "A bookstore wants to catalog its book inventory. The following program creates an array of 100 structures, where each structure contains various types of variables, including arrays."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <ctype.h>\n#include <stdlib.h>\nstruct inventory\n{\nchar title[25];\nchar publication_date[20];\nchar author[30];\nint quantity;\nint order;\nfloat sale_price;\n};\nint main()\n{\nstruct inventory book[100];\nint total = 0;\nchar response, buffer[21];"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"Total books %d \\n\", (total+1));\nprintf(\"What is the title?: \");\ngets(book[total].title);\nprintf(\"What is the publication date?: \");\ngets(book[total].publication_date);\nprintf(\"Who is the author?: \");\ngets(book[total].author);\nprintf(\"How many books exist?: \");\nscanf(\"%d\", &book[total].quantity);\nprintf(\"How many copies are on order?: \");\nscanf(\"%d\", &book[total].order);\nprintf(\"What is the sale price?: \");\ngets(buffer);"
+    },
+    {
+      "type": "paragraph",
+      "text": "book[total].sale_price = atof(buffer);  /* conversion to real */"
+    },
+    {
+      "type": "code",
+      "text": "fflush(stdin);\nprintf(\"\\nAre there more books? (Y/N): \");\nscanf(\"%c\", &response);\nfflush(stdin);"
+    },
+    {
+      "type": "paragraph",
+      "text": "response = toupper(response);  /* convert to uppercase */ if (response == 'Y')"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "total++; continue;"
+    },
+    {
+      "type": "code",
+      "text": "}\n} while (response == 'Y');"
+    },
+    {
+      "type": "paragraph",
+      "text": "return 0;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.5. USING STRUCTURES AS PARAMETERS C allows passing structures to functions, either by value or by reference using the & operator. If the structure is large, the time needed to copy a struct parameter to the stack can be prohibitive. In such cases, you should consider the method of passing the structure's address."
+    },
+    {
+      "type": "paragraph",
+      "text": "The following listing shows a program that passes the address of a structure to a function for data input. The same structure variable is passed by value to another function for field output."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* Define the person_info structure type */"
+    },
+    {
+      "type": "code",
+      "text": "struct person_info {\nchar name[20];\nchar street[30];\nchar city[25];\nchar province[25];\nchar postal_code[6];\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* function prototypes */"
+    },
+    {
+      "type": "code",
+      "text": "void input_person(struct person_info* pp);\nvoid view_info(struct person_info p);\nvoid main(void)\n{\nstruct person_info data_record;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* Pass by reference the variable */"
+    },
+    {
+      "type": "code",
+      "text": "input_person(&data_record);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* Pass by value */"
+    },
+    {
+      "type": "code",
+      "text": "view_info(data_record);\nprintf(\"\\nPress any character to continue\\n\");\ngetchar();\n}\nvoid input_person(struct person_info* pp)\n{\nputs(\"\\nEnter a person's data\\n\");\nprintf(\"Name: \");\ngets(pp->name);\nprintf(\"Street: \");\ngets(pp->street);\nprintf(\"City: \");\ngets(pp->city);\nprintf(\"Province: \");\ngets(pp->province);\nprintf(\"Postal code: \");\ngets(pp->postal_code);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* To access the fields, use the selector -> */"
+    },
+    {
+      "type": "code",
+      "text": "}\nvoid view_info(struct person_info p)\n{\nputs(\"\\n\\tInformation about the person\");\nputs(p.name);\nputs(p.street);\nputs(p.city);\nputs(p.province);\nputs(p.postal_code);\n}"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Note"
+    },
+    {
+      "type": "paragraph",
+      "text": "If you want to pass the structure by reference, you need to place a reference operator & before data_record in the call to the input_person() function. The parameter must be a pointer type struct person_info *pp. Access to members from a pointer requires the use of the selector ->."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.6. UNIONS Unions are similar to structures in that they group a series of variables, but the form of storage is different and, consequently, has different effects. A structure (struct) allows storing related variables together and stored in contiguous positions in memory. Unions, declared with the reserved word union, also store multiple members in a package; however, instead of placing their members one after another, in a union, all members overlap each other in the same position. The size occupied by a union is determined as follows: the size of each variable in the union is analyzed, and the largest variable size will be the size of the union. The syntax of a union is as follows:"
+    },
+    {
+      "type": "code",
+      "text": "union name {"
+    },
+    {
+      "type": "paragraph",
+      "text": "type1 member1; type2 member2; ..."
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "An example:"
+    },
+    {
+      "type": "code",
+      "text": "union TestUnion\n{\nfloat Item1;\nint Item2;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "The amount of memory reserved for a union is equal to the width of the largest variable. In the union type, each of the data members shares memory with the other members of the union. The total amount of memory used by the shared union is 8 bytes, since the double element is the largest data member of the union."
+    },
+    {
+      "type": "code",
+      "text": "union share\n{\nchar letter;\nint element;\nfloat price;\ndouble z;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "One reason to use a union is to save memory. In many programs, you must have several variables, but you don't need to use them all at the same time. Consider the situation where you need to have several input character strings. You can create several character string arrays, such as the following:"
+    },
+    {
+      "type": "code",
+      "text": "char command_line[80];\nchar error_message[80];\nchar help_text[80];"
+    },
+    {
+      "type": "paragraph",
+      "text": "These three variables occupy 240 bytes of memory. However, if your program doesn't need to use the three variables simultaneously, why not allow them to share memory using a union? When combined in the phrases union type, these variables occupy a total of only 80 bytes."
+    },
+    {
+      "type": "code",
+      "text": "union phrases {\nchar command_line[80];\nchar error_message[80];\nchar help_text[80];"
+    },
+    {
+      "type": "paragraph",
+      "text": "} strings, *ptr_string; To refer to the members of a union, you use the dot operator (.), or the -> operator if done from a pointer to union. Thus:"
+    },
+    {
+      "type": "paragraph",
+      "text": "strings.help_text; strings.error_message; ptr_string->error_message; 9.7. ENUMERATIONS An enum is a user-defined type with named constants of integer type. In the declaration of an enum type, you write a list of identifiers that are internally associated with the integer constants 0, 1, 2, etc."
+    },
+    {
+      "type": "paragraph",
+      "text": "Format 1. enum"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "enumerator, enumerator, ... enumerator"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "2. enum name"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "enumerator, enumerator, ... enumerator"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "In the enum type declaration, constant values can be associated with the identifiers instead of the default association (0, 1, 2, etc.). To do this, use this format:"
+    },
+    {
+      "type": "paragraph",
+      "text": "3. enum name"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "enumerator1 = constant-expression1, enumerator2 = constant-expression2, enumerator3 = constant-expression3, ..."
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example 9.2"
+    },
+    {
+      "type": "paragraph",
+      "text": "Typical uses of enum enum Switch"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "ON, OFF"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum Boolean"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "FALSE, TRUE"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "RED, GREEN, BLUE"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "defines three constants RED, GREEN and BLUE with values equal to 0, 1 and 2, respectively. The data members of an enum are called enumerators and the default integer constant of the first enumerator in the list of data members is equal to 0. Note that, unlike struct and union, the members of an enum type are separated by the comma operator. The previous example is equivalent to the definition of the three constants, RED, GREEN and BLUE, such as:"
+    },
+    {
+      "type": "code",
+      "text": "const int RED = 0;\nconst int GREEN = 1;\nconst int BLUE = 2;"
+    },
+    {
+      "type": "paragraph",
+      "text": "In the following enumerated type declaration, the type is given a name:"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum weekdays"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "A variable of type enum weekdays can take the values specified in the type declaration:"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum weekdays day; for (day = MONDAY; day <= SUNDAY; day++)"
+    },
+    {
+      "type": "code",
+      "text": "{\nprintf(\"%d \", day);\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "The execution of the loop would write to the screen: 0 1 2 3 4 5 6."
+    },
+    {
+      "type": "paragraph",
+      "text": "Enumerators can be assigned constant values or constant expressions during declaration:"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum Hexahedron"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "VERTICES = 8, SIDES = 12, FACES = 6"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Exercise 9.2"
+    },
+    {
+      "type": "paragraph",
+      "text": "The following program shows the use of the boolean enumeration. The program reads a text and counts the vowels read. The vowel() function returns TRUE if the input character is a vowel."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <ctype.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum boolean"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "FALSE, TRUE"
+    },
+    {
+      "type": "code",
+      "text": "};\nenum boolean vowel(char c);\nvoid main()\n{\nchar character;\nint num_vowel = 0;\nputs(\"\\nEnter a text. To finish: ENTER\\n\");"
+    },
+    {
+      "type": "paragraph",
+      "text": "while ((character = getchar()) != '\\n')"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "if (vowel(tolower(character))) num_vowel++;"
+    },
+    {
+      "type": "code",
+      "text": "}\nprintf(\"\\nTotal vowels read: %d\\n\", num_vowel);\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "enum boolean vowel(char c)"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "switch (c)"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "case 'a':"
+    },
+    {
+      "type": "paragraph",
+      "text": "case 'e':"
+    },
+    {
+      "type": "paragraph",
+      "text": "case 'i':"
+    },
+    {
+      "type": "paragraph",
+      "text": "case 'o':"
+    },
+    {
+      "type": "paragraph",
+      "text": "case 'u':"
+    },
+    {
+      "type": "paragraph",
+      "text": "return TRUE; default:"
+    },
+    {
+      "type": "paragraph",
+      "text": "return FALSE;"
+    },
+    {
+      "type": "code",
+      "text": "}\n}"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.7.1. sizeof of Structured Data Types The size in bytes of a structure, a union, or an enumerated type can be determined with the sizeof operator."
+    },
+    {
+      "type": "paragraph",
+      "text": "The following program extracts the size of a structure (struct), a union (union) with identical data members, and an enumerated type."
+    },
+    {
+      "type": "paragraph",
+      "text": "/* declare a union */"
+    },
+    {
+      "type": "code",
+      "text": "union union_type\n{\nchar c;\nint i;\nfloat f;\ndouble d;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* declare a structure */"
+    },
+    {
+      "type": "code",
+      "text": "struct structure_type\n{\nchar c;\nint i;\nfloat f;\ndouble d;\n};"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* declare an enumerated type */ enum coins"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "paragraph",
+      "text": "PESETA, DURO, FIVE_DUROS, HUNDRED"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"\\nsizeof(structure_type): %d\\n\",\nsizeof(struct structure_type));\nprintf(\"\\nsizeof(union_type): %d\\n\",\nsizeof(union union_type));\nprintf(\"\\nsizeof(coins): %d\\n\",\nsizeof(enum coins));"
+    },
+    {
+      "type": "paragraph",
+      "text": "The output generated with this data:"
+    },
+    {
+      "type": "paragraph",
+      "text": "sizeof(structure_type): 15 sizeof(union_type): 8 sizeof(coins): 2 9.7.2. typedef A typedef allows a programmer to create a synonym of a user-defined data type or an existing type."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example"
+    },
+    {
+      "type": "paragraph",
+      "text": "Use of typedef to declare a new name, Length, of data type double."
+    },
+    {
+      "type": "code",
+      "text": "typedef double Length;"
+    },
+    {
+      "type": "paragraph",
+      "text": "Length Distance(const struct Point* p, const struct Point* p2)"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "code",
+      "text": "Length length = sqrt(r_squared);"
+    },
+    {
+      "type": "paragraph",
+      "text": "return length;"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "Other examples:"
+    },
+    {
+      "type": "code",
+      "text": "typedef char* String;\ntypedef const char* string;"
+    },
+    {
+      "type": "paragraph",
+      "text": "You can declare a structure type or a union type and then associate the structure type with a name using typedef."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example"
+    },
+    {
+      "type": "paragraph",
+      "text": "Declaration of the complex data type and association with complex."
+    },
+    {
+      "type": "code",
+      "text": "struct complex_num\n{\nfloat real_part;\nfloat imaginary_part;\n};\ntypedef struct complex_num complex;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* definition of an array of complex numbers */ complex v[12];"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Note"
+    },
+    {
+      "type": "paragraph",
+      "text": "The advantage of typedef is that it allows giving names to data types more in line with what they represent in a particular application."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.8. BIT FIELDS The C language allows performing operations with the bits of a word. We have already studied bit manipulation operators: >>, <<, ... With bit fields, C allows accessing a number of bits from an integer word. A bit field is a set of adjacent bits within an integer word. The syntax for declaring bit fields is based on structure declaration. The general format:"
+    },
+    {
+      "type": "code",
+      "text": "struct field_identifier {"
+    },
+    {
+      "type": "paragraph",
+      "text": "type name1: length1; type name2: length2; type name3: length3; ..."
+    },
+    {
+      "type": "paragraph",
+      "text": "type nameN: lengthN;"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "type must be integer, int; generally unsigned int length is the number of consecutive bits that are taken"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example 9.3"
+    },
+    {
+      "type": "paragraph",
+      "text": "In this example, a bit field is declared to represent in compressed format the day, month, year (the last two digits), and whether the year is a leap year."
+    },
+    {
+      "type": "code",
+      "text": "struct date {"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned day: 5; unsigned month: 4; unsigned year: 7; unsigned leap_year: 1;"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example 9.4"
+    },
+    {
+      "type": "paragraph",
+      "text": "The following example shows how bit fields can be used to represent whether various electrical components are connected or not. Each component is represented with a flag, with a bit; when it is set to zero it is not connected, when it is set to one it is connected."
+    },
+    {
+      "type": "code",
+      "text": "struct components {"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned diode: 1; unsigned resistor: 1; unsigned ammeter: 1; unsigned transistor: 1; unsigned capacitor: 1; unsigned inductance: 1;"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "Individual fields are referenced like any other member of a structure: dot selector (.). For example:"
+    },
+    {
+      "type": "code",
+      "text": "struct components ct;\nct.diode = 1;"
+    },
+    {
+      "type": "paragraph",
+      "text": "if (ct.ammeter)"
+    },
+    {
+      "type": "code",
+      "text": "{"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "When declaring bit fields, the sum of the declared bits can exceed the size of an integer; in that case, the next integer storage position is used. It is not allowed for a bit field to overlap the boundaries between two ints."
+    },
+    {
+      "type": "paragraph",
+      "text": "When declaring a structure, there can be members that are variables and others that are bit fields. The following structure has this characteristic:"
+    },
+    {
+      "type": "code",
+      "text": "struct student_record {\nchar name[33];\nchar surname1[33];\nchar surname2[33];"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned male: 1; unsigned female: 1; unsigned course: 3;"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "Bit fields are used for data encryption routines and mainly for certain external device interfaces. They have certain restrictions. Thus, you cannot take the address of a bit field variable; there cannot be arrays of bit fields; you cannot overlap int boundaries. It depends on the processor whether bit fields are aligned left to right or right to left (it is advisable to make a check for each processor, using a union with an integer variable and bit fields for this purpose)."
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example 9.5"
+    },
+    {
+      "type": "paragraph",
+      "text": "There is an access_request() function capable of addressing an 8-bit memory position if it receives as an argument a variable called eight_bits. With this variable it controls through each bit the access requests to each of the eight different peripherals it works with; external events are in charge of loading the eight_bits variable."
+    },
+    {
+      "type": "paragraph",
+      "text": "We want to write a function that determines how many accesses occur for each peripheral in a loop of 1000 calls to the access_request() function. It is assumed that each call only activates one peripheral."
+    },
+    {
+      "type": "paragraph",
+      "text": "Analysis The type of the eight_bits variable will be a bit field structure, each field with length 1; so it can have two states, 0 or 1, to indicate no access or yes access. An array of 8 elements, as many as peripherals, is used to count the accesses to each peripheral."
+    },
+    {
+      "type": "paragraph",
+      "text": "/* Bit field structure type */"
+    },
+    {
+      "type": "code",
+      "text": "struct peripherals {"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned periph1: 1; unsigned periph2: 1; unsigned periph3: 1; unsigned periph4: 1; unsigned periph5: 1; unsigned periph6: 1; unsigned periph7: 1; unsigned periph8: 1;"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* access_request() function prototype */"
+    },
+    {
+      "type": "code",
+      "text": "void access_request(const struct peripherals eight_bits);"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* Function that counts accesses to each peripheral. */"
+    },
+    {
+      "type": "code",
+      "text": "void peripheral_accesses(int acc_periph[])\n{\nint i;"
+    },
+    {
+      "type": "paragraph",
+      "text": "const struct peripherals eight_bits;"
+    },
+    {
+      "type": "code",
+      "text": "const int n_events = 1000;"
+    },
+    {
+      "type": "paragraph",
+      "text": "for (i = 0; i < 8; i++)"
+    },
+    {
+      "type": "code",
+      "text": "acc_periph[i] = 0;"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* Main loop of 1000 calls */ for (i = 0; i < n_events; i++)"
+    },
+    {
+      "type": "code",
+      "text": "{\naccess_request(eight_bits);"
+    },
+    {
+      "type": "paragraph",
+      "text": "if (eight_bits.periph1) ++acc_periph[0]; else if (eight_bits.periph2) ++acc_periph[1]; else if (eight_bits.periph3) ++acc_periph[2]; else if (eight_bits.periph4) ++acc_periph[3]; else if (eight_bits.periph5) ++acc_periph[4]; else if (eight_bits.periph6) ++acc_periph[5]; else if (eight_bits.periph7) ++acc_periph[6]; else if (eight_bits.periph8) ++acc_periph[7];"
+    },
+    {
+      "type": "code",
+      "text": "}\n}"
+    },
+    {
+      "type": "heading",
+      "level": 3,
+      "text": "Example 9.6"
+    },
+    {
+      "type": "paragraph",
+      "text": "Using a bit field structure and a union, this exercise writes a program to display the bit decoding of any character read from the keyboard."
+    },
+    {
+      "type": "paragraph",
+      "text": "Analysis A bit field structure type is declared, with as many fields as bits a byte has, which in turn is the storage of a character. The decoding is immediate by declaring a union between a character variable and a bit field variable of the indicated type."
+    },
+    {
+      "type": "code",
+      "text": "#include <stdio.h>\n#include <conio.h>"
+    },
+    {
+      "type": "paragraph",
+      "text": "#define uppercase(ch) ((ch>='a' && ch<='z') ? (ch+'A'-'a') : ch)"
+    },
+    {
+      "type": "code",
+      "text": "struct byte\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "unsigned int a: 1; unsigned int b: 1; unsigned int c: 1; unsigned int d: 1; unsigned int e: 1; unsigned int f: 1; unsigned int g: 1; unsigned int h: 1;"
+    },
+    {
+      "type": "code",
+      "text": "};\nunion char_bits {\nchar ch;\nstruct byte bits;"
+    },
+    {
+      "type": "paragraph",
+      "text": "} character;"
+    },
+    {
+      "type": "code",
+      "text": "void decode(struct byte b);\nvoid main()\n{\nputs(\"Type characters. To exit type character X\");"
+    },
+    {
+      "type": "code",
+      "text": "character.ch = getch();\nprintf(\": \");\ndecode(character.bits);\n} while (uppercase(character.ch) != 'X');\n}\nvoid decode(struct byte b)\n{"
+    },
+    {
+      "type": "paragraph",
+      "text": "/* Bit fields are aligned right to left, which is why fields are written in reverse order */"
+    },
+    {
+      "type": "code",
+      "text": "printf(\"%2u %2u %2u %2u %2u %2u %2u %2u\\n\","
+    },
+    {
+      "type": "paragraph",
+      "text": "b.h, b.g, b.f, b.e, b.d, b.c, b.b, b.a);"
+    },
+    {
+      "type": "code",
+      "text": "}"
+    },
+    {
+      "type": "paragraph",
+      "text": "9.9. SUMMARY A structure allows the data members to encapsulate in a unique implementation, doesn’t matter if they are the same or different type, unlike arranges that need all the members to be the same simple data type. Data members in a structure are accessible with the point operator (.) or with the arrow operator (->)."
+    },
+    {
+      "type": "paragraph",
+      "text": "A structure is a data type that contains different types of elements."
+    },
+    {
+      "type": "paragraph",
+      "text": "Struct employee { Char name[30]; Long salary; Char cellphone[10];"
+    },
+    {
+      "type": "code",
+      "text": "};"
+    },
+    {
+      "type": "paragraph",
+      "text": "To create a structure variable, write:"
+    },
+    {
+      "type": "code",
+      "text": "struct employee peter;"
+    },
+    {
+      "type": "paragraph",
+      "text": "In order to determine the size in bytes of any C data, use the sizeof operator."
+    },
+    {
+      "type": "paragraph",
+      "text": "The datatype union is similar to the datatype struct in the way that both of them are a collection of members that are all the same or different data types, but unlike struct, that assigns enough memory to contain all data members, a union can only contain one data member at any give moment, and the union’s size is the same as it’s largest member."
+    },
+    {
+      "type": "paragraph",
+      "text": "/// 9.10. EXERCISES [This section would contain various exercise problems for students to practice the concepts presented in the unit] 9.11. PROBLEMS 9.1. Calculate the number of days elapsed between two dates; declare date as a structure type."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.2. Write a customer billing program. Customers have a name, the number of units requested, the price of each unit, and a status which can be: delinquent, late, or paid. The program must generate various customer billing reports so that the following listings can be obtained:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Customers in delinquent status Customers in paid status with invoice greater than a certain amount 9.3. Modify the program from 9.2 to include additional customer information."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.4. Write a program that allows performing operations of addition, subtraction, multiplication, and division of complex numbers. The complex type must be defined as a structure."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.5. A rational number is characterized by the numerator and denominator. Write a program to handle rational numbers."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.6. Store information about a basketball team including:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Number of turnovers (ball losses) Number of rebounds captured Name of the best three-point scorer Number of three-pointers by the best three-point shooter For a soccer team, add information about the top scorer. Store information for all teams competing in both leagues."
+    },
+    {
+      "type": "paragraph",
+      "text": "9.7. Modify program 9.6 to obtain the following reports or data:"
+    },
+    {
+      "type": "paragraph",
+      "text": "List of the best three-point shooters from each team Maximum goal scorer Calculate the distance between two given points"
+    }
+  ]
+}
