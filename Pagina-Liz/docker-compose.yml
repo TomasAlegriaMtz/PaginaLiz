@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:4.4
+    restart: always
+    volumes:
+      - ./data/db:/data/db
+    ports:
+      - "27017:27017"
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://db:27017/paginaliz
+      - JWT_SECRET=supersecret123
+      - PORT=3000
+    volumes:
+      - ./Backend:/app
+      - /app/node_modules
+      - ./data/uploads:/data/uploads
+      - ./data/assets:/data/assets
+    depends_on:
+      - db

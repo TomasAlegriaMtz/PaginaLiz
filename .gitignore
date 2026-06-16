@@ -27,6 +27,7 @@ Pagina-Liz/Backend/dist/
 Pagina-Liz/Backend/build/
 
 # Datos y Archivos Subidos por el Usuario (¡No subir a Git!)
+Pagina-Liz/data/db/
 Pagina-Liz/data/uploads/*
 Pagina-Liz/data/assets/*
 Pagina-Liz/Backend/data/*
