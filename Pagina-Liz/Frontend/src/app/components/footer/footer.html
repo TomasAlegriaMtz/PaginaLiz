@@ -1,11 +1,11 @@
 <footer class="footer-section">
     <div class="social-icons">
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-tiktok"></i></a>
+        <a *ngIf="footerData.facebook" [href]="footerData.facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a *ngIf="footerData.instagram" [href]="footerData.instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a *ngIf="footerData.tiktok" [href]="footerData.tiktok" target="_blank"><i class="fab fa-tiktok"></i></a>
     </div>
 
     <div class="copyright">
-        <p>Universidad Autónoma de Aguascalientes © {{year}} All Rights Reserved</p>
+        <p>{{ footerData.copyright }} © {{year}} All Rights Reserved</p>
     </div>
 </footer>

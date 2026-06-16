@@ -1,0 +1,160 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2>Gestión de Documentos</h2>
+</div>
+
+<div class="card mb-4 shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Subir Documentos (Dropzone)</h5>
+    
+    <div *ngIf="uploadError" class="alert alert-danger">
+      {{ uploadError }}
+    </div>
+
+    <!-- Dropzone Area -->
+    <div class="mb-4">
+      <div class="dropzone" appDragDrop (fileDropped)="onFilesDropped($event)" (click)="fileInput.click()">
+        <i class="bi bi-cloud-arrow-up display-4 text-primary"></i>
+        <h5 class="mt-3">Arrastra tus PDFs, DOCX o PPTX aquí</h5>
+        <p class="text-muted">Pasarán a la zona de preparación antes de subirse</p>
+        <input type="file" #fileInput class="d-none" accept=".pdf,.doc,.docx,.ppt,.pptx" multiple (change)="onFilesSelected($event)">
+      </div>
+    </div>
+
+    <!-- Zona de Preparación (Pending Uploads) -->
+    <div *ngIf="pendingUploads.length > 0" class="mt-4 border-top pt-4">
+      <h5 class="text-primary mb-3"><i class="bi bi-clock-history"></i> Documentos Pendientes por Subir ({{ pendingUploads.length }})</h5>
+      
+      <div class="card mb-3 card-list-item shadow-sm" *ngFor="let p of pendingUploads; let i = index">
+        <div class="card-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Archivo</label>
+              <input type="text" class="form-control" [value]="p.file.name" disabled>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Título <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" [(ngModel)]="p.title" name="pTitle{{i}}" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Descripción</label>
+              <input type="text" class="form-control" [(ngModel)]="p.description" name="pDesc{{i}}">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Materia <span class="text-danger">*</span></label>
+              <select class="form-select" [(ngModel)]="p.subjectId" name="pSub{{i}}" (change)="onPendingSubjectChange(p)" required>
+                <option value="" disabled>Selecciona...</option>
+                <option *ngFor="let sub of subjects" [value]="sub._id">{{ sub.name }}</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Sección <span class="text-danger">*</span></label>
+              <select class="form-select" [(ngModel)]="p.categoryId" name="pCat{{i}}" [disabled]="!p.subjectId" required>
+                <option value="" disabled *ngIf="getFilteredCategories(p.subjectId).length > 0">Selecciona...</option>
+                <option value="" disabled *ngIf="getFilteredCategories(p.subjectId).length === 0">Sin secciones</option>
+                <option *ngFor="let cat of getFilteredCategories(p.subjectId)" [value]="cat._id">{{ cat.name }}</option>
+              </select>
+            </div>
+            <div class="col-md-4 d-flex align-items-end justify-content-end gap-2">
+              <button class="btn btn-outline-danger" (click)="removePending(i)"><i class="bi bi-trash"></i> Descartar</button>
+              <button class="btn btn-success" (click)="uploadPending(i)"><i class="bi bi-upload"></i> Subir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-end mt-3">
+        <button class="btn btn-primary" (click)="uploadAllPending()"><i class="bi bi-cloud-upload"></i> Subir Todos los Pendientes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title mb-3">Documentos Existentes</h5>
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Título y Descripción</th>
+            <th>Sección</th>
+            <th>Archivo Original</th>
+            <th>Fecha</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="documents.length === 0">
+            <td colspan="5" class="text-center py-4 text-muted">No hay documentos subidos todavía.</td>
+          </tr>
+          <ng-container *ngFor="let doc of documents">
+            <!-- Modo Vista -->
+            <tr *ngIf="editingDocId !== doc._id">
+              <td>
+                <strong>{{ doc.title }}</strong>
+                <div *ngIf="doc.description" class="text-muted small text-truncate" style="max-width: 200px;">
+                  {{ doc.description }}
+                </div>
+              </td>
+              <td>
+                <span class="badge bg-secondary">{{ getCategoryName(doc.categoryId) }}</span>
+              </td>
+              <td>
+                <a [href]="'http://localhost:3000' + doc.path" target="_blank" class="text-decoration-none">
+                  {{ doc.originalName }}
+                </a>
+              </td>
+              <td>{{ doc.uploadDate | date:'shortDate' }}</td>
+              <td>
+                <div class="d-flex justify-content-end gap-2">
+                  <button class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1" (click)="startEdit(doc)">
+                    <i class="bi bi-pencil"></i> Modificar
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" (click)="onDelete(doc._id)">
+                    <i class="bi bi-trash"></i> Eliminar
+                  </button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- Modo Edición -->
+            <tr *ngIf="editingDocId === doc._id" class="table-warning">
+              <td colspan="5">
+                <div class="row g-2 p-2">
+                  <div class="col-md-3">
+                    <label class="form-label fw-bold small">Título</label>
+                    <input type="text" class="form-control form-control-sm" [(ngModel)]="editData.title" name="eTitle">
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label fw-bold small">Descripción</label>
+                    <input type="text" class="form-control form-control-sm" [(ngModel)]="editData.description" name="eDesc">
+                  </div>
+                  <div class="col-md-2">
+                    <label class="form-label fw-bold small">Materia</label>
+                    <select class="form-select form-select-sm" [(ngModel)]="editData.subjectId" name="eSub" (change)="onEditSubjectChange()">
+                      <option *ngFor="let sub of subjects" [value]="sub._id">{{ sub.name }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <label class="form-label fw-bold small">Sección</label>
+                    <select class="form-select form-select-sm" [(ngModel)]="editData.categoryId" name="eCat" [disabled]="!editData.subjectId">
+                      <option *ngFor="let cat of getFilteredCategories(editData.subjectId)" [value]="cat._id">{{ cat.name }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2 d-flex align-items-end justify-content-end gap-2 pb-1">
+                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1" (click)="cancelEdit()">
+                      <i class="bi bi-x-circle"></i> Cancelar
+                    </button>
+                    <button class="btn btn-sm btn-success d-flex align-items-center gap-1" (click)="saveEdit()">
+                      <i class="bi bi-check-circle"></i> Guardar
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
