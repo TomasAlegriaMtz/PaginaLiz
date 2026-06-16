@@ -1,12 +1,8 @@
 # Dependencias
 node_modules/
 jspm_packages/
-
-# Compilación de Angular
-dist/
-tmp/
-out-tsc/
-/angular-devkit/
+Pagina-Liz/Frontend/node_modules/
+Pagina-Liz/Backend/node_modules/
 
 # Archivos de log
 npm-debug.log*
@@ -16,8 +12,29 @@ yarn-error.log*
 # Entorno y credenciales
 .env
 .env.local
+.env.*.local
 
-# IDEs
+# Compilación de Frontend (Angular)
+dist/
+tmp/
+out-tsc/
+/angular-devkit/
+Pagina-Liz/Frontend/dist/
+Pagina-Liz/Frontend/.angular/
+
+# Compilación de Backend
+Pagina-Liz/Backend/dist/
+Pagina-Liz/Backend/build/
+
+# Datos y Archivos Subidos por el Usuario (¡No subir a Git!)
+Pagina-Liz/data/uploads/*
+Pagina-Liz/data/assets/*
+Pagina-Liz/Backend/data/*
+Pagina-Liz/Backend/materials_temp/*
+!Pagina-Liz/data/uploads/.gitkeep
+!Pagina-Liz/data/assets/.gitkeep
+
+# IDEs y Editores
 .vscode/
 .idea/
 *.suo
