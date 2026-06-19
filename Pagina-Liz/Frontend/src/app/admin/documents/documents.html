@@ -40,7 +40,7 @@
                 <input class="admin-input" type="text" [(ngModel)]="p.description" name="pDesc{{i}}">
               </div>
             </div>
-            <div class="admin-input-row cols-3">
+            <div class="admin-input-row cols-4">
               <div class="admin-field">
                 <label class="admin-label">Materia <span class="req">*</span></label>
                 <select class="admin-select" [(ngModel)]="p.subjectId" name="pSub{{i}}" (change)="onPendingSubjectChange(p)">
@@ -58,6 +58,13 @@
                     <option [value]="cat._id">{{ cat.name }}</option>
                   }
                 </select>
+              </div>
+              <div class="admin-field">
+                <label class="admin-label">Idioma</label>
+                <div style="display:flex; gap:2px; margin-top:2px;">
+                  <button class="admin-btn" [class.admin-btn-primary]="p.lang === 'es'" [class.admin-btn-ghost]="p.lang !== 'es'" (click)="p.lang = 'es'" style="flex:1; justify-content:center;">ES</button>
+                  <button class="admin-btn" [class.admin-btn-primary]="p.lang === 'en'" [class.admin-btn-ghost]="p.lang !== 'en'" (click)="p.lang = 'en'" style="flex:1; justify-content:center;">EN</button>
+                </div>
               </div>
               <div class="admin-field" style="display:flex; align-items:flex-end; justify-content:flex-end; gap:0.5rem;">
                 <button class="admin-btn admin-btn-ghost-danger" (click)="removePending(i)"><i class="bi bi-trash3"></i> Descartar</button>
@@ -80,10 +87,10 @@
         <table class="admin-table">
           <thead>
             <tr>
-              <th>Título</th>
-              <th>Sección</th>
-              <th>Archivo</th>
-              <th>Fecha</th>
+              <th class="sortable" (click)="sortBy('title')">Título <i class="bi" [ngClass]="{'bi-sort-alpha-down': sortColumn === 'title' && sortDirection === 'asc', 'bi-sort-alpha-up': sortColumn === 'title' && sortDirection === 'desc', 'bi-arrow-down-up text-muted': sortColumn !== 'title'}"></i></th>
+              <th class="sortable" (click)="sortBy('categoryName')">Sección <i class="bi" [ngClass]="{'bi-sort-alpha-down': sortColumn === 'categoryName' && sortDirection === 'asc', 'bi-sort-alpha-up': sortColumn === 'categoryName' && sortDirection === 'desc', 'bi-arrow-down-up text-muted': sortColumn !== 'categoryName'}"></i></th>
+              <th>Idiomas</th>
+              <th class="sortable" (click)="sortBy('uploadDate')">Fecha <i class="bi" [ngClass]="{'bi-sort-numeric-down': sortColumn === 'uploadDate' && sortDirection === 'asc', 'bi-sort-numeric-up': sortColumn === 'uploadDate' && sortDirection === 'desc', 'bi-arrow-down-up text-muted': sortColumn !== 'uploadDate'}"></i></th>
               <th class="text-end">Acciones</th>
             </tr>
           </thead>
@@ -93,8 +100,7 @@
                 <td colspan="5" style="text-align:center; padding:2rem; color:#94a3b8;">No hay documentos subidos todavía.</td>
               </tr>
             }
-            @for (doc of documents; track doc) {
-              <!-- View mode -->
+            @for (doc of sortedDocuments; track doc) {
               @if (editingDocId !== doc._id) {
                 <tr>
                   <td>
@@ -104,7 +110,45 @@
                     }
                   </td>
                   <td><span class="badge-cat">{{ getCategoryName(doc.categoryId) }}</span></td>
-                  <td><a class="doc-link" [href]="'http://localhost:3000' + doc.path" target="_blank">{{ doc.originalName }}</a></td>
+                  <td>
+                    <div style="display:flex; gap:0.75rem; align-items:center;">
+                      <!-- ES indicator -->
+                      <div class="lang-badge-container">
+                        @if (doc.es) {
+                          <div class="lang-badge active" title="Archivo en Español: {{doc.es.originalName}}">
+                            <span style="width:6px; height:6px; border-radius:50%; background:#10b981; display:inline-block;"></span> ES
+                          </div>
+                          <div class="lang-dropdown">
+                            <button class="lang-dropdown-btn" (click)="viewText(doc, 'es')"><i class="bi bi-file-text"></i> Ver texto extraído</button>
+                            <a class="lang-dropdown-btn" [href]="baseUrl + doc.es.path" target="_blank" download><i class="bi bi-download"></i> Descargar</a>
+                            <button class="lang-dropdown-btn danger" (click)="deleteLangFile(doc._id, 'es')"><i class="bi bi-trash3"></i> Eliminar este idioma</button>
+                          </div>
+                        } @else {
+                          <div class="lang-badge inactive" title="Sin archivo en Español" (click)="uploadLangFile(doc, 'es')">
+                            <span style="width:6px; height:6px; border-radius:50%; background:#cbd5e1; display:inline-block;"></span> ES
+                          </div>
+                        }
+                      </div>
+
+                      <!-- EN indicator -->
+                      <div class="lang-badge-container">
+                        @if (doc.en) {
+                          <div class="lang-badge active" title="Archivo en Inglés: {{doc.en.originalName}}">
+                            <span style="width:6px; height:6px; border-radius:50%; background:#10b981; display:inline-block;"></span> EN
+                          </div>
+                          <div class="lang-dropdown">
+                            <button class="lang-dropdown-btn" (click)="viewText(doc, 'en')"><i class="bi bi-file-text"></i> Ver texto extraído</button>
+                            <a class="lang-dropdown-btn" [href]="baseUrl + doc.en.path" target="_blank" download><i class="bi bi-download"></i> Descargar</a>
+                            <button class="lang-dropdown-btn danger" (click)="deleteLangFile(doc._id, 'en')"><i class="bi bi-trash3"></i> Eliminar este idioma</button>
+                          </div>
+                        } @else {
+                          <div class="lang-badge inactive" title="Sin archivo en Inglés" (click)="uploadLangFile(doc, 'en')">
+                            <span style="width:6px; height:6px; border-radius:50%; background:#cbd5e1; display:inline-block;"></span> EN
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </td>
                   <td style="color:#94a3b8; font-size:0.8125rem;">{{ doc.uploadDate | date:'shortDate' }}</td>
                   <td>
                     <div class="actions">
@@ -114,7 +158,6 @@
                   </td>
                 </tr>
               }
-              <!-- Edit mode -->
               @if (editingDocId === doc._id) {
                 <tr class="edit-row">
                   <td colspan="5">
@@ -144,9 +187,36 @@
                         </select>
                       </div>
                     </div>
-                    <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.75rem;">
+                    <div class="edit-lang-section">
+                      <div class="edit-lang-block">
+                        <div class="edit-lang-header">Archivo Español</div>
+                        @if (doc.es) {
+                          <div class="edit-lang-file">
+                            <span class="file-name-truncate" [title]="doc.es.originalName"><i class="bi bi-file-earmark-pdf" style="margin-right: 0.4rem; color: #64748b;"></i>{{ doc.es.originalName }}</span>
+                            <button class="btn-remove-file" (click)="deleteLangFile(doc._id, 'es')" title="Desvincular"><i class="bi bi-x-lg"></i></button>
+                          </div>
+                          <button class="btn-upload-micro" (click)="uploadLangFile(doc, 'es')"><i class="bi bi-cloud-upload"></i> Reemplazar versión en Español</button>
+                        } @else {
+                          <button class="btn-upload-micro" (click)="uploadLangFile(doc, 'es')"><i class="bi bi-cloud-arrow-up"></i> Subir versión en Español</button>
+                        }
+                      </div>
+                      <div class="edit-lang-block">
+                        <div class="edit-lang-header">Archivo Inglés</div>
+                        @if (doc.en) {
+                          <div class="edit-lang-file">
+                            <span class="file-name-truncate" [title]="doc.en.originalName"><i class="bi bi-file-earmark-word" style="margin-right: 0.4rem; color: #64748b;"></i>{{ doc.en.originalName }}</span>
+                            <button class="btn-remove-file" (click)="deleteLangFile(doc._id, 'en')" title="Desvincular"><i class="bi bi-x-lg"></i></button>
+                          </div>
+                          <button class="btn-upload-micro" (click)="uploadLangFile(doc, 'en')"><i class="bi bi-cloud-upload"></i> Reemplazar versión en Inglés</button>
+                        } @else {
+                          <button class="btn-upload-micro" (click)="uploadLangFile(doc, 'en')"><i class="bi bi-cloud-arrow-up"></i> Subir versión en Inglés</button>
+                        }
+                      </div>
+                    </div>
+
+                    <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:1.5rem;">
                       <button class="admin-btn admin-btn-ghost" (click)="cancelEdit()"><i class="bi bi-x-lg"></i> Cancelar</button>
-                      <button class="admin-btn admin-btn-save" (click)="saveEdit()"><i class="bi bi-check-lg"></i> Guardar</button>
+                      <button class="admin-btn admin-btn-save" (click)="saveEdit()"><i class="bi bi-check-lg"></i> Guardar Todo</button>
                     </div>
                   </td>
                 </tr>
@@ -163,7 +233,6 @@
 @if (activeTab === 'categories') {
   <div>
     <div class="admin-categories-grid">
-      <!-- Materias -->
       <div class="admin-section">
         <h2 class="admin-section-title">Materias</h2>
         <form (submit)="createSubject()" style="display:flex; gap:0.5rem; margin-bottom:1.25rem;">
@@ -184,7 +253,6 @@
           }
         </ul>
       </div>
-      <!-- Secciones -->
       <div class="admin-section">
         <h2 class="admin-section-title">Secciones (Unidades)</h2>
         <form (submit)="createCategory()" style="margin-bottom:1.25rem;">

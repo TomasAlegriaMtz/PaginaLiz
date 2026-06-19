@@ -1,0 +1,224 @@
+/* Dropdown Logic */
+.lang-badge-container {
+  position: relative;
+  display: inline-block;
+}
+
+.lang-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  min-width: 54px;
+}
+
+.lang-badge.active {
+  background: #f1f5f9;
+  color: #1e293b;
+  border-color: #cbd5e1;
+}
+
+.lang-badge.active:hover {
+  background: #e2e8f0;
+}
+
+.lang-badge.inactive {
+  background: transparent;
+  color: #94a3b8;
+  border: 1px dashed #cbd5e1;
+}
+
+.lang-badge.inactive:hover {
+  background: #f8fafc;
+  color: #64748b;
+  border-style: solid;
+}
+
+.lang-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+  padding: 0.5rem;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 50;
+  min-width: 160px;
+}
+
+.lang-badge-container:hover .lang-dropdown {
+  display: flex;
+}
+
+.lang-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: #ffffff;
+  border-left: 1px solid #e2e8f0;
+  border-top: 1px solid #e2e8f0;
+}
+
+.lang-dropdown-btn {
+  background: transparent;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #475569;
+  text-align: left;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  position: relative;
+  z-index: 2;
+}
+
+.lang-dropdown-btn i {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.lang-dropdown-btn:hover {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.lang-dropdown-btn.danger {
+  color: #ef4444;
+}
+
+.lang-dropdown-btn.danger:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* Edit Language Section */
+.edit-lang-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #cbd5e1;
+}
+
+.edit-lang-block {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.25rem;
+}
+
+.edit-lang-header {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.edit-lang-file {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.8125rem;
+  color: #334155;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+}
+
+.file-name-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
+}
+
+.btn-remove-file {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0.2rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.btn-remove-file:hover {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.btn-upload-micro {
+  width: 100%;
+  background: transparent;
+  border: 1px dashed #cbd5e1;
+  color: #64748b;
+  padding: 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-upload-micro:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #475569;
+}
+
+.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
+}
+
+.sortable:hover {
+  color: #1e293b;
+}
+
+.sortable i {
+  margin-left: 0.25rem;
+  font-size: 0.8em;
+}
+.text-muted {
+  color: #94a3b8 !important;
+  opacity: 0.5;
+}

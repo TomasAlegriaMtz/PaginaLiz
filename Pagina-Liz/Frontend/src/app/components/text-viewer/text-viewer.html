@@ -1,0 +1,23 @@
+<div class="text-viewer-container">
+  <div class="text-viewer-header">
+    <span class="text-viewer-label">Contenido del documento</span>
+    <div class="text-viewer-lang-toggle">
+      <button [class.active]="currentLang === 'es'" (click)="switchLang('es')">ES</button>
+      <button [class.active]="currentLang === 'en'" (click)="switchLang('en')">EN</button>
+    </div>
+  </div>
+  <div class="text-viewer-body">
+    @if (isLoading) {
+      <div class="text-viewer-loading">
+        <div class="text-viewer-spinner"></div>
+        <span>Cargando contenido...</span>
+      </div>
+    } @else if (hasError) {
+      <div class="text-viewer-empty">No hay contenido disponible en este idioma.</div>
+    } @else if (!content) {
+      <div class="text-viewer-empty">No se ha extraído texto de este documento.</div>
+    } @else {
+      <pre class="text-viewer-content">{{ content }}</pre>
+    }
+  </div>
+</div>

@@ -67,16 +67,14 @@
                         <span class="file-type" [attr.data-type]="m.type">{{ m.type.toUpperCase() }}</span>
                         <span class="documento-titulo">{{ m.title }}</span>
                         <div class="documento-acciones">
-                          @if (m.description) {
-                            <button type="button" class="btn-leer"
-                              (click)="toggleContenido(m._id)">
-                              <i class="bi" [class.bi-chevron-down]="!estaExpandido(m._id)"
-                              [class.bi-chevron-up]="estaExpandido(m._id)"></i>
-                              {{ estaExpandido(m._id)
-                              ? (idiomaProgramacion === 'es' ? 'Ocultar texto' : 'Hide text')
-                              : (idiomaProgramacion === 'es' ? 'Leer aquí' : 'Read here') }}
-                            </button>
-                          }
+                          <button type="button" class="btn-leer"
+                            (click)="toggleContenido(m._id)">
+                            <i class="bi" [class.bi-chevron-down]="!estaExpandido(m._id)"
+                            [class.bi-chevron-up]="estaExpandido(m._id)"></i>
+                            {{ estaExpandido(m._id)
+                            ? (idiomaProgramacion === 'es' ? 'Ocultar texto' : 'Hide text')
+                            : (idiomaProgramacion === 'es' ? 'Leer aquí' : 'Read here') }}
+                          </button>
                           @if (m.type === 'pdf') {
                             <a [href]="m.file" target="_blank" rel="noopener" class="btn-descargar outline-btn">
                               <i class="bi bi-eye"></i> {{ idiomaProgramacion === 'es' ? 'Visualizar' : 'View' }}
@@ -93,12 +91,15 @@
                           </a>
                         </div>
                       </header>
-                      <!-- Contenido text (Description) -->
-                      @if (m.description && estaExpandido(m._id)) {
+                      <!-- Contenido text (Description & Viewer) -->
+                      @if (estaExpandido(m._id)) {
                         <div class="documento-contenido">
-                          <div class="contenido-render">
-                            <p class="bloque-p" style="white-space: pre-wrap;">{{ m.description }}</p>
-                          </div>
+                          @if (m.description) {
+                            <div class="contenido-render" style="margin-bottom: 1rem;">
+                              <p class="bloque-p" style="white-space: pre-wrap;">{{ m.description }}</p>
+                            </div>
+                          }
+                          <app-text-viewer [documentId]="m._id" [initialLang]="idiomaProgramacion"></app-text-viewer>
                         </div>
                       }
                     </article>
@@ -134,14 +135,12 @@
                     <span class="file-type" [attr.data-type]="m.type">{{ m.type.toUpperCase() }}</span>
                     <span class="documento-titulo">{{ m.title }}</span>
                     <div class="documento-acciones">
-                      @if (m.description) {
-                        <button type="button" class="btn-leer"
-                          (click)="toggleContenido(m._id)">
-                          <i class="bi" [class.bi-chevron-down]="!estaExpandido(m._id)"
-                          [class.bi-chevron-up]="estaExpandido(m._id)"></i>
-                          {{ estaExpandido(m._id) ? 'Ocultar texto' : 'Leer aquí' }}
-                        </button>
-                      }
+                      <button type="button" class="btn-leer"
+                        (click)="toggleContenido(m._id)">
+                        <i class="bi" [class.bi-chevron-down]="!estaExpandido(m._id)"
+                        [class.bi-chevron-up]="estaExpandido(m._id)"></i>
+                        {{ estaExpandido(m._id) ? 'Ocultar texto' : 'Leer aquí' }}
+                      </button>
                       @if (m.type === 'pdf') {
                         <a [href]="m.file" target="_blank" rel="noopener" class="btn-descargar outline-btn">
                           <i class="bi bi-eye"></i> Visualizar
@@ -157,11 +156,14 @@
                       </a>
                     </div>
                   </header>
-                  @if (m.description && estaExpandido(m._id)) {
+                  @if (estaExpandido(m._id)) {
                     <div class="documento-contenido">
-                        <div class="contenido-render">
+                      @if (m.description) {
+                        <div class="contenido-render" style="margin-bottom: 1rem;">
                             <p class="bloque-p" style="white-space: pre-wrap;">{{ m.description }}</p>
                         </div>
+                      }
+                      <app-text-viewer [documentId]="m._id" [initialLang]="idiomaProgramacion"></app-text-viewer>
                     </div>
                   }
                 </article>

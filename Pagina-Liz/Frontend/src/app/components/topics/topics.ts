@@ -1,8 +1,10 @@
 import { Component, signal, OnInit, inject } from '@angular/core';
 
+import { environment } from '../../../environments/environment';
 import { DocumentService } from '../../core/services/document.service';
 import { CategoryService, Category } from '../../core/services/category.service';
 import { SubjectService, Subject } from '../../core/services/subject.service';
+import { TextViewerComponent } from '../text-viewer/text-viewer';
 
 type Lang = 'es' | 'en';
 
@@ -30,7 +32,7 @@ interface MateriaData {
 
 @Component({
   selector: 'app-topics',
-  imports: [],
+  imports: [TextViewerComponent],
   templateUrl: './topics.html',
   styleUrl: './topics.css',
 })
@@ -71,11 +73,21 @@ export class Topics implements OnInit {
             (d.categoryId && d.categoryId._id === cat._id) || d.categoryId === cat._id
           );
 
-          const materiales: Material[] = docsCat.map(d => ({
+          const baseUrl = environment.apiUrl.replace(/\/api$/, '');
+
+          const materialesEs: Material[] = docsCat.filter(d => d.es).map(d => ({
             _id: d._id,
             title: d.title,
-            file: 'http://localhost:3000' + d.path,
-            type: this.getFileType(d.originalName),
+            file: baseUrl + d.es!.path,
+            type: this.getFileType(d.es!.originalName),
+            description: d.description
+          }));
+
+          const materialesEn: Material[] = docsCat.filter(d => d.en).map(d => ({
+            _id: d._id,
+            title: d.title,
+            file: baseUrl + d.en!.path,
+            type: this.getFileType(d.en!.originalName),
             description: d.description
           }));
 
@@ -83,8 +95,8 @@ export class Topics implements OnInit {
             numero: (count++).toString(),
             tituloEs: cat.name,
             tituloEn: cat.name,
-            materialesEs: materiales,
-            materialesEn: []
+            materialesEs: materialesEs,
+            materialesEn: materialesEn
           };
         });
 
@@ -105,14 +117,20 @@ export class Topics implements OnInit {
           numero: '*',
           tituloEs: 'Materiales Generales',
           tituloEn: 'General Materials',
-          materialesEs: docsGenerales.map(d => ({
+          materialesEs: docsGenerales.filter(d => d.es).map(d => ({
             _id: d._id,
             title: d.title,
-            file: 'http://localhost:3000' + d.path,
-            type: this.getFileType(d.originalName),
+            file: environment.apiUrl.replace(/\/api$/, '') + d.es!.path,
+            type: this.getFileType(d.es!.originalName),
             description: d.description
           })),
-          materialesEn: []
+          materialesEn: docsGenerales.filter(d => d.en).map(d => ({
+            _id: d._id,
+            title: d.title,
+            file: environment.apiUrl.replace(/\/api$/, '') + d.en!.path,
+            type: this.getFileType(d.en!.originalName),
+            description: d.description
+          }))
         }];
       }
 
