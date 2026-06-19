@@ -13,7 +13,7 @@ services:
   backend:
     build:
       context: ./Backend
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.production
     restart: always
     ports:
       - "3000:3000"
@@ -22,9 +22,10 @@ services:
       - JWT_SECRET=supersecret123
       - PORT=3000
       - CORS_ORIGIN=*
+      - NODE_ENV=production
     volumes:
-      - ./Backend:/app
-      - /app/node_modules
+      # Eliminamos el mapeo del código fuente y node_modules para optimizar recursos
+      # y evitar problemas de permisos o bucles infinitos en servidores Ubuntu.
       - ./data/uploads:/data/uploads
       - ./data/assets:/data/assets
     depends_on:
