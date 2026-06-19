@@ -20,6 +20,7 @@ services:
       - MONGO_URI=mongodb://db:27017/resources
       - JWT_SECRET=supersecret123
       - PORT=3000
+      - CORS_ORIGIN=*
     volumes:
       - ./Backend:/app
       - /app/node_modules
