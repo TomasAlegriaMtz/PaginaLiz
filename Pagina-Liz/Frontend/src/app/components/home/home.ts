@@ -1,12 +1,12 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Carousel } from "../carousel/carousel";
 import { ContentService } from '../../core/services/content.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [Carousel, CommonModule],
+  imports: [Carousel],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

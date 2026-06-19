@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { ContentService } from '../../core/services/content.service';
 import { AssetService } from '../../core/services/asset.service';
@@ -9,23 +9,9 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-cms-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, DragDropDirective],
+  imports: [FormsModule, DragDropDirective],
   templateUrl: './cms-home.html',
-  styles: [`
-    .dropzone {
-      border: 2px dashed #ccc;
-      border-radius: 10px;
-      padding: 40px;
-      text-align: center;
-      background: #f9f9f9;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-    .dropzone.dragover {
-      border-color: #0d6efd;
-      background: #e9ecef;
-    }
-  `]
+  styles: [``]
 })
 export class CmsHomeComponent implements OnInit {
   activeTab: 'home' | 'projects' | 'gallery' | 'footer' = 'home';

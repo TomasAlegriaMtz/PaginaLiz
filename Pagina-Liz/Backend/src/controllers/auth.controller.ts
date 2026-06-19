@@ -10,22 +10,26 @@ const generateToken = (id: string, role: string) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
 
-    if (user && (await bcrypt.compare(password, user.password_hash))) {
+    if (!user || !user.isActive) {
+      return res.status(401).json({ message: 'Usuario no encontrado o inactivo' });
+    }
+
+    if (await bcrypt.compare(password, user.password_hash)) {
       res.json({
         _id: user._id,
-        email: user.email,
+        username: user.username,
         role: user.role,
         token: generateToken(user.id, user.role),
       });
     } else {
-      res.status(401).json({ message: 'Invalid email or password' });
+      res.status(401).json({ message: 'Credenciales inválidas' });
     }
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: 'Error en el servidor' });
   }
 };

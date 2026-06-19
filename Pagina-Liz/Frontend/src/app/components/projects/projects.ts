@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Carousel } from "../carousel/carousel";
 import { ContentService } from '../../core/services/content.service';
 
 interface Publicacion { titulo: string; fuente: string; anio: number; autores: string; }
@@ -10,7 +9,7 @@ interface Capitulo { titulo: string; editorial: string; anio: number; autores: s
 
 @Component({
   selector: 'app-projects',
-  imports: [CommonModule, Carousel],
+  imports: [CommonModule],
   templateUrl: './projects.html',
   styleUrl: './projects.css',
 })

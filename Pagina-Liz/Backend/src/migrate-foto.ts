@@ -6,7 +6,7 @@ import PageContent from './models/PageContent';
 dotenv.config({ path: path.join(__dirname, '../.env') });
 
 const migrate = async () => {
-  const mongoUri = process.env.MONGO_URI || 'mongodb://db:27017/paginaliz';
+  const mongoUri = process.env.MONGO_URI || 'mongodb://db:27017/resources';
   await mongoose.connect(mongoUri);
   console.log('Connected to MongoDB');
 

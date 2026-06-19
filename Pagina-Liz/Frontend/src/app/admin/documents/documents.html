@@ -1,160 +1,223 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2>Gestión de Documentos</h2>
-</div>
+<h1 class="admin-page-title">Documentos y Temario</h1>
 
-<div class="card mb-4 shadow-sm">
-  <div class="card-body">
-    <h5 class="card-title mb-3">Subir Documentos (Dropzone)</h5>
-    
-    <div *ngIf="uploadError" class="alert alert-danger">
-      {{ uploadError }}
-    </div>
+<ul class="admin-tabs">
+  <li><a [class.active]="activeTab === 'documents'" (click)="setTab('documents')">Documentos PDF</a></li>
+  <li><a [class.active]="activeTab === 'categories'" (click)="setTab('categories')">Materias y Secciones</a></li>
+</ul>
 
-    <!-- Dropzone Area -->
-    <div class="mb-4">
-      <div class="dropzone" appDragDrop (fileDropped)="onFilesDropped($event)" (click)="fileInput.click()">
-        <i class="bi bi-cloud-arrow-up display-4 text-primary"></i>
-        <h5 class="mt-3">Arrastra tus PDFs, DOCX o PPTX aquí</h5>
-        <p class="text-muted">Pasarán a la zona de preparación antes de subirse</p>
-        <input type="file" #fileInput class="d-none" accept=".pdf,.doc,.docx,.ppt,.pptx" multiple (change)="onFilesSelected($event)">
+<!-- TAB: DOCUMENTS -->
+@if (activeTab === 'documents') {
+  <div>
+    <div class="admin-section">
+      <h2 class="admin-section-title">Subir documentos</h2>
+      @if (uploadError) {
+        <div class="admin-alert admin-alert-error">{{ uploadError }}</div>
+      }
+      <div class="admin-dropzone" appDragDrop (fileDropped)="onFilesDropped($event)" (click)="fileInput.click()">
+        <div class="dz-icon"><i class="bi bi-cloud-arrow-up"></i></div>
+        <p class="dz-title">Arrastra tus archivos aquí</p>
+        <p class="dz-subtitle">PDF, DOCX o PPTX — pasarán a la zona de preparación</p>
+        <input type="file" #fileInput style="display:none" accept=".pdf,.doc,.docx,.ppt,.pptx" multiple (change)="onFilesSelected($event)">
       </div>
     </div>
-
-    <!-- Zona de Preparación (Pending Uploads) -->
-    <div *ngIf="pendingUploads.length > 0" class="mt-4 border-top pt-4">
-      <h5 class="text-primary mb-3"><i class="bi bi-clock-history"></i> Documentos Pendientes por Subir ({{ pendingUploads.length }})</h5>
-      
-      <div class="card mb-3 card-list-item shadow-sm" *ngFor="let p of pendingUploads; let i = index">
-        <div class="card-body">
-          <div class="row g-3">
-            <div class="col-md-4">
-              <label class="form-label fw-bold">Archivo</label>
-              <input type="text" class="form-control" [value]="p.file.name" disabled>
+    <!-- Pending Uploads -->
+    @if (pendingUploads.length > 0) {
+      <div class="admin-section">
+        <h2 class="admin-section-title">Pendientes por subir · {{ pendingUploads.length }}</h2>
+        @for (p of pendingUploads; track p; let i = $index) {
+          <div class="admin-pending-item">
+            <div class="admin-input-row cols-3">
+              <div class="admin-field">
+                <label class="admin-label">Archivo</label>
+                <input class="admin-input" type="text" [value]="p.file.name" disabled>
+              </div>
+              <div class="admin-field">
+                <label class="admin-label">Título <span class="req">*</span></label>
+                <input class="admin-input" type="text" [(ngModel)]="p.title" name="pTitle{{i}}">
+              </div>
+              <div class="admin-field">
+                <label class="admin-label">Descripción</label>
+                <input class="admin-input" type="text" [(ngModel)]="p.description" name="pDesc{{i}}">
+              </div>
             </div>
-            <div class="col-md-4">
-              <label class="form-label fw-bold">Título <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" [(ngModel)]="p.title" name="pTitle{{i}}" required>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label fw-bold">Descripción</label>
-              <input type="text" class="form-control" [(ngModel)]="p.description" name="pDesc{{i}}">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label fw-bold">Materia <span class="text-danger">*</span></label>
-              <select class="form-select" [(ngModel)]="p.subjectId" name="pSub{{i}}" (change)="onPendingSubjectChange(p)" required>
-                <option value="" disabled>Selecciona...</option>
-                <option *ngFor="let sub of subjects" [value]="sub._id">{{ sub.name }}</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label fw-bold">Sección <span class="text-danger">*</span></label>
-              <select class="form-select" [(ngModel)]="p.categoryId" name="pCat{{i}}" [disabled]="!p.subjectId" required>
-                <option value="" disabled *ngIf="getFilteredCategories(p.subjectId).length > 0">Selecciona...</option>
-                <option value="" disabled *ngIf="getFilteredCategories(p.subjectId).length === 0">Sin secciones</option>
-                <option *ngFor="let cat of getFilteredCategories(p.subjectId)" [value]="cat._id">{{ cat.name }}</option>
-              </select>
-            </div>
-            <div class="col-md-4 d-flex align-items-end justify-content-end gap-2">
-              <button class="btn btn-outline-danger" (click)="removePending(i)"><i class="bi bi-trash"></i> Descartar</button>
-              <button class="btn btn-success" (click)="uploadPending(i)"><i class="bi bi-upload"></i> Subir</button>
+            <div class="admin-input-row cols-3">
+              <div class="admin-field">
+                <label class="admin-label">Materia <span class="req">*</span></label>
+                <select class="admin-select" [(ngModel)]="p.subjectId" name="pSub{{i}}" (change)="onPendingSubjectChange(p)">
+                  <option value="" disabled>Selecciona...</option>
+                  @for (sub of subjects; track sub) {
+                    <option [value]="sub._id">{{ sub.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="admin-field">
+                <label class="admin-label">Sección <span class="req">*</span></label>
+                <select class="admin-select" [(ngModel)]="p.categoryId" name="pCat{{i}}" [disabled]="!p.subjectId">
+                  <option value="" disabled>Selecciona...</option>
+                  @for (cat of getFilteredCategories(p.subjectId); track cat) {
+                    <option [value]="cat._id">{{ cat.name }}</option>
+                  }
+                </select>
+              </div>
+              <div class="admin-field" style="display:flex; align-items:flex-end; justify-content:flex-end; gap:0.5rem;">
+                <button class="admin-btn admin-btn-ghost-danger" (click)="removePending(i)"><i class="bi bi-trash3"></i> Descartar</button>
+                <button class="admin-btn admin-btn-primary" (click)="uploadPending(i)"><i class="bi bi-upload"></i> Subir</button>
+              </div>
             </div>
           </div>
+        }
+        <div style="display:flex; justify-content:flex-end; margin-top:1rem;">
+          <button class="admin-btn admin-btn-save" (click)="uploadAllPending()" [disabled]="isUploading">
+            <i class="bi bi-cloud-upload"></i> Subir todos
+          </button>
         </div>
       </div>
-      
-      <div class="text-end mt-3">
-        <button class="btn btn-primary" (click)="uploadAllPending()"><i class="bi bi-cloud-upload"></i> Subir Todos los Pendientes</button>
+    }
+    <!-- Existing Documents -->
+    <div class="admin-section">
+      <h2 class="admin-section-title">Documentos existentes</h2>
+      <div style="overflow-x:auto;">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Sección</th>
+              <th>Archivo</th>
+              <th>Fecha</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @if (documents.length === 0) {
+              <tr>
+                <td colspan="5" style="text-align:center; padding:2rem; color:#94a3b8;">No hay documentos subidos todavía.</td>
+              </tr>
+            }
+            @for (doc of documents; track doc) {
+              <!-- View mode -->
+              @if (editingDocId !== doc._id) {
+                <tr>
+                  <td>
+                    <div class="doc-title">{{ doc.title }}</div>
+                    @if (doc.description) {
+                      <div class="doc-desc">{{ doc.description }}</div>
+                    }
+                  </td>
+                  <td><span class="badge-cat">{{ getCategoryName(doc.categoryId) }}</span></td>
+                  <td><a class="doc-link" [href]="'http://localhost:3000' + doc.path" target="_blank">{{ doc.originalName }}</a></td>
+                  <td style="color:#94a3b8; font-size:0.8125rem;">{{ doc.uploadDate | date:'shortDate' }}</td>
+                  <td>
+                    <div class="actions">
+                      <button class="admin-btn admin-btn-ghost" (click)="startEdit(doc)" title="Modificar"><i class="bi bi-pencil"></i></button>
+                      <button class="admin-btn admin-btn-ghost-danger" (click)="onDelete(doc._id)" title="Eliminar"><i class="bi bi-trash3"></i></button>
+                    </div>
+                  </td>
+                </tr>
+              }
+              <!-- Edit mode -->
+              @if (editingDocId === doc._id) {
+                <tr class="edit-row">
+                  <td colspan="5">
+                    <div class="admin-input-row cols-4" style="align-items:end;">
+                      <div class="admin-field">
+                        <label class="admin-label">Título</label>
+                        <input class="admin-input" type="text" [(ngModel)]="editData.title" name="eTitle">
+                      </div>
+                      <div class="admin-field">
+                        <label class="admin-label">Descripción</label>
+                        <input class="admin-input" type="text" [(ngModel)]="editData.description" name="eDesc">
+                      </div>
+                      <div class="admin-field">
+                        <label class="admin-label">Materia</label>
+                        <select class="admin-select" [(ngModel)]="editData.subjectId" name="eSub" (change)="onEditSubjectChange()">
+                          @for (sub of subjects; track sub) {
+                            <option [value]="sub._id">{{ sub.name }}</option>
+                          }
+                        </select>
+                      </div>
+                      <div class="admin-field">
+                        <label class="admin-label">Sección</label>
+                        <select class="admin-select" [(ngModel)]="editData.categoryId" name="eCat" [disabled]="!editData.subjectId">
+                          @for (cat of getFilteredCategories(editData.subjectId); track cat) {
+                            <option [value]="cat._id">{{ cat.name }}</option>
+                          }
+                        </select>
+                      </div>
+                    </div>
+                    <div style="display:flex; justify-content:flex-end; gap:0.5rem; margin-top:0.75rem;">
+                      <button class="admin-btn admin-btn-ghost" (click)="cancelEdit()"><i class="bi bi-x-lg"></i> Cancelar</button>
+                      <button class="admin-btn admin-btn-save" (click)="saveEdit()"><i class="bi bi-check-lg"></i> Guardar</button>
+                    </div>
+                  </td>
+                </tr>
+              }
+            }
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-</div>
+}
 
-<div class="card shadow-sm">
-  <div class="card-body">
-    <h5 class="card-title mb-3">Documentos Existentes</h5>
-    <div class="table-responsive">
-      <table class="table table-hover align-middle">
-        <thead class="table-light">
-          <tr>
-            <th>Título y Descripción</th>
-            <th>Sección</th>
-            <th>Archivo Original</th>
-            <th>Fecha</th>
-            <th class="text-end">Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngIf="documents.length === 0">
-            <td colspan="5" class="text-center py-4 text-muted">No hay documentos subidos todavía.</td>
-          </tr>
-          <ng-container *ngFor="let doc of documents">
-            <!-- Modo Vista -->
-            <tr *ngIf="editingDocId !== doc._id">
-              <td>
-                <strong>{{ doc.title }}</strong>
-                <div *ngIf="doc.description" class="text-muted small text-truncate" style="max-width: 200px;">
-                  {{ doc.description }}
-                </div>
-              </td>
-              <td>
-                <span class="badge bg-secondary">{{ getCategoryName(doc.categoryId) }}</span>
-              </td>
-              <td>
-                <a [href]="'http://localhost:3000' + doc.path" target="_blank" class="text-decoration-none">
-                  {{ doc.originalName }}
-                </a>
-              </td>
-              <td>{{ doc.uploadDate | date:'shortDate' }}</td>
-              <td>
-                <div class="d-flex justify-content-end gap-2">
-                  <button class="btn btn-sm btn-outline-primary d-flex align-items-center gap-1" (click)="startEdit(doc)">
-                    <i class="bi bi-pencil"></i> Modificar
-                  </button>
-                  <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1" (click)="onDelete(doc._id)">
-                    <i class="bi bi-trash"></i> Eliminar
-                  </button>
-                </div>
-              </td>
-            </tr>
-
-            <!-- Modo Edición -->
-            <tr *ngIf="editingDocId === doc._id" class="table-warning">
-              <td colspan="5">
-                <div class="row g-2 p-2">
-                  <div class="col-md-3">
-                    <label class="form-label fw-bold small">Título</label>
-                    <input type="text" class="form-control form-control-sm" [(ngModel)]="editData.title" name="eTitle">
-                  </div>
-                  <div class="col-md-3">
-                    <label class="form-label fw-bold small">Descripción</label>
-                    <input type="text" class="form-control form-control-sm" [(ngModel)]="editData.description" name="eDesc">
-                  </div>
-                  <div class="col-md-2">
-                    <label class="form-label fw-bold small">Materia</label>
-                    <select class="form-select form-select-sm" [(ngModel)]="editData.subjectId" name="eSub" (change)="onEditSubjectChange()">
-                      <option *ngFor="let sub of subjects" [value]="sub._id">{{ sub.name }}</option>
-                    </select>
-                  </div>
-                  <div class="col-md-2">
-                    <label class="form-label fw-bold small">Sección</label>
-                    <select class="form-select form-select-sm" [(ngModel)]="editData.categoryId" name="eCat" [disabled]="!editData.subjectId">
-                      <option *ngFor="let cat of getFilteredCategories(editData.subjectId)" [value]="cat._id">{{ cat.name }}</option>
-                    </select>
-                  </div>
-                  <div class="col-md-2 d-flex align-items-end justify-content-end gap-2 pb-1">
-                    <button class="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1" (click)="cancelEdit()">
-                      <i class="bi bi-x-circle"></i> Cancelar
-                    </button>
-                    <button class="btn btn-sm btn-success d-flex align-items-center gap-1" (click)="saveEdit()">
-                      <i class="bi bi-check-circle"></i> Guardar
-                    </button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </ng-container>
-        </tbody>
-      </table>
+<!-- TAB: CATEGORIES -->
+@if (activeTab === 'categories') {
+  <div>
+    <div class="admin-categories-grid">
+      <!-- Materias -->
+      <div class="admin-section">
+        <h2 class="admin-section-title">Materias</h2>
+        <form (submit)="createSubject()" style="display:flex; gap:0.5rem; margin-bottom:1.25rem;">
+          <input class="admin-input" type="text" placeholder="Ej. Programación I" [(ngModel)]="newSubjectName" name="subjectName" required>
+          <button type="submit" class="admin-btn admin-btn-primary" [disabled]="isSavingSub || !newSubjectName" style="white-space:nowrap;">
+            <i class="bi bi-plus"></i> Añadir
+          </button>
+        </form>
+        <ul class="admin-list">
+          @if (subjects.length === 0) {
+            <li class="admin-list-empty">No hay materias creadas.</li>
+          }
+          @for (sub of subjects; track sub) {
+            <li class="admin-list-item">
+              <span><span class="item-name">{{ sub.name }}</span><span class="item-slug">/{{ sub.slug }}</span></span>
+              <button class="admin-btn admin-btn-ghost-danger" (click)="deleteSubject(sub._id)" title="Eliminar"><i class="bi bi-trash3"></i></button>
+            </li>
+          }
+        </ul>
+      </div>
+      <!-- Secciones -->
+      <div class="admin-section">
+        <h2 class="admin-section-title">Secciones (Unidades)</h2>
+        <form (submit)="createCategory()" style="margin-bottom:1.25rem;">
+          <div style="margin-bottom:0.5rem;">
+            <select class="admin-select" [(ngModel)]="newCategorySubjectId" name="subjectSelect" required>
+              <option value="" disabled>Selecciona la Materia...</option>
+              @for (sub of subjects; track sub) {
+                <option [value]="sub._id">{{ sub.name }}</option>
+              }
+            </select>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <input class="admin-input" type="text" placeholder="Ej. Funciones" [(ngModel)]="newCategoryName" name="categoryName" required>
+            <button type="submit" class="admin-btn admin-btn-primary" [disabled]="isSavingCat || !newCategoryName || !newCategorySubjectId" style="white-space:nowrap;">
+              <i class="bi bi-plus"></i> Añadir
+            </button>
+          </div>
+        </form>
+        <ul class="admin-list">
+          @if (categories.length === 0) {
+            <li class="admin-list-empty">No hay secciones creadas.</li>
+          }
+          @for (cat of categories; track cat) {
+            <li class="admin-list-item">
+              <div>
+                <div class="item-name">{{ cat.name }}</div>
+                <div class="item-badge"><i class="bi bi-journal-bookmark" style="margin-right:0.25rem;"></i>{{ cat.subjectId?.name || 'Sin Materia' }}</div>
+              </div>
+              <button class="admin-btn admin-btn-ghost-danger" (click)="deleteCategory(cat._id)" title="Eliminar"><i class="bi bi-trash3"></i></button>
+            </li>
+          }
+        </ul>
+      </div>
     </div>
   </div>
-</div>
+}

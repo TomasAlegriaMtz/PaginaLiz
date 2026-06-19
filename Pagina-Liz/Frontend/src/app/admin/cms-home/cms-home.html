@@ -1,247 +1,223 @@
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2>Gestor de Contenido Dinámico</h2>
+<h1 class="admin-page-title">Gestor de Contenido</h1>
+
+@if (isLoading) {
+  <div class="admin-spinner"></div>
+}
+
+@if (!isLoading) {
+  <div>
+    <ul class="admin-tabs">
+      <li><a [class.active]="activeTab === 'home'" (click)="setTab('home')">Inicio</a></li>
+      <li><a [class.active]="activeTab === 'projects'" (click)="setTab('projects')">Trayectoria</a></li>
+      <li><a [class.active]="activeTab === 'gallery'" (click)="setTab('gallery')">Galería</a></li>
+      <li><a [class.active]="activeTab === 'footer'" (click)="setTab('footer')">Pie de Página</a></li>
+    </ul>
+    <!-- TAB: HOME -->
+    @if (activeTab === 'home') {
+      <div>
+        <div class="admin-section">
+          <h2 class="admin-section-title">Información Principal</h2>
+          <form (submit)="saveContent('home', homeData)">
+            <div class="admin-field" style="margin-bottom:1.25rem;">
+              <label class="admin-label">Texto principal (Sobre Mí)</label>
+              <textarea class="admin-textarea" rows="4" [(ngModel)]="homeData.sobreMi" name="sobreMi"></textarea>
+            </div>
+            <hr class="admin-divider">
+            <div class="admin-field" style="margin-bottom:1rem;">
+              <label class="admin-label">Años de experiencia</label>
+              <input class="admin-input" type="text" [(ngModel)]="homeData.experienciaAnios" name="experienciaAnios">
+            </div>
+            <div class="admin-field" style="margin-bottom:1.25rem;">
+              <label class="admin-label">Lista de experiencias</label>
+              @for (exp of homeData.experienciaLista; track trackByIndex(i, exp); let i = $index) {
+                <div
+                  style="display:flex; gap:0.5rem; margin-bottom:0.5rem;">
+                  <input class="admin-input" type="text" [(ngModel)]="homeData.experienciaLista[i]" [name]="'exp'+i">
+                  <button type="button" class="admin-btn admin-btn-ghost-danger" (click)="removeStringItem(homeData.experienciaLista, i)"><i class="bi bi-trash3"></i></button>
+                </div>
+              }
+              <button type="button" class="admin-btn-add" (click)="addStringItem(homeData.experienciaLista)"><i class="bi bi-plus"></i> Agregar experiencia</button>
+            </div>
+            <hr class="admin-divider">
+            <div class="admin-field" style="margin-bottom:1rem;">
+              <label class="admin-label">Texto carreras impartidas</label>
+              <textarea class="admin-textarea" rows="2" [(ngModel)]="homeData.carrerasTexto" name="carrerasTexto"></textarea>
+            </div>
+            <div class="admin-field" style="margin-bottom:1.25rem;">
+              <label class="admin-label">Lista de carreras</label>
+              @for (car of homeData.carrerasLista; track trackByIndex(i, car); let i = $index) {
+                <div
+                  style="display:flex; gap:0.5rem; margin-bottom:0.5rem;">
+                  <input class="admin-input" type="text" [(ngModel)]="homeData.carrerasLista[i]" [name]="'car'+i">
+                  <button type="button" class="admin-btn admin-btn-ghost-danger" (click)="removeStringItem(homeData.carrerasLista, i)"><i class="bi bi-trash3"></i></button>
+                </div>
+              }
+              <button type="button" class="admin-btn-add" (click)="addStringItem(homeData.carrerasLista)"><i class="bi bi-plus"></i> Agregar carrera</button>
+            </div>
+            <div style="margin-top:1.5rem;">
+              <button type="submit" class="admin-btn admin-btn-save" [disabled]="isSaving">Guardar Inicio</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    }
+    <!-- TAB: TRAYECTORIA -->
+    @if (activeTab === 'projects') {
+      <div>
+        <div class="admin-section">
+          <form (submit)="saveContent('projects', projectsData)">
+            <h2 class="admin-section-subtitle">Proyectos de Investigación (Columna 1)</h2>
+            @for (p of projectsData.proyectosCol1; track p; let i = $index) {
+              <div class="admin-repeater-item" style="grid-template-columns: 1fr 3fr 1fr 1fr auto;">
+                <div class="admin-field"><label class="admin-label">Código</label><input class="admin-input" type="text" [(ngModel)]="p.codigo" [name]="'p1c'+i"></div>
+                <div class="admin-field"><label class="admin-label">Título</label><input class="admin-input" type="text" [(ngModel)]="p.titulo" [name]="'p1t'+i"></div>
+                <div class="admin-field"><label class="admin-label">Año</label><input class="admin-input" type="number" [(ngModel)]="p.anio" [name]="'p1a'+i"></div>
+                <div class="admin-field"><label class="admin-label">Forma</label>
+                <select class="admin-select" [(ngModel)]="p.shape" [name]="'p1s'+i">
+                  <option value="diamond">Diamante</option><option value="circle">Círculo</option><option value="triangle">Triángulo</option>
+                </select>
+              </div>
+              <div class="admin-field" style="align-self:end;"><button type="button" class="admin-btn admin-btn-ghost-danger" (click)="removeProject(projectsData.proyectosCol1, i)"><i class="bi bi-trash3"></i></button></div>
+            </div>
+          }
+          <button type="button" class="admin-btn-add" (click)="addProject(projectsData.proyectosCol1)"><i class="bi bi-plus"></i> Agregar Proyecto Col 1</button>
+          <h2 class="admin-section-subtitle">Proyectos de Investigación (Columna 2)</h2>
+          @for (p of projectsData.proyectosCol2; track p; let i = $index) {
+            <div class="admin-repeater-item" style="grid-template-columns: 1fr 3fr 1fr 1fr auto;">
+              <div class="admin-field"><label class="admin-label">Código</label><input class="admin-input" type="text" [(ngModel)]="p.codigo" [name]="'p2c'+i"></div>
+              <div class="admin-field"><label class="admin-label">Título</label><input class="admin-input" type="text" [(ngModel)]="p.titulo" [name]="'p2t'+i"></div>
+              <div class="admin-field"><label class="admin-label">Año</label><input class="admin-input" type="number" [(ngModel)]="p.anio" [name]="'p2a'+i"></div>
+              <div class="admin-field"><label class="admin-label">Forma</label>
+              <select class="admin-select" [(ngModel)]="p.shape" [name]="'p2s'+i">
+                <option value="diamond">Diamante</option><option value="circle">Círculo</option><option value="triangle">Triángulo</option>
+              </select>
+            </div>
+            <div class="admin-field" style="align-self:end;"><button type="button" class="admin-btn admin-btn-ghost-danger" (click)="removeProject(projectsData.proyectosCol2, i)"><i class="bi bi-trash3"></i></button></div>
+          </div>
+        }
+        <button type="button" class="admin-btn-add" (click)="addProject(projectsData.proyectosCol2)"><i class="bi bi-plus"></i> Agregar Proyecto Col 2</button>
+        <hr class="admin-divider">
+        <h2 class="admin-section-subtitle">Tesis Dirigidas</h2>
+        @for (t of projectsData.tesis; track t; let i = $index) {
+          <div class="admin-repeater-item" style="grid-template-columns: 3fr 1fr 1fr 1fr auto;">
+            <div class="admin-field"><label class="admin-label">Título</label><input class="admin-input" type="text" [(ngModel)]="t.titulo" [name]="'tt'+i"></div>
+            <div class="admin-field"><label class="admin-label">Nivel</label>
+            <select class="admin-select" [(ngModel)]="t.nivel" [name]="'tn'+i">
+              <option value="Maestría">Maestría</option><option value="Doctorado">Doctorado</option>
+            </select>
+          </div>
+          <div class="admin-field"><label class="admin-label">Estado</label>
+          <select class="admin-select" [(ngModel)]="t.estado" [name]="'te'+i">
+            <option value="Terminada">Terminada</option><option value="En Proceso">En Proceso</option>
+          </select>
+        </div>
+        <div class="admin-field"><label class="admin-label">Año</label><input class="admin-input" type="text" [(ngModel)]="t.anio" [name]="'ta'+i"></div>
+        <div class="admin-field" style="align-self:end;"><button type="button" class="admin-btn admin-btn-ghost-danger" (click)="removeTesis(i)"><i class="bi bi-trash3"></i></button></div>
+      </div>
+    }
+    <button type="button" class="admin-btn-add" (click)="addTesis()"><i class="bi bi-plus"></i> Agregar Tesis</button>
+    <hr class="admin-divider">
+    <h2 class="admin-section-subtitle">Publicaciones</h2>
+    @for (p of projectsData.publicaciones; track p; let i = $index) {
+      <div class="admin-repeater-item">
+        <div class="admin-input-row cols-2" style="margin-bottom:0;">
+          <div class="admin-field"><label class="admin-label">Título</label><input class="admin-input" type="text" [(ngModel)]="p.titulo" [name]="'pt'+i"></div>
+          <div class="admin-field"><label class="admin-label">Año</label><input class="admin-input" type="number" [(ngModel)]="p.anio" [name]="'pa'+i"></div>
+        </div>
+        <div class="admin-input-row cols-3" style="margin-bottom:0; align-items:end;">
+          <div class="admin-field"><label class="admin-label">Revista / Fuente</label><input class="admin-input" type="text" [(ngModel)]="p.fuente" [name]="'pf'+i"></div>
+          <div class="admin-field"><label class="admin-label">Autores</label><input class="admin-input" type="text" [(ngModel)]="p.autores" [name]="'pau'+i"></div>
+          <div class="admin-field" style="align-self:end;"><button type="button" class="admin-btn admin-btn-ghost-danger" (click)="removePub(i)"><i class="bi bi-trash3"></i></button></div>
+        </div>
+      </div>
+    }
+    <button type="button" class="admin-btn-add" (click)="addPub()"><i class="bi bi-plus"></i> Agregar Publicación</button>
+    <hr class="admin-divider">
+    <h2 class="admin-section-subtitle">Capítulos de Libro</h2>
+    @for (c of projectsData.capitulos; track c; let i = $index) {
+      <div class="admin-repeater-item">
+        <div class="admin-input-row cols-2" style="margin-bottom:0;">
+          <div class="admin-field"><label class="admin-label">Título</label><input class="admin-input" type="text" [(ngModel)]="c.titulo" [name]="'ct'+i"></div>
+          <div class="admin-field"><label class="admin-label">Año</label><input class="admin-input" type="number" [(ngModel)]="c.anio" [name]="'ca'+i"></div>
+        </div>
+        <div class="admin-input-row cols-4" style="margin-bottom:0; align-items:end;">
+          <div class="admin-field"><label class="admin-label">Editorial</label><input class="admin-input" type="text" [(ngModel)]="c.editorial" [name]="'ce'+i"></div>
+          <div class="admin-field"><label class="admin-label">Capítulo</label><input class="admin-input" type="text" [(ngModel)]="c.numeroCapitulo" [name]="'cn'+i"></div>
+          <div class="admin-field"><label class="admin-label">Autores</label><input class="admin-input" type="text" [(ngModel)]="c.autores" [name]="'cau'+i"></div>
+          <div class="admin-field" style="align-self:end;"><button type="button" class="admin-btn admin-btn-ghost-danger" (click)="removeCapitulo(i)"><i class="bi bi-trash3"></i></button></div>
+        </div>
+      </div>
+    }
+    <button type="button" class="admin-btn-add" (click)="addCapitulo()"><i class="bi bi-plus"></i> Agregar Capítulo</button>
+    <div style="margin-top:2rem;">
+      <button type="submit" class="admin-btn admin-btn-save" [disabled]="isSaving">Guardar Trayectoria</button>
+    </div>
+  </form>
 </div>
-
-<div *ngIf="isLoading" class="text-center my-5">
-  <div class="spinner-border text-primary" role="status"></div>
 </div>
-
-<div *ngIf="!isLoading">
-  <ul class="nav nav-tabs mb-4">
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'home'" (click)="setTab('home')" style="cursor:pointer">Inicio</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'projects'" (click)="setTab('projects')" style="cursor:pointer">Trayectoria</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'gallery'" (click)="setTab('gallery')" style="cursor:pointer">Galería</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'footer'" (click)="setTab('footer')" style="cursor:pointer">Pie de Página</a>
-    </li>
-  </ul>
-
-  <!-- TAB: HOME -->
-  <div *ngIf="activeTab === 'home'" class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="mb-3">Información Principal</h5>
-      <form (submit)="saveContent('home', homeData)">
-        <!-- Sobre Mí -->
-        <div class="mb-3">
-          <label class="form-label fw-bold">Texto Principal (Sobre Mí)</label>
-          <textarea class="form-control" rows="4" [(ngModel)]="homeData.sobreMi" name="sobreMi"></textarea>
-        </div>
-
-        <hr>
-
-        <!-- Experiencia -->
-        <div class="mb-3">
-          <label class="form-label fw-bold">Años de Experiencia</label>
-          <input type="text" class="form-control" [(ngModel)]="homeData.experienciaAnios" name="experienciaAnios">
-        </div>
-        <div class="mb-3">
-          <label class="form-label fw-bold">Lista de Experiencias</label>
-          <div *ngFor="let exp of homeData.experienciaLista; let i = index; trackBy: trackByIndex" class="d-flex gap-2 mb-2">
-            <input type="text" class="form-control" [(ngModel)]="homeData.experienciaLista[i]" [name]="'exp'+i">
-            <button type="button" class="btn btn-outline-danger" (click)="removeStringItem(homeData.experienciaLista, i)"><i class="bi bi-trash"></i></button>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-primary" (click)="addStringItem(homeData.experienciaLista)">+ Agregar Experiencia</button>
-        </div>
-
-        <hr>
-
-        <!-- Carreras -->
-        <div class="mb-3">
-          <label class="form-label fw-bold">Texto Carreras Impartidas</label>
-          <textarea class="form-control" rows="2" [(ngModel)]="homeData.carrerasTexto" name="carrerasTexto"></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label fw-bold">Lista de Carreras</label>
-          <div *ngFor="let car of homeData.carrerasLista; let i = index; trackBy: trackByIndex" class="d-flex gap-2 mb-2">
-            <input type="text" class="form-control" [(ngModel)]="homeData.carrerasLista[i]" [name]="'car'+i">
-            <button type="button" class="btn btn-outline-danger" (click)="removeStringItem(homeData.carrerasLista, i)"><i class="bi bi-trash"></i></button>
-          </div>
-          <button type="button" class="btn btn-sm btn-outline-primary" (click)="addStringItem(homeData.carrerasLista)">+ Agregar Carrera</button>
-        </div>
-
-        <div class="mt-4">
-          <button type="submit" class="btn btn-success px-4" [disabled]="isSaving">Guardar Inicio</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- TAB: TRAYECTORIA -->
-  <div *ngIf="activeTab === 'projects'" class="card shadow-sm mb-4">
-    <div class="card-body">
-      <form (submit)="saveContent('projects', projectsData)">
-        
-        <!-- PROYECTOS COL 1 -->
-        <h5 class="mb-3">Proyectos de Investigación (Columna 1)</h5>
-        <div *ngFor="let p of projectsData.proyectosCol1; let i = index" class="border p-3 mb-3 bg-light">
-          <div class="row g-2">
-            <div class="col-md-2"><input type="text" class="form-control" [(ngModel)]="p.codigo" [name]="'p1c'+i" placeholder="Código"></div>
-            <div class="col-md-6"><input type="text" class="form-control" [(ngModel)]="p.titulo" [name]="'p1t'+i" placeholder="Título del proyecto"></div>
-            <div class="col-md-2"><input type="number" class="form-control" [(ngModel)]="p.anio" [name]="'p1a'+i" placeholder="Año"></div>
-            <div class="col-md-2 d-flex gap-2">
-              <select class="form-select" [(ngModel)]="p.shape" [name]="'p1s'+i">
-                <option value="diamond">Diamante</option>
-                <option value="circle">Círculo</option>
-                <option value="triangle">Triángulo</option>
-              </select>
-              <button type="button" class="btn btn-danger" (click)="removeProject(projectsData.proyectosCol1, i)"><i class="bi bi-trash"></i></button>
-            </div>
-          </div>
-        </div>
-        <button type="button" class="btn btn-sm btn-outline-primary mb-4" (click)="addProject(projectsData.proyectosCol1)">+ Agregar Proyecto Col 1</button>
-
-        <!-- PROYECTOS COL 2 -->
-        <h5 class="mb-3">Proyectos de Investigación (Columna 2)</h5>
-        <div *ngFor="let p of projectsData.proyectosCol2; let i = index" class="border p-3 mb-3 bg-light">
-          <div class="row g-2">
-            <div class="col-md-2"><input type="text" class="form-control" [(ngModel)]="p.codigo" [name]="'p2c'+i" placeholder="Código"></div>
-            <div class="col-md-6"><input type="text" class="form-control" [(ngModel)]="p.titulo" [name]="'p2t'+i" placeholder="Título del proyecto"></div>
-            <div class="col-md-2"><input type="number" class="form-control" [(ngModel)]="p.anio" [name]="'p2a'+i" placeholder="Año"></div>
-            <div class="col-md-2 d-flex gap-2">
-              <select class="form-select" [(ngModel)]="p.shape" [name]="'p2s'+i">
-                <option value="diamond">Diamante</option>
-                <option value="circle">Círculo</option>
-                <option value="triangle">Triángulo</option>
-              </select>
-              <button type="button" class="btn btn-danger" (click)="removeProject(projectsData.proyectosCol2, i)"><i class="bi bi-trash"></i></button>
-            </div>
-          </div>
-        </div>
-        <button type="button" class="btn btn-sm btn-outline-primary mb-4" (click)="addProject(projectsData.proyectosCol2)">+ Agregar Proyecto Col 2</button>
-
-        <hr>
-
-        <!-- TESIS -->
-        <h5 class="mb-3">Tesis Dirigidas</h5>
-        <div *ngFor="let t of projectsData.tesis; let i = index" class="border p-3 mb-3 bg-light">
-          <div class="row g-2">
-            <div class="col-md-6"><input type="text" class="form-control" [(ngModel)]="t.titulo" [name]="'tt'+i" placeholder="Título"></div>
-            <div class="col-md-2">
-              <select class="form-select" [(ngModel)]="t.nivel" [name]="'tn'+i">
-                <option value="Maestría">Maestría</option>
-                <option value="Doctorado">Doctorado</option>
-              </select>
-            </div>
-            <div class="col-md-2">
-              <select class="form-select" [(ngModel)]="t.estado" [name]="'te'+i">
-                <option value="Terminada">Terminada</option>
-                <option value="En Proceso">En Proceso</option>
-              </select>
-            </div>
-            <div class="col-md-1"><input type="text" class="form-control" [(ngModel)]="t.anio" [name]="'ta'+i" placeholder="Año"></div>
-            <div class="col-md-1"><button type="button" class="btn btn-danger w-100" (click)="removeTesis(i)"><i class="bi bi-trash"></i></button></div>
-          </div>
-        </div>
-        <button type="button" class="btn btn-sm btn-outline-primary mb-4" (click)="addTesis()">+ Agregar Tesis</button>
-
-        <hr>
-
-        <!-- PUBLICACIONES -->
-        <h5 class="mb-3">Publicaciones</h5>
-        <div *ngFor="let p of projectsData.publicaciones; let i = index" class="border p-3 mb-3 bg-light">
-          <div class="row g-2 mb-2">
-            <div class="col-md-10"><input type="text" class="form-control" [(ngModel)]="p.titulo" [name]="'pt'+i" placeholder="Título"></div>
-            <div class="col-md-2"><input type="number" class="form-control" [(ngModel)]="p.anio" [name]="'pa'+i" placeholder="Año"></div>
-          </div>
-          <div class="row g-2">
-            <div class="col-md-5"><input type="text" class="form-control" [(ngModel)]="p.fuente" [name]="'pf'+i" placeholder="Revista / Fuente"></div>
-            <div class="col-md-6"><input type="text" class="form-control" [(ngModel)]="p.autores" [name]="'pau'+i" placeholder="Autores"></div>
-            <div class="col-md-1"><button type="button" class="btn btn-danger w-100" (click)="removePub(i)"><i class="bi bi-trash"></i></button></div>
-          </div>
-        </div>
-        <button type="button" class="btn btn-sm btn-outline-primary mb-4" (click)="addPub()">+ Agregar Publicación</button>
-
-        <hr>
-
-        <!-- CAPITULOS -->
-        <h5 class="mb-3">Capítulos de Libro</h5>
-        <div *ngFor="let c of projectsData.capitulos; let i = index" class="border p-3 mb-3 bg-light">
-          <div class="row g-2 mb-2">
-            <div class="col-md-10"><input type="text" class="form-control" [(ngModel)]="c.titulo" [name]="'ct'+i" placeholder="Título"></div>
-            <div class="col-md-2"><input type="number" class="form-control" [(ngModel)]="c.anio" [name]="'ca'+i" placeholder="Año"></div>
-          </div>
-          <div class="row g-2">
-            <div class="col-md-4"><input type="text" class="form-control" [(ngModel)]="c.editorial" [name]="'ce'+i" placeholder="Editorial"></div>
-            <div class="col-md-2"><input type="text" class="form-control" [(ngModel)]="c.numeroCapitulo" [name]="'cn'+i" placeholder="Capítulo"></div>
-            <div class="col-md-5"><input type="text" class="form-control" [(ngModel)]="c.autores" [name]="'cau'+i" placeholder="Autores"></div>
-            <div class="col-md-1"><button type="button" class="btn btn-danger w-100" (click)="removeCapitulo(i)"><i class="bi bi-trash"></i></button></div>
-          </div>
-        </div>
-        <button type="button" class="btn btn-sm btn-outline-primary mb-4" (click)="addCapitulo()">+ Agregar Capítulo</button>
-
-        <div class="mt-4">
-          <button type="submit" class="btn btn-success px-4" [disabled]="isSaving">Guardar Trayectoria</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- TAB: GALLERY -->
-  <div *ngIf="activeTab === 'gallery'" class="card shadow-sm mb-4">
-    <div class="card-body">
-      <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0">Galería de Imágenes</h5>
+}
+<!-- TAB: GALLERY -->
+@if (activeTab === 'gallery') {
+  <div>
+    <div class="admin-section">
+      <h2 class="admin-section-title">Galería de Imágenes</h2>
+      <div class="admin-dropzone" style="margin-bottom:1.5rem;" appDragDrop (fileDropped)="onFilesDropped($event)" (click)="fileInput.click()">
+        <div class="dz-icon"><i class="bi bi-image"></i></div>
+        <p class="dz-title">Arrastra tus imágenes aquí</p>
+        <p class="dz-subtitle">o haz clic para explorar</p>
+        <input type="file" #fileInput style="display:none" accept="image/*" multiple (change)="onFilesSelected($event)">
       </div>
-
-      <!-- Dropzone -->
-      <div class="dropzone mb-4" appDragDrop (fileDropped)="onFilesDropped($event)" (click)="fileInput.click()">
-        <i class="bi bi-cloud-arrow-up display-4 text-primary"></i>
-        <h5 class="mt-3">Arrastra tus imágenes aquí</h5>
-        <p class="text-muted">o haz clic para explorar tus archivos</p>
-        <input type="file" #fileInput class="d-none" accept="image/*" multiple (change)="onFilesSelected($event)">
-      </div>
-
-      <div class="row g-3">
-        <div class="col-md-3" *ngFor="let img of galleryData.images; let i = index">
-          <div class="position-relative border rounded overflow-hidden" style="height: 150px;">
-            <img [src]="img" class="w-100 h-100" style="object-fit: cover;">
-            <button class="btn btn-sm btn-danger position-absolute top-0 end-0 m-1" (click)="removeImage(i)">
-              <i class="bi bi-trash"></i>
-            </button>
+      <div class="admin-gallery-grid">
+        @for (img of galleryData.images; track img; let i = $index) {
+          <div class="admin-gallery-item">
+            <img [src]="img" alt="Galería">
+            <button class="gallery-delete" (click)="removeImage(i)"><i class="bi bi-trash3"></i></button>
           </div>
+        }
+      </div>
+      @if (galleryData.images.length === 0) {
+        <div style="text-align:center; color:#94a3b8; padding:2rem 0; font-size:0.8125rem;">
+          No hay imágenes en la galería.
         </div>
-      </div>
-      <div *ngIf="galleryData.images.length === 0" class="text-muted mt-3">
-        No hay imágenes en la galería.
-      </div>
-
-      <div class="mt-4 border-top pt-3">
-        <button type="button" class="btn btn-success px-4" [disabled]="isSaving" (click)="saveContent('gallery', galleryData)">Guardar Galería</button>
+      }
+      <div style="margin-top:1.5rem; padding-top:1rem; border-top:1px solid #f1f5f9;">
+        <button class="admin-btn admin-btn-save" [disabled]="isSaving" (click)="saveContent('gallery', galleryData)">Guardar Galería</button>
       </div>
     </div>
   </div>
-
-  <!-- TAB: FOOTER -->
-  <div *ngIf="activeTab === 'footer'" class="card shadow-sm mb-4">
-    <div class="card-body">
-      <h5 class="mb-3">Pie de Página y Redes Sociales</h5>
+}
+<!-- TAB: FOOTER -->
+@if (activeTab === 'footer') {
+  <div>
+    <div class="admin-section">
+      <h2 class="admin-section-title">Pie de Página y Redes Sociales</h2>
       <form (submit)="saveContent('footer', footerData)">
-        <div class="mb-3">
-          <label class="form-label fw-bold">Link de Facebook</label>
-          <input type="text" class="form-control" [(ngModel)]="footerData.facebook" name="fb">
+        <div class="admin-input-row cols-2">
+          <div class="admin-field">
+            <label class="admin-label">Link de Facebook</label>
+            <input class="admin-input" type="text" [(ngModel)]="footerData.facebook" name="fb">
+          </div>
+          <div class="admin-field">
+            <label class="admin-label">Link de Instagram</label>
+            <input class="admin-input" type="text" [(ngModel)]="footerData.instagram" name="ig">
+          </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label fw-bold">Link de Instagram</label>
-          <input type="text" class="form-control" [(ngModel)]="footerData.instagram" name="ig">
+        <div class="admin-input-row cols-2">
+          <div class="admin-field">
+            <label class="admin-label">Link de TikTok</label>
+            <input class="admin-input" type="text" [(ngModel)]="footerData.tiktok" name="tk">
+          </div>
+          <div class="admin-field">
+            <label class="admin-label">Texto Copyright</label>
+            <input class="admin-input" type="text" [(ngModel)]="footerData.copyright" name="cp">
+          </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label fw-bold">Link de TikTok</label>
-          <input type="text" class="form-control" [(ngModel)]="footerData.tiktok" name="tk">
-        </div>
-        <div class="mb-3">
-          <label class="form-label fw-bold">Texto Copyright</label>
-          <input type="text" class="form-control" [(ngModel)]="footerData.copyright" name="cp">
-        </div>
-        <div class="mt-4">
-          <button type="submit" class="btn btn-success px-4" [disabled]="isSaving">Guardar Pie de Página</button>
+        <div style="margin-top:1.5rem;">
+          <button type="submit" class="admin-btn admin-btn-save" [disabled]="isSaving">Guardar Pie de Página</button>
         </div>
       </form>
     </div>
   </div>
+}
 </div>
+}

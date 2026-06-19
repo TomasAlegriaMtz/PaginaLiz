@@ -1,0 +1,21 @@
+# Usa la imagen estándar de Node 22 para soportar Angular 20+
+FROM node:22
+
+# Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copia los archivos de definición de dependencias
+COPY package*.json ./
+
+# Instala el CLI de Angular correcto y las dependencias (evitando conflictos)
+RUN npm install -g @angular/cli@20
+RUN npm install --legacy-peer-deps
+
+# Copia el resto del código fuente
+COPY . .
+
+# Expone el puerto 4200
+EXPOSE 4200
+
+# Comando para levantar el servidor de desarrollo exponiendo el host
+CMD ["ng", "serve", "--host", "0.0.0.0", "--poll", "2000"]

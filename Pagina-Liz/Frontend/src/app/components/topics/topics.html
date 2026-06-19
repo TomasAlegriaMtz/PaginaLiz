@@ -1,154 +1,175 @@
 <header class="main-header">
-    <p class="universidad">Benemérita Universidad Autónoma de Aguascalientes</p>
-    <h1 class="nombreCompleto">Dra. Estela Lizbeth Muñoz Andrade</h1>
+  <p class="universidad">Benemérita Universidad Autónoma de Aguascalientes</p>
 </header>
-<div class="container">
-    <h2>Mis Materias</h2>
 
-    <div class="row g-4">
-        <!-- Generar tarjetas de materias dinámicamente -->
-        <div class="col-md-6" *ngFor="let mData of materiasEstructura">
-            <div class="card-materia" [class.card-active]="materiaSeleccionada === mData.subject.name"
-                (click)="seleccionarMateria(mData.subject.name)">
+<div class="public-container-wide">
+  <h2 class="public-page-title">Mis Materias</h2>
 
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="materia-titulo">{{ mData.subject.name }}</h4>
-                    <span class="badge bg-primary">Ver temas</span>
-                </div>
-            </div>
+  <div class="public-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+    <!-- Generar tarjetas de materias dinámicamente -->
+    @for (mData of materiasEstructura; track mData) {
+      <div class="public-card" [class.card-active]="materiaSeleccionada === mData.subject.name"
+        (click)="seleccionarMateria(mData.subject.name)" style="cursor: pointer;">
+        <div class="card-header-flex">
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0; color: #1e293b;">{{ mData.subject.name }}</h3>
+          <span class="neutral-badge">Ver temas</span>
         </div>
+      </div>
+    }
 
-        <!-- Tarjeta para Materiales Generales si existen -->
-        <div class="col-md-6" *ngIf="materiasGenerales.length > 0">
-            <div class="card-materia" [class.card-active]="materiaSeleccionada === 'Generales'"
-                (click)="seleccionarMateria('Generales')">
-
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="materia-titulo">Materiales Generales</h4>
-                    <span class="badge bg-secondary">Ver</span>
-                </div>
-            </div>
+    <!-- Tarjeta para Materiales Generales si existen -->
+    @if (materiasGenerales.length > 0) {
+      <div class="public-card" [class.card-active]="materiaSeleccionada === 'Generales'"
+        (click)="seleccionarMateria('Generales')" style="cursor: pointer;">
+        <div class="card-header-flex">
+          <h3 style="font-size: 1.125rem; font-weight: 600; margin: 0; color: #1e293b;">Materiales Generales</h3>
+          <span class="neutral-badge">Ver</span>
         </div>
-    </div>
+      </div>
+    }
+  </div>
 
-    <!-- Detalles de Materias (Iterar sobre estructura) -->
-    <ng-container *ngFor="let mData of materiasEstructura">
-        <div class="mt-4" *ngIf="materiaSeleccionada === mData.subject.name">
-            <hr>
-            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
-                <h3 class="mb-0">Temario: {{ mData.subject.name }}</h3>
-                <div class="idioma-toggle btn-group" role="group">
-                    <button type="button" class="btn"
-                        [class.btn-primary]="idiomaProgramacion === 'es'"
-                        [class.btn-outline-primary]="idiomaProgramacion !== 'es'"
-                        (click)="cambiarIdioma('es')">Español</button>
-                    <button type="button" class="btn"
-                        [class.btn-primary]="idiomaProgramacion === 'en'"
-                        [class.btn-outline-primary]="idiomaProgramacion !== 'en'"
-                        (click)="cambiarIdioma('en')">English</button>
-                </div>
-            </div>
-
-            <div class="unidades-stack">
-                <div *ngIf="mData.unidades.length === 0" class="text-muted fst-italic my-4">
-                    Aún no hay unidades registradas para esta materia.
-                </div>
-
-                <div class="unidad-card" *ngFor="let u of mData.unidades" [class.pendiente]="u.pendiente">
-                    <div class="unidad-header">
-                        <span class="badge bg-secondary">
-                            {{ idiomaProgramacion === 'es' ? 'Unidad' : 'Unit' }} {{ u.numero }}
-                        </span>
-                        <h4>{{ idiomaProgramacion === 'es' ? u.tituloEs : u.tituloEn }}</h4>
-                    </div>
-
-                    <div class="documentos-lista" *ngIf="!u.pendiente">
-                        <article class="documento"
-                            *ngFor="let m of (idiomaProgramacion === 'es' ? u.materialesEs : u.materialesEn)">
-                            <header class="documento-header">
-                                <span class="file-type" [attr.data-type]="m.type">{{ m.type.toUpperCase() }}</span>
-                                <span class="documento-titulo">{{ m.title }}</span>
-                                <div class="documento-acciones">
-                                    <button type="button" class="btn-leer"
-                                        *ngIf="m.description"
-                                        (click)="toggleContenido(m._id)">
-                                        <i class="bi" [class.bi-chevron-down]="!estaExpandido(m._id)"
-                                           [class.bi-chevron-up]="estaExpandido(m._id)"></i>
-                                        {{ estaExpandido(m._id)
-                                            ? (idiomaProgramacion === 'es' ? 'Ocultar texto' : 'Hide text')
-                                            : (idiomaProgramacion === 'es' ? 'Leer aquí' : 'Read here') }}
-                                    </button>
-                                    <a *ngIf="m.type === 'pdf'" [href]="m.file" target="_blank" rel="noopener" class="btn-descargar me-2" style="background: var(--surface-color); color: var(--primary-color); border: 1px solid var(--primary-color);">
-                                        <i class="bi bi-eye"></i> {{ idiomaProgramacion === 'es' ? 'Visualizar' : 'View' }}
-                                    </a>
-                                    <a *ngIf="m.type !== 'pdf'" [href]="'https://view.officeapps.live.com/op/view.aspx?src=' + m.file" target="_blank" rel="noopener" class="btn-descargar me-2" style="background: var(--surface-color); color: var(--primary-color); border: 1px solid var(--primary-color);" title="Solo funciona en producción">
-                                        <i class="bi bi-eye"></i> {{ idiomaProgramacion === 'es' ? 'Visualizar' : 'View' }}
-                                    </a>
-                                    <a [href]="m.file" download target="_blank" rel="noopener" class="btn-descargar">
-                                        <i class="bi bi-download"></i>
-                                        {{ idiomaProgramacion === 'es' ? 'Descargar' : 'Download' }}
-                                    </a>
-                                </div>
-                            </header>
-
-                            <!-- Contenido text (Description) -->
-                            <div class="documento-contenido" *ngIf="m.description && estaExpandido(m._id)">
-                                <div class="contenido-render">
-                                    <p class="bloque-p text-muted" style="white-space: pre-wrap;">{{ m.description }}</p>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-
-                    <p class="pendiente-msg" *ngIf="u.pendiente">
-                        {{ idiomaProgramacion === 'es'
-                            ? 'Esta unidad estará disponible próximamente.'
-                            : 'This unit will be available soon.' }}
-                    </p>
-                </div>
-            </div>
+  <!-- Detalles de Materias (Iterar sobre estructura) -->
+  @for (mData of materiasEstructura; track mData) {
+    @if (materiaSeleccionada === mData.subject.name) {
+      <div class="materias-details">
+        <hr class="minimal-hr">
+        <div class="flex-wrap-between">
+          <h3 class="public-section-title">Temario: {{ mData.subject.name }}</h3>
+          <div class="idioma-toggle">
+            <button type="button" class="btn-lang"
+              [class.btn-lang-active]="idiomaProgramacion === 'es'"
+              (click)="cambiarIdioma('es')">Español</button>
+            <button type="button" class="btn-lang"
+              [class.btn-lang-active]="idiomaProgramacion === 'en'"
+              (click)="cambiarIdioma('en')">English</button>
+          </div>
         </div>
-    </ng-container>
-
-    <!-- Detalles Generales -->
-    <div class="mt-4" *ngIf="materiaSeleccionada === 'Generales'">
-        <hr>
-        <h3 class="mb-3">Materiales Generales</h3>
         <div class="unidades-stack">
-            <div class="unidad-card" *ngFor="let u of materiasGenerales">
-                <div class="documentos-lista">
-                    <article class="documento"
-                        *ngFor="let m of u.materialesEs">
-                        <header class="documento-header">
-                            <span class="file-type" [attr.data-type]="m.type">{{ m.type.toUpperCase() }}</span>
-                            <span class="documento-titulo">{{ m.title }}</span>
-                            <div class="documento-acciones">
-                                <button type="button" class="btn-leer"
-                                    *ngIf="m.description"
-                                    (click)="toggleContenido(m._id)">
-                                    <i class="bi" [class.bi-chevron-down]="!estaExpandido(m._id)"
-                                       [class.bi-chevron-up]="estaExpandido(m._id)"></i>
-                                    {{ estaExpandido(m._id) ? 'Ocultar texto' : 'Leer aquí' }}
-                                </button>
-                                <a *ngIf="m.type === 'pdf'" [href]="m.file" target="_blank" rel="noopener" class="btn-descargar me-2" style="background: var(--surface-color); color: var(--primary-color); border: 1px solid var(--primary-color);">
-                                    <i class="bi bi-eye"></i> Visualizar
-                                </a>
-                                <a *ngIf="m.type !== 'pdf'" [href]="'https://view.officeapps.live.com/op/view.aspx?src=' + m.file" target="_blank" rel="noopener" class="btn-descargar me-2" style="background: var(--surface-color); color: var(--primary-color); border: 1px solid var(--primary-color);" title="Solo funciona en producción">
-                                    <i class="bi bi-eye"></i> Visualizar
-                                </a>
-                                <a [href]="m.file" download target="_blank" rel="noopener" class="btn-descargar">
-                                    <i class="bi bi-download"></i> Descargar
-                                </a>
-                            </div>
-                        </header>
-                        <div class="documento-contenido" *ngIf="m.description && estaExpandido(m._id)">
-                            <div class="contenido-render">
-                                <p class="bloque-p text-muted" style="white-space: pre-wrap;">{{ m.description }}</p>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+          @if (mData.unidades.length === 0) {
+            <div class="empty-state">
+              Aún no hay unidades registradas para esta materia.
             </div>
+          }
+          @for (u of mData.unidades; track u) {
+            <div class="unidad-card" [class.pendiente]="u.pendiente">
+              <div class="unidad-header">
+                <span class="neutral-badge">
+                  {{ idiomaProgramacion === 'es' ? 'Unidad' : 'Unit' }} {{ u.numero }}
+                </span>
+                <h4 class="unidad-titulo">{{ idiomaProgramacion === 'es' ? u.tituloEs : u.tituloEn }}</h4>
+              </div>
+              @if (!u.pendiente) {
+                <div class="documentos-lista">
+                  @for (m of (idiomaProgramacion === 'es' ? u.materialesEs : u.materialesEn); track m) {
+                    <article class="documento">
+                      <header class="documento-header">
+                        <span class="file-type" [attr.data-type]="m.type">{{ m.type.toUpperCase() }}</span>
+                        <span class="documento-titulo">{{ m.title }}</span>
+                        <div class="documento-acciones">
+                          @if (m.description) {
+                            <button type="button" class="btn-leer"
+                              (click)="toggleContenido(m._id)">
+                              <i class="bi" [class.bi-chevron-down]="!estaExpandido(m._id)"
+                              [class.bi-chevron-up]="estaExpandido(m._id)"></i>
+                              {{ estaExpandido(m._id)
+                              ? (idiomaProgramacion === 'es' ? 'Ocultar texto' : 'Hide text')
+                              : (idiomaProgramacion === 'es' ? 'Leer aquí' : 'Read here') }}
+                            </button>
+                          }
+                          @if (m.type === 'pdf') {
+                            <a [href]="m.file" target="_blank" rel="noopener" class="btn-descargar outline-btn">
+                              <i class="bi bi-eye"></i> {{ idiomaProgramacion === 'es' ? 'Visualizar' : 'View' }}
+                            </a>
+                          }
+                          @if (m.type !== 'pdf') {
+                            <a [href]="'https://view.officeapps.live.com/op/view.aspx?src=' + m.file" target="_blank" rel="noopener" class="btn-descargar outline-btn" title="Solo funciona en producción">
+                                <i class="bi bi-eye"></i> {{ idiomaProgramacion === 'es' ? 'Visualizar' : 'View' }}
+                            </a>
+                          }
+                          <a [href]="m.file" download target="_blank" rel="noopener" class="btn-descargar">
+                              <i class="bi bi-download"></i>
+                              {{ idiomaProgramacion === 'es' ? 'Descargar' : 'Download' }}
+                          </a>
+                        </div>
+                      </header>
+                      <!-- Contenido text (Description) -->
+                      @if (m.description && estaExpandido(m._id)) {
+                        <div class="documento-contenido">
+                          <div class="contenido-render">
+                            <p class="bloque-p" style="white-space: pre-wrap;">{{ m.description }}</p>
+                          </div>
+                        </div>
+                      }
+                    </article>
+                  }
+                </div>
+              }
+              @if (u.pendiente) {
+                <p class="pendiente-msg">
+                  {{ idiomaProgramacion === 'es'
+                  ? 'Esta unidad estará disponible próximamente.'
+                  : 'This unit will be available soon.' }}
+                </p>
+              }
+            </div>
+          }
         </div>
+      </div>
+    }
+  }
+
+  <!-- Detalles Generales -->
+  @if (materiaSeleccionada === 'Generales') {
+    <div class="materias-details">
+      <hr class="minimal-hr">
+      <h3 class="public-section-title">Materiales Generales</h3>
+      <div class="unidades-stack">
+        @for (u of materiasGenerales; track u) {
+          <div class="unidad-card">
+            <div class="documentos-lista">
+              @for (m of u.materialesEs; track m) {
+                <article class="documento">
+                  <header class="documento-header">
+                    <span class="file-type" [attr.data-type]="m.type">{{ m.type.toUpperCase() }}</span>
+                    <span class="documento-titulo">{{ m.title }}</span>
+                    <div class="documento-acciones">
+                      @if (m.description) {
+                        <button type="button" class="btn-leer"
+                          (click)="toggleContenido(m._id)">
+                          <i class="bi" [class.bi-chevron-down]="!estaExpandido(m._id)"
+                          [class.bi-chevron-up]="estaExpandido(m._id)"></i>
+                          {{ estaExpandido(m._id) ? 'Ocultar texto' : 'Leer aquí' }}
+                        </button>
+                      }
+                      @if (m.type === 'pdf') {
+                        <a [href]="m.file" target="_blank" rel="noopener" class="btn-descargar outline-btn">
+                          <i class="bi bi-eye"></i> Visualizar
+                        </a>
+                      }
+                      @if (m.type !== 'pdf') {
+                        <a [href]="'https://view.officeapps.live.com/op/view.aspx?src=' + m.file" target="_blank" rel="noopener" class="btn-descargar outline-btn" title="Solo funciona en producción">
+                            <i class="bi bi-eye"></i> Visualizar
+                        </a>
+                      }
+                      <a [href]="m.file" download target="_blank" rel="noopener" class="btn-descargar">
+                          <i class="bi bi-download"></i> Descargar
+                      </a>
+                    </div>
+                  </header>
+                  @if (m.description && estaExpandido(m._id)) {
+                    <div class="documento-contenido">
+                        <div class="contenido-render">
+                            <p class="bloque-p" style="white-space: pre-wrap;">{{ m.description }}</p>
+                        </div>
+                    </div>
+                  }
+                </article>
+              }
+            </div>
+          </div>
+        }
+      </div>
     </div>
+  }
 </div>

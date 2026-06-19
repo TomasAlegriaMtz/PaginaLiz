@@ -1,8 +1,17 @@
-<div class="list-group shadow-sm">
-    @for (tema of listaTemas; track tema) {
-    <div class="list-group-item list-group-item-action d-flex align-items-center">
-        <i class="bi bi-book me-3 text-primary"></i>
-        {{ tema }}
-    </div>
+<div class="public-container">
+  <h2 class="public-page-title">Detalles del Tema</h2>
+  <div class="tema-content">
+    @if (listaTemas && listaTemas.length > 0) {
+      <div class="tema-lista">
+        @for (tema of listaTemas; track tema) {
+          <div class="tema-item">
+            <span class="tema-icon"><i class="bi bi-file-text"></i></span>
+            <span class="tema-texto">{{ tema }}</span>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="empty-state">No hay temas disponibles.</div>
     }
+  </div>
 </div>

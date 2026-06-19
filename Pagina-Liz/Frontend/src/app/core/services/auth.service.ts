@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 
 export interface AuthResponse {
   _id: string;
-  email: string;
+  username: string;
   role: string;
   token: string;
 }

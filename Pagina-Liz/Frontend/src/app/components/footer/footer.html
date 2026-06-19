@@ -1,11 +1,17 @@
 <footer class="footer-section">
-    <div class="social-icons">
-        <a *ngIf="footerData.facebook" [href]="footerData.facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a *ngIf="footerData.instagram" [href]="footerData.instagram" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a *ngIf="footerData.tiktok" [href]="footerData.tiktok" target="_blank"><i class="fab fa-tiktok"></i></a>
-    </div>
+  <div class="social-icons">
+    @if (footerData.facebook) {
+      <a [href]="footerData.facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    }
+    @if (footerData.instagram) {
+      <a [href]="footerData.instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+    }
+    @if (footerData.tiktok) {
+      <a [href]="footerData.tiktok" target="_blank"><i class="fab fa-tiktok"></i></a>
+    }
+  </div>
 
-    <div class="copyright">
-        <p>{{ footerData.copyright }} © {{year}} All Rights Reserved</p>
-    </div>
+  <div class="copyright">
+    <p>{{ footerData.copyright }} © {{year}} All Rights Reserved</p>
+  </div>
 </footer>

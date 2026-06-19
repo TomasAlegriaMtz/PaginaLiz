@@ -1,0 +1,78 @@
+<div class="admin-container">
+  <div class="admin-header-flex">
+    <h2 class="admin-page-title">Gestión de Usuarios</h2>
+    <!-- Botón para añadir un nuevo ADMIN -->
+    <button class="admin-btn admin-btn-primary" (click)="abrirModalNuevoUsuario()">
+      <i class="bi bi-person-plus"></i> Nuevo Administrador
+    </button>
+  </div>
+
+  <div class="admin-card">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Rol</th>
+          <th>Estado</th>
+          <th class="text-right" style="text-align: right;">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (user of users; track user._id) {
+          <tr [class.inactive-row]="!user.isActive">
+            <td class="font-medium">{{ user.username }}</td>
+            <td>
+              <span class="badge" [class.badge-master]="user.role === 'MASTER'">{{ user.role }}</span>
+            </td>
+            <td>
+              <span class="status-dot" [class.active]="user.isActive"></span>
+              {{ user.isActive ? 'Activo' : 'Bloqueado' }}
+            </td>
+            <td class="actions" style="justify-content: flex-end;">
+              <!-- Botón Toggle Bloquear/Desbloquear -->
+              <button class="admin-btn admin-btn-ghost" 
+                      [class.admin-btn-ghost-danger]="!user.isActive"
+                      [disabled]="user.role === 'MASTER'" 
+                      (click)="toggleStatus(user)">
+                @if (user.isActive) {
+                  <i class="bi bi-lock"></i> Bloquear
+                } @else {
+                  <i class="bi bi-unlock"></i> Desbloquear
+                }
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Nuevo Usuario -->
+@if (mostrarModal) {
+  <div class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Nuevo Administrador</h3>
+        <button class="admin-btn admin-btn-ghost" (click)="cerrarModal()"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body">
+        @if (errorMsg) {
+          <div class="error-alert">{{ errorMsg }}</div>
+        }
+        <div class="form-group">
+          <label>Usuario</label>
+          <input type="text" [(ngModel)]="nuevoUsuario.username" class="form-control" placeholder="Ej. admin2">
+        </div>
+        <div class="form-group">
+          <label>Contraseña</label>
+          <input type="password" [(ngModel)]="nuevoUsuario.password" class="form-control" placeholder="********">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="admin-btn admin-btn-ghost" (click)="cerrarModal()">Cancelar</button>
+        <button class="admin-btn admin-btn-primary" (click)="crearUsuario()">Crear Usuario</button>
+      </div>
+    </div>
+  </div>
+}

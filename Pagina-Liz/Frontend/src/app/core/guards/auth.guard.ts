@@ -10,5 +10,6 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
+  authService.logout();
   return router.parseUrl('/admin/login');
 };

@@ -7,7 +7,6 @@ import { AdminLayout } from './admin/layout/admin-layout';
 import { LoginComponent } from './admin/login/login';
 import { DocumentsComponent } from './admin/documents/documents';
 import { CmsHomeComponent } from './admin/cms-home/cms-home';
-import { CmsCategoriesComponent } from './admin/cms-categories/cms-categories';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -23,8 +22,8 @@ export const routes: Routes = [
       children: [
         { path: '', redirectTo: 'documents', pathMatch: 'full' },
         { path: 'documents', component: DocumentsComponent },
-        { path: 'cms-categories', component: CmsCategoriesComponent },
-        { path: 'cms-home', component: CmsHomeComponent }
+        { path: 'cms-home', component: CmsHomeComponent },
+        { path: 'users', loadComponent: () => import('./admin/users/users').then(m => m.UsersComponent) }
       ]
     }
 ];

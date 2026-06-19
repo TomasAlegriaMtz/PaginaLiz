@@ -1,24 +1,27 @@
 <header class="main-header">
-    <p class="universidad">Benemérita Universidad Autónoma de Aguascalientes</p>
-    <h1 class="nombreCompleto">Dra. Estela Lizbeth Muñoz Andrade</h1>
+  <p class="universidad">Benemérita Universidad Autónoma de Aguascalientes</p>
+  <h1 class="nombreCompleto">Dra. Estela Lizbeth Muñoz Andrade</h1>
 </header>
 
-<div *ngIf="isLoading" class="text-center my-5">
+@if (isLoading) {
+  <div class="text-center my-5">
     <div class="spinner-border text-primary" role="status"></div>
-</div>
+  </div>
+}
 
-<div class="masonry-grid" *ngIf="!isLoading">
-    <ng-container *ngFor="let img of images; let i = index">
-        <div class="card" [ngClass]="'item-' + ((i % 7) + 1)" (click)="openImage(modalTemplate)">
-            <img [src]="img" alt="Foto Galería">
-            <div class="noise-overlay"></div>
+@if (!isLoading) {
+  <div class="masonry-grid">
+    @for (img of images; track img; let i = $index) {
+      <div class="card" (click)="openImage(modalTemplate)">
+        <img [src]="img" alt="Foto Galería">
+      </div>
+      <ng-template #modalTemplate let-modal>
+        <div class="modal-body p-0 bg-transparent text-center">
+          <img [src]="img" class="img-fluid rounded shadow-lg" alt="Grande">
+          <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+          (click)="modal.dismiss()"></button>
         </div>
-        <ng-template #modalTemplate let-modal>
-            <div class="modal-body p-0 bg-transparent text-center">
-                <img [src]="img" class="img-fluid rounded shadow-lg" alt="Grande">
-                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
-                    (click)="modal.dismiss()"></button>
-            </div>
-        </ng-template>
-    </ng-container>
-</div>
+      </ng-template>
+    }
+  </div>
+}

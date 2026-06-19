@@ -1,18 +1,20 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IUser extends Document {
-  email: string;
+  username: string;
   password_hash: string;
-  role: string;
+  role: 'MASTER' | 'ADMIN';
+  isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
 
 const UserSchema: Schema = new Schema(
   {
-    email: { type: String, required: true, unique: true, trim: true, lowercase: true },
+    username: { type: String, required: true, unique: true, trim: true },
     password_hash: { type: String, required: true },
-    role: { type: String, required: true, enum: ['ADMIN'], default: 'ADMIN' },
+    role: { type: String, required: true, enum: ['MASTER', 'ADMIN'], default: 'ADMIN' },
+    isActive: { type: Boolean, default: true },
   },
   { timestamps: true }
 );

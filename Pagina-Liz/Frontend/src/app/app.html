@@ -1,9 +1,11 @@
 <div class="main-wrapper">
-    <app-nav-bar *ngIf="!isAdminRoute"></app-nav-bar>
-    <main class="content">
-        <router-outlet></router-outlet>
-    </main>
-    <footer class="footer" *ngIf="!isAdminRoute">
-        <app-footer></app-footer>
-    </footer>
+  @if (!isAdminRoute) {
+    <app-nav-bar></app-nav-bar>
+  }
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+  @if (!isAdminRoute) {
+    <app-footer></app-footer>
+  }
 </div>

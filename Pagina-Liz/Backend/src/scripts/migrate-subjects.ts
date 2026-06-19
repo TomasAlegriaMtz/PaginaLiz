@@ -10,7 +10,7 @@ import DocumentCategory from '../models/DocumentCategory';
 
 const migrateSubjects = async () => {
   try {
-    const mongoUri = process.env.MONGO_URI || 'mongodb://db:27017/paginaliz';
+    const mongoUri = process.env.MONGO_URI || 'mongodb://db:27017/resources';
     await mongoose.connect(mongoUri);
     console.log('Connected to MongoDB');
 

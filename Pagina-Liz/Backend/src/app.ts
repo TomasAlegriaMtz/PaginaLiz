@@ -3,12 +3,15 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 import { connectDB } from './config/db';
+import { seedMasterUser } from './config/seeder';
 
 // Load environment variables
 dotenv.config();
 
-// Connect to database
-connectDB();
+// Connect to database and seed
+connectDB().then(() => {
+  seedMasterUser();
+});
 
 const app = express();
 
@@ -29,8 +32,10 @@ import contentRoutes from './routes/content.routes';
 import categoryRoutes from './routes/category.routes';
 import subjectRoutes from './routes/subject.routes';
 import assetRoutes from './routes/asset.routes';
+import userRoutes from './routes/user.routes';
 
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/documents', documentRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/categories', categoryRoutes);

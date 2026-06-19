@@ -1,69 +1,75 @@
 <body>
-    <app-carousel></app-carousel>
+  <app-carousel></app-carousel>
 
-    <div *ngIf="isLoading" class="text-center py-5">
-        <div class="spinner-border text-primary" role="status">
-            <span class="visually-hidden">Cargando datos...</span>
-        </div>
+  @if (isLoading) {
+    <div class="public-container" style="text-align: center; padding: 3rem 0;">
+      <p class="public-text">Cargando datos...</p>
     </div>
+  }
 
-    <main class="container" *ngIf="!isLoading && homeData">
-        <section class="sobre-mi">
-            <h2 class="section-title">Sobre Mí</h2>
-            <p class="intro-name">Estela Lizbeth Muñoz Andrade:</p>
-            <p class="textoSobreMi">{{ homeData.sobreMi }}</p>
+  @if (!isLoading && homeData) {
+    <main class="public-container">
+      <section class="sobre-mi">
+        <h2 class="public-section-title">Sobre Mí</h2>
+        <div class="public-card">
+          <p class="public-text" style="font-weight: 600; margin-bottom: 1rem;">Estela Lizbeth Muñoz Andrade:</p>
+          <p class="public-text">{{ homeData.sobreMi }}</p>
+        </div>
+        <div class="grid-info">
+          <div class="public-card">
+            <span class="label public-text" style="opacity: 0.6; font-size: 0.875rem;">What:</span>
+            <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">Ready to find your voice?</h3>
+            <p class="public-text">This is a safe place to hone your skills with like-minded peers.</p>
+          </div>
+          <div class="public-card">
+            <span class="label public-text" style="opacity: 0.6; font-size: 0.875rem;">Quienes:</span>
+            <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">Todos los Estudiantes del Centro de Ciencias Básicas</h3>
+            <p class="public-text">Todos son bienvenidos.</p>
+          </div>
+          <div class="public-card">
+            <span class="label public-text" style="opacity: 0.6; font-size: 0.875rem;">Cuando:</span>
+            <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">Wednesday, 3:30-4:30pm</h3>
+            <p class="public-text">You'll be out in time for the late bus home.</p>
+          </div>
+          <div class="public-card">
+            <span class="label public-text" style="opacity: 0.6; font-size: 0.875rem;">Donde:</span>
+            <h3 style="font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem;">Room 204</h3>
+            <p class="public-text">We meet in Mr. Smith's room. He's our teacher sponsor.</p>
+          </div>
+        </div>
+      </section>
+      
+      <section class="experiencia">
+        <h2 class="public-section-title">Experiencia</h2>
+        <div class="public-card exp-content">
+          <div class="exp-image">
+            <img src="/foto.jpg" alt="Conferencia">
+          </div>
+          <div class="exp-text">
+            <p class="public-text" style="opacity: 0.6; margin-bottom: 1rem;">{{ homeData.experienciaAnios }}</p>
+            <ul>
+              @for (exp of homeData.experienciaLista; track exp) {
+                <li class="public-text" style="margin-bottom: 0.5rem;">• {{ exp }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+      </section>
 
-            <div class="grid-info">
-                <div class="info-card">
-                    <span class="label">What:</span>
-                    <h3>Ready to find your voice?</h3>
-                    <p>This is a safe place to hone your skills with like-minded peers.</p>
-                </div>
-                <div class="info-card">
-                    <span class="label">Quienes:</span>
-                    <h3>Todos los Estudiantes del Centro de Ciencias Básicas</h3>
-                    <p>Todos son bienvenidos.</p>
-                </div>
-                <div class="info-card">
-                    <span class="label">Cuando:</span>
-                    <h3>Wednesday, 3:30-4:30pm</h3>
-                    <p>You'll be out in time for the late bus home.</p>
-                </div>
-                <div class="info-card">
-                    <span class="label">Donde:</span>
-                    <h3>Room 204</h3>
-                    <p>We meet in Mr. Smith's room. He's our teacher sponsor.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="experiencia">
-            <h2 class="section-title">Experiencia</h2>
-            <div class="exp-content">
-                <div class="exp-image">
-                    <img src="/foto.jpg" alt="Conferencia">
-                </div>
-                <div class="exp-text">
-                    <p class="years">{{ homeData.experienciaAnios }}</p>
-                    <ul>
-                        <li *ngFor="let exp of homeData.experienciaLista">{{ exp }}</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section class="carreras">
-            <h2 class="section-title">Carreras</h2>
-            <p class="sub-text">{{ homeData.carrerasTexto }}</p>
-            <div class="carreras-container">
-                <ul class="lista-carreras">
-                    <li *ngFor="let carrera of homeData.carrerasLista">{{ carrera }}</li>
-                </ul>
-                <div class="carreras-image">
-                    <img src="/foto.jpg" alt="Clase">
-                </div>
-            </div>
-        </section>
+      <section class="carreras">
+        <h2 class="public-section-title">Carreras</h2>
+        <p class="public-text sub-text">{{ homeData.carrerasTexto }}</p>
+        <div class="public-card carreras-container">
+          <ul class="lista-carreras">
+            @for (carrera of homeData.carrerasLista; track carrera) {
+              <li class="public-text" style="margin-bottom: 1rem; border-left: 2px solid #e2e8f0; padding-left: 1rem;">{{ carrera }}</li>
+            }
+          </ul>
+          <div class="carreras-image">
+            <img src="/foto.jpg" alt="Clase">
+          </div>
+        </div>
+      </section>
     </main>
-
+  }
 </body>

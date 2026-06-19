@@ -17,7 +17,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - MONGO_URI=mongodb://db:27017/paginaliz
+      - MONGO_URI=mongodb://db:27017/resources
       - JWT_SECRET=supersecret123
       - PORT=3000
     volumes:
@@ -27,3 +27,18 @@ services:
       - ./data/assets:/data/assets
     depends_on:
       - db
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend

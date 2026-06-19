@@ -20,29 +20,21 @@ export interface PendingDocument {
   standalone: true,
   imports: [CommonModule, FormsModule, DragDropDirective],
   templateUrl: './documents.html',
-  styles: [`
-    .dropzone {
-      border: 2px dashed #ccc;
-      border-radius: 10px;
-      padding: 40px;
-      text-align: center;
-      background: #f9f9f9;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-    .dropzone.dragover {
-      border-color: #0d6efd;
-      background: #e9ecef;
-    }
-    .card-list-item {
-      border-left: 4px solid #0d6efd;
-    }
-  `]
+  styles: [``]
 })
 export class DocumentsComponent implements OnInit {
+  activeTab: 'documents' | 'categories' = 'documents';
+
   documents: any[] = [];
   categories: Category[] = [];
   subjects: Subject[] = [];
+  
+  // Categories/Subjects state
+  newCategoryName: string = '';
+  newCategorySubjectId: string = '';
+  newSubjectName: string = '';
+  isSavingCat = false;
+  isSavingSub = false;
   
   // Pending documents staging area
   pendingUploads: PendingDocument[] = [];
@@ -101,6 +93,84 @@ export class DocumentsComponent implements OnInit {
   onEditSubjectChange() {
     const filtered = this.getFilteredCategories(this.editData.subjectId);
     this.editData.categoryId = filtered.length > 0 ? filtered[0]._id : '';
+  }
+
+  setTab(tab: 'documents' | 'categories') {
+    this.activeTab = tab;
+  }
+
+  createSubject() {
+    if (!this.newSubjectName.trim()) return;
+    this.isSavingSub = true;
+
+    this.subjectService.createSubject(this.newSubjectName).subscribe({
+      next: () => {
+        this.newSubjectName = '';
+        this.isSavingSub = false;
+        Swal.fire({
+          toast: true, position: 'top-end', icon: 'success', title: 'Materia creada',
+          showConfirmButton: false, timer: 3000
+        });
+        this.loadData();
+      },
+      error: (err) => {
+        console.error('Error creating subject', err);
+        Swal.fire('Error', 'Error al crear la materia. Puede que ya exista.', 'error');
+        this.isSavingSub = false;
+      }
+    });
+  }
+
+  createCategory() {
+    if (!this.newCategoryName.trim() || !this.newCategorySubjectId) return;
+    this.isSavingCat = true;
+
+    this.categoryService.createCategory(this.newCategoryName, this.newCategorySubjectId).subscribe({
+      next: () => {
+        this.newCategoryName = '';
+        this.isSavingCat = false;
+        Swal.fire({
+          toast: true, position: 'top-end', icon: 'success', title: 'Sección creada',
+          showConfirmButton: false, timer: 3000
+        });
+        this.loadData();
+      },
+      error: (err) => {
+        console.error('Error creating category', err);
+        Swal.fire('Error', 'Error al crear la sección. Puede que ya exista.', 'error');
+        this.isSavingCat = false;
+      }
+    });
+  }
+
+  deleteSubject(id: string) {
+    Swal.fire({
+      title: '¿Estás seguro?', text: '¿Deseas eliminar esta materia?',
+      icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6', confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.subjectService.deleteSubject(id).subscribe({
+          next: () => { Swal.fire('Eliminada', 'La materia ha sido eliminada.', 'success'); this.loadData(); },
+          error: (err) => { console.error('Error deleting', err); Swal.fire('Error', 'No se pudo eliminar.', 'error'); }
+        });
+      }
+    });
+  }
+
+  deleteCategory(id: string) {
+    Swal.fire({
+      title: '¿Estás seguro?', text: '¿Deseas eliminar esta sección?',
+      icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6', confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoryService.deleteCategory(id).subscribe({
+          next: () => { Swal.fire('Eliminada', 'La sección ha sido eliminada.', 'success'); this.loadData(); },
+          error: (err) => { console.error('Error deleting', err); Swal.fire('Error', 'No se pudo eliminar.', 'error'); }
+        });
+      }
+    });
   }
 
   loadDocuments() {

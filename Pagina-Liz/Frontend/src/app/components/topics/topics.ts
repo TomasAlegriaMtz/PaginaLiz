@@ -1,6 +1,5 @@
 import { Component, signal, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TemaDetalle } from '../tema-detalle/tema-detalle';
+
 import { DocumentService } from '../../core/services/document.service';
 import { CategoryService, Category } from '../../core/services/category.service';
 import { SubjectService, Subject } from '../../core/services/subject.service';
@@ -31,7 +30,7 @@ interface MateriaData {
 
 @Component({
   selector: 'app-topics',
-  imports: [CommonModule, TemaDetalle],
+  imports: [],
   templateUrl: './topics.html',
   styleUrl: './topics.css',
 })

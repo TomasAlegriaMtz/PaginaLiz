@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-tema-detalle',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './tema-detalle.html',
   styleUrl: './tema-detalle.css',
 })

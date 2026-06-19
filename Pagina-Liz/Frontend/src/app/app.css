@@ -9,19 +9,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden;
 }
 
 .content {
     flex: 1;
     width: 100%;
-    overflow-x: hidden;
 }
-
-.footer {
-    background-color: #333;
-    color: white;
-    padding: 20px 0;
-    text-align: center;
-    width: 100%;
-}
+

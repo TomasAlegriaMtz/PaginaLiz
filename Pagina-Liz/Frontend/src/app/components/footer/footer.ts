@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ContentService } from '../../core/services/content.service';
 
 @Component({
   selector: 'app-footer',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })
